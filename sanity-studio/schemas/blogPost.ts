@@ -130,6 +130,14 @@ export default defineType({
       description: 'Estimated reading time in minutes',
     }),
     defineField({
+      name: 'likeCount',
+      title: 'Like Count',
+      type: 'number',
+      description: 'Number of likes for this post',
+      initialValue: 0,
+      validation: (Rule) => Rule.min(0),
+    }),
+    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'object',

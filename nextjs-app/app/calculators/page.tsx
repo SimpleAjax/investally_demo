@@ -4,17 +4,17 @@ import { useState } from "react";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import Link from "next/link";
-import { ArrowLeft, BarChart2, Home, Shield, ArrowRight, Briefcase, TrendingUp, Calculator } from "lucide-react";
+import { ArrowLeft, BarChart2, Target, Clock, ArrowRight, Briefcase, Shield, Home, TrendingUp, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function CalculatorsPage() {
   const [sipInputs, setSipInputs] = useState({ monthly: "", return: "", years: "" });
-  const [emiInputs, setEmiInputs] = useState({ amount: "", rate: "", years: "" });
-  const [insuranceInputs, setInsuranceInputs] = useState({ age: "", income: "", dependents: "" });
+  const [goalInputs, setGoalInputs] = useState({ target: "", years: "", return: "" });
+  const [delayInputs, setDelayInputs] = useState({ monthly: "", delay: "", return: "", years: "" });
 
   const [sipResult, setSipResult] = useState("");
-  const [emiResult, setEmiResult] = useState("");
-  const [insuranceResult, setInsuranceResult] = useState("");
+  const [goalResult, setGoalResult] = useState("");
+  const [delayResult, setDelayResult] = useState("");
 
   const calculateSIP = () => {
     const P = parseFloat(sipInputs.monthly);
@@ -27,24 +27,37 @@ export default function CalculatorsPage() {
     }
   };
 
-  const calculateEMI = () => {
-    const P = parseFloat(emiInputs.amount);
-    const r = parseFloat(emiInputs.rate) / 100 / 12;
-    const n = parseFloat(emiInputs.years) * 12;
+  const calculateGoal = () => {
+    const target = parseFloat(goalInputs.target);
+    const years = parseFloat(goalInputs.years);
+    const r = parseFloat(goalInputs.return) / 100 / 12;
+    const n = years * 12;
 
-    if (P && r && n) {
-      const emi = P * r * (Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-      setEmiResult(`₹${Math.round(emi).toLocaleString('en-IN')}`);
+    if (target && years && r && n) {
+      // Calculate monthly SIP required to reach target
+      const monthlySIP = target / (((Math.pow(1 + r, n) - 1) / r) * (1 + r));
+      setGoalResult(`₹${Math.round(monthlySIP).toLocaleString('en-IN')}`);
     }
   };
 
-  const calculateInsurance = () => {
-    const income = parseFloat(insuranceInputs.income);
-    const dependents = parseInt(insuranceInputs.dependents);
+  const calculateDelay = () => {
+    const monthly = parseFloat(delayInputs.monthly);
+    const delay = parseFloat(delayInputs.delay);
+    const r = parseFloat(delayInputs.return) / 100 / 12;
+    const totalYears = parseFloat(delayInputs.years);
 
-    if (income && dependents) {
-      const coverage = income * 10 + (dependents * 500000);
-      setInsuranceResult(`₹${Math.round(coverage).toLocaleString('en-IN')}`);
+    if (monthly && delay && r && totalYears) {
+      // Calculate value if started now
+      const nNow = totalYears * 12;
+      const valueNow = monthly * (((Math.pow(1 + r, nNow) - 1) / r) * (1 + r));
+
+      // Calculate value if delayed
+      const nDelayed = (totalYears - delay) * 12;
+      const valueDelayed = monthly * (((Math.pow(1 + r, nDelayed) - 1) / r) * (1 + r));
+
+      // Cost of delay
+      const cost = valueNow - valueDelayed;
+      setDelayResult(`₹${Math.round(cost).toLocaleString('en-IN')}`);
     }
   };
 
@@ -127,105 +140,115 @@ export default function CalculatorsPage() {
                   </div>
                 </div>
 
-                {/* EMI Calculator */}
+                {/* Goal-Based Calculator */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 card-hover">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-2xl font-bold text-slate-900">EMI Calculator</h3>
+                    <h3 className="text-2xl font-bold text-slate-900">Goal-Based Calculator</h3>
                     <div className="bg-blue-100 p-3 rounded-xl">
-                      <Home className="text-blue-600 h-6 w-6" />
+                      <Target className="text-blue-600 h-6 w-6" />
                     </div>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Loan Amount (₹)</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Target Amount (₹)</label>
                       <input
                         type="number"
-                        placeholder="50,00,000"
-                        value={emiInputs.amount}
-                        onChange={(e) => setEmiInputs({ ...emiInputs, amount: e.target.value })}
+                        placeholder="10,00,000"
+                        value={goalInputs.target}
+                        onChange={(e) => setGoalInputs({ ...goalInputs, target: e.target.value })}
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Interest Rate (% p.a.)</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Time Period (Years)</label>
                       <input
                         type="number"
-                        placeholder="8.5"
-                        value={emiInputs.rate}
-                        onChange={(e) => setEmiInputs({ ...emiInputs, rate: e.target.value })}
+                        placeholder="5"
+                        value={goalInputs.years}
+                        onChange={(e) => setGoalInputs({ ...goalInputs, years: e.target.value })}
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Loan Tenure (Years)</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Expected Return (% p.a.)</label>
                       <input
                         type="number"
-                        placeholder="20"
-                        value={emiInputs.years}
-                        onChange={(e) => setEmiInputs({ ...emiInputs, years: e.target.value })}
+                        placeholder="12"
+                        value={goalInputs.return}
+                        onChange={(e) => setGoalInputs({ ...goalInputs, return: e.target.value })}
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
-                    <Button onClick={calculateEMI} className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Button onClick={calculateGoal} className="w-full bg-blue-600 hover:bg-blue-700">
                       Calculate
                     </Button>
                   </div>
 
                   <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-slate-600">Monthly EMI</p>
-                    <p className="text-3xl font-bold text-blue-600">{emiResult || "₹--"}</p>
+                    <p className="text-sm text-slate-600">Monthly SIP Required</p>
+                    <p className="text-3xl font-bold text-blue-600">{goalResult || "₹--"}</p>
                   </div>
                 </div>
 
-                {/* Insurance Calculator */}
+                {/* Cost of Delay Calculator */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 card-hover md:col-span-2">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-2xl font-bold text-slate-900">Insurance Needs Calculator</h3>
-                    <div className="bg-green-100 p-3 rounded-xl">
-                      <Shield className="text-green-600 h-6 w-6" />
+                    <h3 className="text-2xl font-bold text-slate-900">Cost of Delay Calculator</h3>
+                    <div className="bg-orange-100 p-3 rounded-xl">
+                      <Clock className="text-orange-600 h-6 w-6" />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Your Age</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Monthly Investment (₹)</label>
                       <input
                         type="number"
-                        placeholder="30"
-                        value={insuranceInputs.age}
-                        onChange={(e) => setInsuranceInputs({ ...insuranceInputs, age: e.target.value })}
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        placeholder="5,000"
+                        value={delayInputs.monthly}
+                        onChange={(e) => setDelayInputs({ ...delayInputs, monthly: e.target.value })}
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Annual Income (₹)</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Delay Period (Years)</label>
                       <input
                         type="number"
-                        placeholder="10,00,000"
-                        value={insuranceInputs.income}
-                        onChange={(e) => setInsuranceInputs({ ...insuranceInputs, income: e.target.value })}
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        placeholder="2"
+                        value={delayInputs.delay}
+                        onChange={(e) => setDelayInputs({ ...delayInputs, delay: e.target.value })}
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Dependents</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Expected Return (% p.a.)</label>
                       <input
                         type="number"
-                        placeholder="3"
-                        value={insuranceInputs.dependents}
-                        onChange={(e) => setInsuranceInputs({ ...insuranceInputs, dependents: e.target.value })}
-                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        placeholder="12"
+                        value={delayInputs.return}
+                        onChange={(e) => setDelayInputs({ ...delayInputs, return: e.target.value })}
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">Total Investment Period (Years)</label>
+                      <input
+                        type="number"
+                        placeholder="20"
+                        value={delayInputs.years}
+                        onChange={(e) => setDelayInputs({ ...delayInputs, years: e.target.value })}
+                        className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                       />
                     </div>
                   </div>
-                  <Button onClick={calculateInsurance} className="w-full bg-green-600 hover:bg-green-700 mt-4">
+                  <Button onClick={calculateDelay} className="w-full bg-orange-600 hover:bg-orange-700 mt-4">
                     Calculate
                   </Button>
 
-                  <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                    <p className="text-sm text-slate-600">Recommended Coverage</p>
-                    <p className="text-3xl font-bold text-green-600">{insuranceResult || "₹--"}</p>
+                  <div className="mt-6 p-4 bg-orange-50 rounded-lg">
+                    <p className="text-sm text-slate-600">Potential Loss Due to Delay</p>
+                    <p className="text-3xl font-bold text-orange-600">{delayResult || "₹--"}</p>
                   </div>
                 </div>
               </div>

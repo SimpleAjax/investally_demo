@@ -39,7 +39,8 @@ export const blogPostsQuery = groq`
     featured,
     tags,
     readTime,
-    body
+    body,
+    likeCount
   }
 `
 
@@ -126,7 +127,8 @@ export const blogPostBySlugQuery = groq`
     featured,
     tags,
     readTime,
-    seo
+    seo,
+    likeCount
   }
 `
 

@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import { getPostBySlug, getAllPostSlugs } from "@/lib/sanity.api";
 import { urlForImage } from "@/lib/sanity.image";
 import PortableText from "@/components/portable-text";
+import LikeButton from "@/components/like-button";
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -97,7 +98,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         </div>
                       </div>
                     </div>
-                    <div className="flex space-x-3">
+                    <div className="flex items-center space-x-3">
+                      <LikeButton postId={post._id} initialLikeCount={post.likeCount || 0} />
                       <button className="p-2 text-slate-600 hover:text-teal-600 transition">
                         <Bookmark className="h-5 w-5" />
                       </button>
