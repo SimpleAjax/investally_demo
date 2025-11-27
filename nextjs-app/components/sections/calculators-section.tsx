@@ -6,22 +6,57 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function CalculatorsSection({ showViewAllLink = true }: { showViewAllLink?: boolean }) {
-  const [sipInputs, setSipInputs] = useState({ monthly: "", return: "", years: "" });
+  const [sipInputs, setSipInputs] = useState({ monthly: "", return: "", years: "", stepUp: "" });
   const [goalInputs, setGoalInputs] = useState({ target: "", years: "", return: "" });
   const [delayInputs, setDelayInputs] = useState({ monthly: "", delay: "", return: "", years: "" });
 
-  const [sipResult, setSipResult] = useState("");
+  const [sipResult, setSipResult] = useState({ standard: "", stepUp: "", invested: "", stepUpInvested: "" });
   const [goalResult, setGoalResult] = useState("");
-  const [delayResult, setDelayResult] = useState("");
+  const [delayResult, setDelayResult] = useState({ costOfDelay: "", startNow: "", delayed: "", investedNow: "", investedDelayed: "" });
 
   const calculateSIP = () => {
     const P = parseFloat(sipInputs.monthly);
-    const r = parseFloat(sipInputs.return) / 100 / 12;
-    const n = parseFloat(sipInputs.years) * 12;
+    const annualReturn = parseFloat(sipInputs.return);
+    const years = parseFloat(sipInputs.years);
+    const stepUpRate = parseFloat(sipInputs.stepUp) || 0;
+    const r = annualReturn / 100 / 12; // Monthly interest rate
+    const n = years * 12; // Total months
 
-    if (P && r && n) {
-      const maturityValue = P * (((Math.pow(1 + r, n) - 1) / r) * (1 + r));
-      setSipResult(`₹${Math.round(maturityValue).toLocaleString('en-IN')}`);
+    if (P && annualReturn && years) {
+      // Standard SIP (No Step Up)
+      const standardValue = P * (((Math.pow(1 + r, n) - 1) / r) * (1 + r));
+      const totalInvested = P * n;
+
+      // Step Up SIP
+      let stepUpValue = 0;
+      let stepUpInvested = 0;
+      let currentMonthlyInvestment = P;
+
+      for (let year = 1; year <= years; year++) {
+        const monthsInYear = 12;
+        const nYear = monthsInYear;
+
+        // Calculate FV for this year's investments
+        const yearFV = currentMonthlyInvestment * (((Math.pow(1 + r, nYear) - 1) / r) * (1 + r));
+
+        // Compound this year's maturity value for remaining years
+        const remainingYears = years - year;
+        const remainingMonths = remainingYears * 12;
+        const compoundedValue = yearFV * Math.pow(1 + r, remainingMonths);
+
+        stepUpValue += compoundedValue;
+        stepUpInvested += currentMonthlyInvestment * monthsInYear;
+
+        // Increase investment for next year
+        currentMonthlyInvestment = currentMonthlyInvestment * (1 + stepUpRate / 100);
+      }
+
+      setSipResult({
+        standard: `₹${Math.round(standardValue).toLocaleString('en-IN')}`,
+        stepUp: stepUpRate > 0 ? `₹${Math.round(stepUpValue).toLocaleString('en-IN')}` : "",
+        invested: `₹${Math.round(totalInvested).toLocaleString('en-IN')}`,
+        stepUpInvested: stepUpRate > 0 ? `₹${Math.round(stepUpInvested).toLocaleString('en-IN')}` : ""
+      });
     }
   };
 
@@ -48,14 +83,23 @@ export default function CalculatorsSection({ showViewAllLink = true }: { showVie
       // Calculate value if started now
       const nNow = totalYears * 12;
       const valueNow = monthly * (((Math.pow(1 + r, nNow) - 1) / r) * (1 + r));
+      const investedNow = monthly * nNow;
 
       // Calculate value if delayed
       const nDelayed = (totalYears - delay) * 12;
       const valueDelayed = monthly * (((Math.pow(1 + r, nDelayed) - 1) / r) * (1 + r));
+      const investedDelayed = monthly * nDelayed;
 
       // Cost of delay
       const cost = valueNow - valueDelayed;
-      setDelayResult(`₹${Math.round(cost).toLocaleString('en-IN')}`);
+
+      setDelayResult({
+        costOfDelay: `₹${Math.round(cost).toLocaleString('en-IN')}`,
+        startNow: `₹${Math.round(valueNow).toLocaleString('en-IN')}`,
+        delayed: `₹${Math.round(valueDelayed).toLocaleString('en-IN')}`,
+        investedNow: `₹${Math.round(investedNow).toLocaleString('en-IN')}`,
+        investedDelayed: `₹${Math.round(investedDelayed).toLocaleString('en-IN')}`
+      });
     }
   };
 
@@ -113,14 +157,34 @@ export default function CalculatorsSection({ showViewAllLink = true }: { showVie
                   className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Annual Step Up (% Optional)</label>
+                <input
+                  type="number"
+                  placeholder="10"
+                  value={sipInputs.stepUp}
+                  onChange={(e) => setSipInputs({ ...sipInputs, stepUp: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                />
+              </div>
               <Button onClick={calculateSIP} className="w-full bg-teal-600 hover:bg-teal-700">
                 Calculate
               </Button>
             </div>
 
-            <div className="mt-6 p-4 bg-teal-50 rounded-lg">
-              <p className="text-sm text-slate-600">Estimated Maturity Value</p>
-              <p className="text-3xl font-bold text-teal-600">{sipResult || "₹--"}</p>
+            <div className="mt-6 space-y-3">
+              <div className="p-4 bg-teal-50 rounded-lg">
+                <p className="text-sm text-slate-600">Standard SIP Value</p>
+                <p className="text-2xl font-bold text-teal-600">{sipResult.standard || "₹--"}</p>
+                <p className="text-xs text-slate-500 mt-1">Invested: {sipResult.invested || "₹--"}</p>
+              </div>
+              {sipResult.stepUp && (
+                <div className="p-4 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg text-white">
+                  <p className="text-sm text-teal-50">With {sipInputs.stepUp}% Step Up</p>
+                  <p className="text-2xl font-bold">{sipResult.stepUp}</p>
+                  <p className="text-xs text-teal-100 mt-1">Invested: {sipResult.stepUpInvested}</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -230,9 +294,27 @@ export default function CalculatorsSection({ showViewAllLink = true }: { showVie
               </Button>
             </div>
 
-            <div className="mt-6 p-4 bg-orange-50 rounded-lg">
-              <p className="text-sm text-slate-600">Potential Loss Due to Delay</p>
-              <p className="text-3xl font-bold text-orange-600">{delayResult || "₹--"}</p>
+            <div className="mt-6 space-y-3">
+              <div className="p-4 bg-orange-50 rounded-lg border-2 border-orange-200">
+                <p className="text-sm font-semibold text-orange-900">Cost of Delay</p>
+                <p className="text-3xl font-bold text-orange-600">{delayResult.costOfDelay || "₹--"}</p>
+              </div>
+              {delayResult.startNow && (
+                <>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="p-3 bg-green-50 rounded-lg">
+                      <p className="text-xs text-slate-600">Start Today</p>
+                      <p className="text-lg font-bold text-green-600">{delayResult.startNow}</p>
+                      <p className="text-xs text-slate-500">Invested: {delayResult.investedNow}</p>
+                    </div>
+                    <div className="p-3 bg-red-50 rounded-lg">
+                      <p className="text-xs text-slate-600">After Delay</p>
+                      <p className="text-lg font-bold text-red-600">{delayResult.delayed}</p>
+                      <p className="text-xs text-slate-500">Invested: {delayResult.investedDelayed}</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
