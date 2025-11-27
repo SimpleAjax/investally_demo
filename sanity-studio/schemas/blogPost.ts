@@ -137,32 +137,6 @@ export default defineType({
       initialValue: 0,
       validation: (Rule) => Rule.min(0),
     }),
-    defineField({
-      name: 'seo',
-      title: 'SEO',
-      type: 'object',
-      fields: [
-        {
-          name: 'metaTitle',
-          type: 'string',
-          title: 'Meta Title',
-          validation: (Rule) => Rule.max(60),
-        },
-        {
-          name: 'metaDescription',
-          type: 'text',
-          title: 'Meta Description',
-          rows: 3,
-          validation: (Rule) => Rule.max(160),
-        },
-        {
-          name: 'keywords',
-          type: 'array',
-          title: 'Keywords',
-          of: [{ type: 'string' }],
-        },
-      ],
-    }),
   ],
   preview: {
     select: {
