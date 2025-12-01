@@ -11,6 +11,7 @@ import TestimonialsSection from "@/components/sections/testimonials-section";
 import CTASection from "@/components/sections/cta-section";
 import ContactSection from "@/components/sections/contact-section";
 import Footer from "@/components/footer";
+import QuotePopup from "@/components/quote-popup";
 
 export default function Home() {
   // Check if blog-only mode is enabled
@@ -37,6 +38,7 @@ export default function Home() {
         <ContactSection />
       </main>
       <Footer />
+      <QuotePopup />
     </>
   );
 }
