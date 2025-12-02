@@ -42,7 +42,7 @@ export default function HeroSection() {
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20">
               <div>
-                <p className="text-3xl font-bold">₹5Cr+</p>
+                <p className="text-3xl font-bold">₹2Cr+</p>
                 <p className="text-teal-100 text-sm">Assets Under Management</p>
               </div>
               <div>
