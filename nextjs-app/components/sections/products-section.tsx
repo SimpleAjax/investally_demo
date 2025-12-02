@@ -25,9 +25,8 @@ export default function ProductsSection() {
     {
       icon: Shield,
       title: "Insurance & Protection",
-      description: "Your protection matters more than our commission. We decode complex policies, ensuring you're covered for real risks—not oversold. From selection to claims, we're your advocate, making insurance work for you. ",
+      description: "Your protection matters more than our commission. We decode complex policies, ensuring you're covered for real risks—not oversold. From selection to claims, we're your advocate, making insurance work for you.",
       features: [
-        "Insurance advisory services available. Execution done through licensed partners",
         "Term & Health Insurance",
         "Critical Illness Coverage",
         "Child & Family Plans",
@@ -115,6 +114,15 @@ export default function ProductsSection() {
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-3">{product.title}</h3>
               <p className="text-slate-700 mb-6">{product.description}</p>
+
+              {/* Disclaimer for Insurance & Protection */}
+              {product.title === "Insurance & Protection" && (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6">
+                  <p className="text-xs text-amber-800 font-medium">
+                    Insurance advisory services available. Execution done through licensed partners
+                  </p>
+                </div>
+              )}
 
               <ul className="space-y-3 mb-8">
                 {product.features.map((feature, idx) => (

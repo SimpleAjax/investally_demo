@@ -133,9 +133,16 @@ export default function ServicesPage() {
                   </div>
                 </div>
 
-                <p className="text-lg text-slate-700 mb-8 leading-relaxed">
+                <p className="text-lg text-slate-700 mb-6 leading-relaxed">
                   True financial planning isn't complete without adequate protection. We help you secure your family's future with the right insurance coverage—ensuring you're protected for real risks, not oversold on unnecessary policies.
                 </p>
+
+                {/* Disclaimer */}
+                <div className="bg-amber-50 border-l-4 border-amber-400 rounded-lg p-4 mb-8">
+                  <p className="text-sm text-amber-900 font-semibold">
+                    Insurance advisory services available. Execution done through licensed partners
+                  </p>
+                </div>
 
                 {/* Services Grid */}
                 <div className="space-y-4">
