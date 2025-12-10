@@ -28,8 +28,9 @@ export default function TeamSection() {
       title: "Co-Founder, InvestAlly",
       subtitle: "Chartered Accountant • CFA Level II",
       linkedin: "https://www.linkedin.com/in/adarsh-katta",
+      email: "adarsh.katta@investally.co.in",
       image: "/adarsh katta.JPG",
-      description: "Adarsh is the research brain behind InvestAlly. With deep experience as a Private Equity analyst across global institutions like Brookfield, HSBC and JP Morgan, he specialises in identifying the right funds, evaluating risks, and conducting high-quality due diligence. His expertise helps clients make smarter, more informed investment decisions. He brings a sharp analytical eye, a disciplined research approach, and a strong understanding of how great investments are built — ensuring that data, clarity, and conviction back every recommendation at InvestAlly.",
+      description: "Adarsh is the research brain behind InvestAlly. With deep experience as a Private Equity and Mutual Fund Expert across global institutions like Brookfield, HSBC and JP Morgan, he specialises in identifying the right funds, evaluating risks, and conducting high-quality due diligence. His expertise helps clients make smarter, more informed investment decisions. He brings a sharp analytical eye, a disciplined research approach, and a strong understanding of how great investments are built — ensuring that data, clarity, and conviction back every recommendation at InvestAlly.",
       credentials: [
         { icon: Award, title: "Chartered Accountant", subtitle: "CFA Level II" },
         { icon: Shield, title: "Mutual Fund Distributor", subtitle: "ARN Number: 339359" },
@@ -41,9 +42,8 @@ export default function TeamSection() {
       name: "Minakshi Maheshwari",
       title: "Co-Founder, InvestAlly",
       subtitle: "Chartered Accountant · Business Analyst",
-      tagline: "CA Precision. Data-Driven Growth",
-      location: "Mumbai, India",
       linkedin: "https://www.linkedin.com/in/minaxi-maheshwari-207bb3b0/",
+      email: "support@investally.co.in",
       image: "/minakshi maheshwari.jpg",
       description: "Minakshi is a Chartered Accountant and Business Analyst who helps people make confident financial decisions. Her experience in understanding numbers, analysing risks, and simplifying complex financial information ensures that every client gets clear guidance tailored to their goals. She focuses on creating practical, easy-to-follow plans that help families protect, grow, and manage their wealth with confidence.",
       credentials: [
@@ -125,12 +125,6 @@ export default function TeamSection() {
                     {member.subtitle && (
                       <p className="text-slate-600 text-sm font-medium mb-2">{member.subtitle}</p>
                     )}
-                    {member.tagline && (
-                      <p className={`${colors.text} text-sm font-semibold italic mb-2`}>{member.tagline}</p>
-                    )}
-                    {member.location && (
-                      <p className="text-slate-500 text-xs mb-3">{member.location}</p>
-                    )}
 
                     {/* Social Links */}
                     <div className="flex space-x-3 mb-6">
@@ -139,7 +133,7 @@ export default function TeamSection() {
                           <Linkedin className={`h-5 w-5 ${colors.icon}`} />
                         </a>
                       )}
-                      <a href="#" className={`${colors.socialBg} p-2 rounded-lg ${colors.socialHover} transition-all duration-300`}>
+                      <a href={`mailto:${member.email}`} className={`${colors.socialBg} p-2 rounded-lg ${colors.socialHover} transition-all duration-300`}>
                         <Mail className={`h-5 w-5 ${colors.icon}`} />
                       </a>
                     </div>

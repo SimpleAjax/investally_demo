@@ -9,40 +9,52 @@ export default function TestimonialsSection() {
 
   const testimonials = [
     {
-      text: "Investally's PMS service completely transformed my investment approach. The personalized attention and expert guidance helped me achieve 18% returns consistently. Best decision I made for my wealth!",
-      name: "Suresh Kumar",
-      role: "Business Owner, Age 45, Mumbai",
-      initials: "SK"
+      text: "Investally has been managing my portfolio for the last 6 months, and I'm genuinely happy with their recommendations. They explain things clearly, keep me updated, and suggest what truly fits my goals. Adarsh's market insight and instinct give me full confidence that my money is in safe hands and the returns speak for themselves.",
+      name: "CA Vishal Mittal, CFA",
+      role: "Salaried, Private Sector Employee, Age 25, Mumbai",
+      initials: "VM"
     },
     {
-      text: "Getting the right term insurance was confusing until I found Investally. Their team patiently explained every detail and helped me choose the perfect policy for my family's needs. Very professional!",
-      name: "Priya Mehta",
-      role: "Software Engineer, Age 32, Bangalore",
-      initials: "PM"
+      text: "InvestAlly brought clarity and confidence to my entire investment journey. Everything finally feels simple, structured and aligned with my goals.",
+      name: "Shailesh Tiwari",
+      role: "Businessman, Age 60, Jaipur",
+      initials: "ST"
     },
     {
-      text: "The home loan process was seamless with Investally. They secured the best interest rate, handled all paperwork, and I moved into my dream home within 6 weeks. Highly recommend their services!",
-      name: "Rahul Verma",
-      role: "Marketing Manager, Age 38, Delhi",
-      initials: "RV"
+      text: "Every discussion with Adarsh Katta gives you a deeper insight on the finance world. InvestAlly helped me build an understanding of the various Mutual funds available in the market and were patient enough to answer all my why's. Their quarterly updates give me more confidence in the funds I am invested in.",
+      name: "Abhinav Chitlangia",
+      role: "Businessman, Age 35, Raxaul, Bihar",
+      initials: "AC"
     },
     {
-      text: "Their mutual fund recommendations helped me build a diversified portfolio. The SIP approach made investing systematic and stress-free. My portfolio has grown by 22% in 2 years!",
-      name: "Anita Singh",
-      role: "Teacher, Age 40, Pune",
-      initials: "AS"
+      text: "Invest smarter with InvestAlly. Avoid Duplication in the name of Diversification.",
+      name: "Ram Gopal Chitlangia",
+      role: "Commodity Broker, Age 66, Sikar, Rajasthan",
+      initials: "RC"
     },
     {
-      text: "As a first-time investor, I was nervous. Investally's team educated me patiently and helped me start with small steps. Now I have a growing investment portfolio and feel financially confident!",
-      name: "Vikram Gupta",
-      role: "IT Professional, Age 29, Hyderabad",
-      initials: "VG"
+      text: "Investally helped me structure my portfolio in the most efficient way- i reduced my holding from some 20+ mutual funds to a lean and clean 5 mutual funds. I now clearly understand the difference between Duplication and Diversification.",
+      name: "Nishant Lakhotiya",
+      role: "Businessman, Age 37, Panipat",
+      initials: "NL"
     },
     {
-      text: "Their tax-saving strategies saved me over ₹1 lakh in taxes this year! The personalized financial planning has been invaluable for my family's future. Truly grateful for their expertise.",
-      name: "Meera Desai",
-      role: "Doctor, Age 42, Ahmedabad",
-      initials: "MD"
+      text: "InvestAlly maintains my family portfolio- keeping in mind the risks that we can take as a couple and our financial goals. It has been a great experience working with them. Very professional and always available. Thank You!",
+      name: "Sarika Lakhotiya",
+      role: "Businesswomen, Age 36, Panipat",
+      initials: "SL"
+    },
+    {
+      text: "Talking to Adarsh and Minakshi has simplified the finance world at large for me. Their insights help me invest confidently. InvestAlly filters the news from the noise in the market, educates and builds your confidence in your financial journey.",
+      name: "Anurag Rajput",
+      role: "IT Consultant, Age 28, Mumbai",
+      initials: "AR"
+    },
+    {
+      text: "I always felt overwhelmed with mutual funds and insurance. InvestAlly made everything simple. They understood my goals, created a plan, and walked me through every step. What I love most is the transparency. I know they're genuinely looking out for my best interest. I finally feel in control of my money.",
+      name: "Saumya",
+      role: "Business, Age 30, Mumbai",
+      initials: "S"
     }
   ];
 
@@ -97,16 +109,23 @@ export default function TestimonialsSection() {
             >
               {testimonials.map((testimonial, index) => (
                 <div key={index} className={`w-full ${slidesToShow === 3 ? 'md:w-1/3' : ''} flex-shrink-0 px-4`}>
-                  <div className="bg-white rounded-xl shadow-lg p-8 h-full">
-                    <div className="flex items-center mb-4">
+                  <div className="bg-white rounded-xl shadow-lg p-8 h-full flex flex-col">
+                    {/* Stars at top */}
+                    <div className="flex items-center mb-6">
                       <div className="flex text-yellow-400">
                         {[...Array(5)].map((_, i) => (
                           <Star key={i} className="w-5 h-5 fill-current" />
                         ))}
                       </div>
                     </div>
-                    <p className="text-slate-700 mb-6 italic leading-relaxed">{testimonial.text}</p>
-                    <div className="flex items-center">
+
+                    {/* Feedback text centered vertically with flex-grow */}
+                    <div className="flex-grow flex items-center">
+                      <p className="text-slate-700 italic leading-relaxed">{testimonial.text}</p>
+                    </div>
+
+                    {/* Client info at bottom */}
+                    <div className="flex items-center mt-6 pt-6 border-t border-slate-100">
                       <div className="w-14 h-14 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 mr-4">
                         {testimonial.initials}
                       </div>
@@ -141,9 +160,8 @@ export default function TestimonialsSection() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index <= maxIndex ? index : maxIndex)}
-                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  currentIndex === index ? 'bg-teal-600' : 'bg-slate-300'
-                }`}
+                className={`w-3 h-3 rounded-full transition-colors duration-300 ${currentIndex === index ? 'bg-teal-600' : 'bg-slate-300'
+                  }`}
               />
             ))}
           </div>
