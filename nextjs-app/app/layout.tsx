@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     default: "InvestAlly - We don't sell Investments - We build Investors",
     template: "%s | InvestAlly"
   },
-  description: "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act - it's a lifelong relationship.",
+  description: "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act- it's a lifelong relationship.",
   applicationName: "InvestAlly",
   authors: [{ name: "InvestAlly Team" }],
   keywords: ["investment advisory", "financial planning", "mutual funds", "insurance", "home loans", "wealth management", "SEBI registered", "India"],
@@ -28,12 +28,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/investally_only_logo.png", sizes: "any" },
-      { url: "/investally_only_logo.png", sizes: "32x32", type: "image/png" },
-      { url: "/investally_only_logo.png", sizes: "16x16", type: "image/png" },
+      { url: "/investally_only_logo.png", sizes: "192x192", type: "image/png" },
+      { url: "/investally_only_logo.png", sizes: "512x512", type: "image/png" },
     ],
     shortcut: "/investally_only_logo.png",
-    apple: "/investally_only_logo.png",
+    apple: [
+      { url: "/investally_only_logo.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   openGraph: {
     type: "website",

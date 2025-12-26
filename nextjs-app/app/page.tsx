@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  description: "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act- it's a lifelong relationship.",
+};
+
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/sections/hero-section";
 import MarketTickers from "@/components/sections/market-tickers";
