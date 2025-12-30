@@ -35,7 +35,7 @@ export default function AboutSection() {
             <span className="gradient-text">Financial Success</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Investally is India's leading financial advisory platform, dedicated to helping families and individuals achieve their financial goals through expert guidance and innovative solutions.
+            Investally is India's leading financial planning platform, dedicated to helping families and individuals achieve their financial goals through expert guidance and innovative solutions.
           </p>
         </div>
 

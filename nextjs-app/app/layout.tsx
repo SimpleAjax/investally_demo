@@ -46,14 +46,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/investally_only_logo.png",
-        width: 1200,
-        height: 630,
-        alt: "InvestAlly",
+        width: 512,
+        height: 512,
+        alt: "InvestAlly Logo",
       }
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "InvestAlly - We don't sell Investments - We build Investors",
     description: "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act - it's a lifelong relationship.",
     images: ["/investally_only_logo.png"],
@@ -91,91 +91,73 @@ export default function RootLayout({
           id="organization-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              {
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "name": "InvestAlly",
-                "url": "https://investally.co.in",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://investally.co.in/investally_only_logo.png",
-                  "width": 512,
-                  "height": 512
-                },
-                "description": "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act - it's a lifelong relationship.",
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressLocality": "Mumbai",
-                  "addressRegion": "Maharashtra",
-                  "addressCountry": "IN"
-                },
-                "contactPoint": {
-                  "@type": "ContactPoint",
-                  "contactType": "Customer Service",
-                  "email": "Support@investally.co.in",
-                  "telephone": "+91-91667-79632",
-                  "availableLanguage": ["English", "Hindi"]
-                },
-                "sameAs": [
-                  "https://investally.co.in"
-                ]
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FinancialService",
+              "name": "InvestAlly",
+              "url": "https://investally.co.in",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://investally.co.in/investally_only_logo.png",
+                "width": 512,
+                "height": 512,
+                "caption": "InvestAlly Logo"
               },
-              {
-                "@context": "https://schema.org",
-                "@type": "FinancialService",
-                "name": "InvestAlly",
-                "alternateName": "InvestAlly Financial Services",
-                "url": "https://investally.co.in",
-                "logo": "https://investally.co.in/investally_only_logo.png",
-                "image": "https://investally.co.in/investally_only_logo.png",
-                "description": "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act - it's a lifelong relationship.",
-                "slogan": "We don't sell Investments - We build Investors",
-                "foundingDate": "2006",
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressCountry": "IN"
-                },
-                "contactPoint": {
-                  "@type": "ContactPoint",
-                  "contactType": "Customer Service",
-                  "availableLanguage": ["English", "Hindi"]
-                },
-                "sameAs": [
-                  "https://investally.co.in"
-                ],
-                "hasOfferCatalog": {
-                  "@type": "OfferCatalog",
-                  "name": "Financial Services",
-                  "itemListElement": [
-                    {
-                      "@type": "Offer",
-                      "itemOffered": {
-                        "@type": "Service",
-                        "name": "Mutual Fund Advisory",
-                        "description": "Expert mutual fund investment advisory and portfolio management"
-                      }
-                    },
-                    {
-                      "@type": "Offer",
-                      "itemOffered": {
-                        "@type": "Service",
-                        "name": "Insurance Advisory",
-                        "description": "Comprehensive insurance planning and advisory services"
-                      }
-                    },
-                    {
-                      "@type": "Offer",
-                      "itemOffered": {
-                        "@type": "Service",
-                        "name": "Loan Services",
-                        "description": "Home loans and personal loan assistance"
-                      }
+              "image": {
+                "@type": "ImageObject",
+                "url": "https://investally.co.in/investally_only_logo.png",
+                "width": 512,
+                "height": 512
+              },
+              "description": "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act - it's a lifelong relationship.",
+              "slogan": "We don't sell Investments - We build Investors",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Mumbai",
+                "addressRegion": "Maharashtra",
+                "addressCountry": "IN"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Service",
+                "email": "Support@investally.co.in",
+                "telephone": "+91-91667-79632",
+                "availableLanguage": ["English", "Hindi"]
+              },
+              "sameAs": [
+                "https://investally.co.in"
+              ],
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Financial Services",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Mutual Fund Advisory",
+                      "description": "Expert mutual fund investment advisory and portfolio management"
                     }
-                  ]
-                }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Insurance Advisory",
+                      "description": "Comprehensive insurance planning and advisory services"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Loan Services",
+                      "description": "Home loans and personal loan assistance"
+                    }
+                  }
+                ]
               }
-            ])
+            })
           }}
         />
 
