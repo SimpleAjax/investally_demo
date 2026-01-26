@@ -165,7 +165,7 @@ export default function RootLayout({
         <WhatsAppFloat />
 
         {/* Tawk.to Live Chat Widget - Hidden in blog-only mode */}
-        {!blogOnlyMode && (
+        {/* {!blogOnlyMode && (
           <Script
             id="tawk-to-widget"
             strategy="afterInteractive"
@@ -183,7 +183,7 @@ export default function RootLayout({
               `,
             }}
           />
-        )}
+        )} */}
 
         {/* Google Analytics */}
         <Script

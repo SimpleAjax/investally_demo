@@ -191,7 +191,7 @@ export default function CalculatorsSection({ showViewAllLink = true }: { showVie
           {/* Goal-Based Calculator */}
           <div className="bg-white rounded-2xl shadow-lg p-8 card-hover">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-slate-900">Goal-Based</h3>
+              <h3 className="text-2xl font-bold text-slate-900">Goal-Based Calculator</h3>
               <div className="bg-blue-100 p-3 rounded-xl">
                 <Target className="text-blue-600 h-6 w-6" />
               </div>
