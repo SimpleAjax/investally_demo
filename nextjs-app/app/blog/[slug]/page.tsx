@@ -9,6 +9,7 @@ import { urlForImage } from "@/lib/sanity.image";
 import PortableText from "@/components/portable-text";
 import LikeButton from "@/components/like-button";
 import ShareButton from "@/components/share-button";
+import CopyAttribution from "@/components/copy-attribution";
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -50,107 +51,109 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Article Content (Left - 2 columns) */}
             <div className="lg:col-span-2">
-              <article>
-                <div className="mb-8">
-                  <span
-                    className="inline-block px-4 py-2 font-semibold text-sm rounded-full mb-4"
-                    style={{
-                      backgroundColor: `${post.category?.color}15`,
-                      color: post.category?.color || '#0d9488'
-                    }}
-                  >
-                    {post.category?.title || 'Uncategorized'}
-                  </span>
-                  <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
-                    {post.title}
-                  </h1>
+              <CopyAttribution>
+                <article>
+                  <div className="mb-8">
+                    <span
+                      className="inline-block px-4 py-2 font-semibold text-sm rounded-full mb-4"
+                      style={{
+                        backgroundColor: `${post.category?.color}15`,
+                        color: post.category?.color || '#0d9488'
+                      }}
+                    >
+                      {post.category?.title || 'Uncategorized'}
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
+                      {post.title}
+                    </h1>
 
-                  {/* Author & Meta */}
-                  <div className="flex items-center justify-between border-b border-slate-200 pb-6 mb-8 flex-wrap gap-4">
-                    <div className="flex items-center">
-                      {authorImageUrl ? (
-                        <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4">
-                          <Image
-                            src={authorImageUrl}
-                            alt={post.author?.name || 'Author'}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 mr-4">
-                          {authorInitials}
-                        </div>
-                      )}
-                      <div>
-                        <p className="font-bold text-slate-900">{post.author?.name || 'Anonymous'}</p>
-                        <div className="flex items-center gap-3 text-sm text-slate-500">
-                          {post.author?.role && <span>{post.author.role}</span>}
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {formattedDate}
-                          </span>
-                          {post.readTime && (
+                    {/* Author & Meta */}
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-6 mb-8 flex-wrap gap-4">
+                      <div className="flex items-center">
+                        {authorImageUrl ? (
+                          <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <Image
+                              src={authorImageUrl}
+                              alt={post.author?.name || 'Author'}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 mr-4">
+                            {authorInitials}
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-bold text-slate-900">{post.author?.name || 'Anonymous'}</p>
+                          <div className="flex items-center gap-3 text-sm text-slate-500">
+                            {post.author?.role && <span>{post.author.role}</span>}
                             <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {post.readTime} min read
+                              <Calendar className="h-3 w-3" />
+                              {formattedDate}
                             </span>
-                          )}
+                            {post.readTime && (
+                              <span className="flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {post.readTime} min read
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
+                      <div className="flex items-center space-x-3">
+                        <LikeButton postId={post._id} initialLikeCount={post.likeCount || 0} />
+                        <ShareButton
+                          url={`/blog/${post.slug.current}`}
+                          title={post.title}
+                          description={post.excerpt}
+                        />
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <LikeButton postId={post._id} initialLikeCount={post.likeCount || 0} />
-                      <ShareButton
-                        url={`/blog/${post.slug.current}`}
-                        title={post.title}
-                        description={post.excerpt}
+                  </div>
+
+                  {/* Featured Image */}
+                  {imageUrl ? (
+                    <div className="relative w-full h-80 sm:h-96 md:h-[500px] rounded-2xl shadow-xl mb-12 overflow-hidden bg-slate-100">
+                      <Image
+                        src={imageUrl}
+                        alt={post.mainImage?.alt || post.title}
+                        fill
+                        className="object-contain"
+                        priority
                       />
                     </div>
-                  </div>
-                </div>
-
-                {/* Featured Image */}
-                {imageUrl ? (
-                  <div className="relative w-full h-80 sm:h-96 md:h-[500px] rounded-2xl shadow-xl mb-12 overflow-hidden bg-slate-100">
-                    <Image
-                      src={imageUrl}
-                      alt={post.mainImage?.alt || post.title}
-                      fill
-                      className="object-contain"
-                      priority
-                    />
-                  </div>
-                ) : (
-                  <div className="w-full h-64 sm:h-80 md:h-96 bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl shadow-xl mb-12 flex items-center justify-center text-white text-3xl font-bold">
-                    {post.title.substring(0, 20)}
-                  </div>
-                )}
-
-                {/* Article Excerpt */}
-                {post.excerpt && (
-                  <p className="text-xl text-slate-600 leading-relaxed mb-8 font-medium">
-                    {post.excerpt}
-                  </p>
-                )}
-
-                {/* Article Content using PortableText */}
-                <PortableText value={post.body} />
-
-                {/* Tags */}
-                {post.tags && post.tags.length > 0 && (
-                  <div className="mt-12 pt-8 border-t border-slate-200">
-                    <p className="text-sm font-semibold text-slate-600 mb-3">Tags:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {post.tags.map((tag, index) => (
-                        <span key={index} className="px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm">
-                          {tag}
-                        </span>
-                      ))}
+                  ) : (
+                    <div className="w-full h-64 sm:h-80 md:h-96 bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl shadow-xl mb-12 flex items-center justify-center text-white text-3xl font-bold">
+                      {post.title.substring(0, 20)}
                     </div>
-                  </div>
-                )}
-              </article>
+                  )}
+
+                  {/* Article Excerpt */}
+                  {post.excerpt && (
+                    <p className="text-xl text-slate-600 leading-relaxed mb-8 font-medium">
+                      {post.excerpt}
+                    </p>
+                  )}
+
+                  {/* Article Content using PortableText */}
+                  <PortableText value={post.body} />
+
+                  {/* Tags */}
+                  {post.tags && post.tags.length > 0 && (
+                    <div className="mt-12 pt-8 border-t border-slate-200">
+                      <p className="text-sm font-semibold text-slate-600 mb-3">Tags:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {post.tags.map((tag, index) => (
+                          <span key={index} className="px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </article>
+              </CopyAttribution>
             </div>
 
             {/* Sticky Sidebar (Right - 1 column) */}
