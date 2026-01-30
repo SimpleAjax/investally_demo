@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { List, ChevronDown, ChevronUp } from "lucide-react";
 
 interface TOCProps {
@@ -12,6 +12,7 @@ interface TOCProps {
 export default function TableOfContents({ content, isMobile = false }: TOCProps) {
     const [activeId, setActiveId] = useState<string>("");
     const [isOpen, setIsOpen] = useState(false);
+    const scrollContainerRef = useRef<HTMLElement>(null);
 
     // Extract headings from content
     const headings = content
@@ -57,13 +58,19 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
     useEffect(() => {
         if (!activeId || (isMobile && !isOpen)) return;
 
-        // Only auto-scroll the menu if it's the desktop sidebar OR if the mobile menu is OPEN
-        // Use a different ID prefix for mobile menu items to avoid ID conflicts
         const activeElement = document.getElementById(`toc-${isMobile ? 'mobile-' : ''}${activeId}`);
-        if (activeElement) {
-            activeElement.scrollIntoView({
-                behavior: "smooth",
-                block: "nearest",
+        const scrollContainer = scrollContainerRef.current;
+
+        if (activeElement && scrollContainer) {
+            const { offsetTop, offsetHeight } = activeElement;
+            const { offsetHeight: containerHeight } = scrollContainer;
+
+            // Calculate the position to center the active element
+            const targetScroll = offsetTop - (containerHeight / 2) + (offsetHeight / 2);
+
+            scrollContainer.scrollTo({
+                top: targetScroll,
+                behavior: "smooth"
             });
         }
     }, [activeId, isMobile, isOpen]);
@@ -93,7 +100,10 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
                 </button>
 
                 {isOpen && (
-                    <div className="absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-lg max-h-[60vh] overflow-y-auto z-50">
+                    <div
+                        ref={scrollContainerRef as any}
+                        className="absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-lg max-h-[60vh] overflow-y-auto z-50"
+                    >
                         <nav className="p-4 space-y-1">
                             {headings.map((heading) => (
                                 <Link
@@ -101,8 +111,8 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
                                     id={`toc-mobile-${heading.id}`}
                                     href={`#${heading.id}`}
                                     className={`block py-2 text-sm transition-colors duration-200 ${activeId === heading.id
-                                            ? "text-teal-600 font-bold bg-teal-50 rounded-lg pl-3"
-                                            : "text-slate-600 hover:text-teal-600 pl-3"
+                                        ? "text-teal-600 font-bold bg-teal-50 rounded-lg pl-3"
+                                        : "text-slate-600 hover:text-teal-600 pl-3"
                                         }`}
                                     style={{ paddingLeft: `${heading.level === 2 ? 12 : (heading.level - 1) * 12 + 12}px` }}
                                     onClick={(e) => {
@@ -131,15 +141,18 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
                 <List className="h-5 w-5 text-teal-600 mr-2" />
                 Table of Contents
             </h3>
-            <nav className="space-y-1 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+            <nav
+                ref={scrollContainerRef}
+                className="relative space-y-1 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent"
+            >
                 {headings.map((heading) => (
                     <Link
                         key={heading.id}
                         id={`toc-${heading.id}`}
                         href={`#${heading.id}`}
                         className={`block py-1.5 text-sm transition-colors duration-200 ${activeId === heading.id
-                                ? "text-teal-600 font-bold border-l-2 border-teal-600 pl-3"
-                                : "text-slate-600 hover:text-teal-600 pl-3 border-l-2 border-transparent"
+                            ? "text-teal-600 font-bold border-l-2 border-teal-600 pl-3"
+                            : "text-slate-600 hover:text-teal-600 pl-3 border-l-2 border-transparent"
                             }`}
                         style={{ paddingLeft: `${(heading.level - 1) * 12}px` }}
                         onClick={(e) => {
