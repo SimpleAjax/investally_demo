@@ -14,32 +14,25 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
     const [isOpen, setIsOpen] = useState(false);
 
     // Extract headings from content
-    // TEMPORARY: Dummy headers for design review
-    // const headings = content
-    //     .filter((block) => block._type === "block" && block.style?.startsWith("h") && block.style !== "h1") // Exclude h1 as it's usually the title
-    //     .map((block) => {
-    //         const text = block.children?.map((child: any) => child.text).join("") || "";
-    //         const slug = text
-    //             .toString()
-    //             .toLowerCase()
-    //             .trim()
-    //             .replace(/\s+/g, "-")
-    //             .replace(/[^\w\-]+/g, "")
-    //             .replace(/\-\-+/g, "-");
+    const headings = content
+        .filter((block) => block._type === "block" && block.style?.startsWith("h") && block.style !== "h1") // Exclude h1 as it's usually the title
+        .map((block) => {
+            const text = block.children?.map((child: any) => child.text).join("") || "";
+            const slug = text
+                .toString()
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, "-")
+                .replace(/[^\w\-]+/g, "")
+                .replace(/\-\-+/g, "-");
 
-    //         return {
-    //             id: slug,
-    //             text,
-    //             level: parseInt(block.style.replace("h", "")),
-    //         };
-    //     })
-    //     .filter((heading) => heading.text.length > 0);
-
-    const headings = Array.from({ length: 10 }, (_, i) => ({
-        id: `content-header-${i + 1}`,
-        text: `Content Header ${i + 1}`,
-        level: 2,
-    }));
+            return {
+                id: slug,
+                text,
+                level: parseInt(block.style.replace("h", "")),
+            };
+        })
+        .filter((heading) => heading.text.length > 0);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -108,8 +101,8 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
                                     id={`toc-mobile-${heading.id}`}
                                     href={`#${heading.id}`}
                                     className={`block py-2 text-sm transition-colors duration-200 ${activeId === heading.id
-                                        ? "text-teal-600 font-bold bg-teal-50 rounded-lg pl-3"
-                                        : "text-slate-600 hover:text-teal-600 pl-3"
+                                            ? "text-teal-600 font-bold bg-teal-50 rounded-lg pl-3"
+                                            : "text-slate-600 hover:text-teal-600 pl-3"
                                         }`}
                                     style={{ paddingLeft: `${heading.level === 2 ? 12 : (heading.level - 1) * 12 + 12}px` }}
                                     onClick={(e) => {
@@ -145,8 +138,8 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
                         id={`toc-${heading.id}`}
                         href={`#${heading.id}`}
                         className={`block py-1.5 text-sm transition-colors duration-200 ${activeId === heading.id
-                            ? "text-teal-600 font-bold border-l-2 border-teal-600 pl-3"
-                            : "text-slate-600 hover:text-teal-600 pl-3 border-l-2 border-transparent"
+                                ? "text-teal-600 font-bold border-l-2 border-teal-600 pl-3"
+                                : "text-slate-600 hover:text-teal-600 pl-3 border-l-2 border-transparent"
                             }`}
                         style={{ paddingLeft: `${(heading.level - 1) * 12}px` }}
                         onClick={(e) => {
