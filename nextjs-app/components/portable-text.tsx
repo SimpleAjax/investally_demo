@@ -245,6 +245,47 @@ const components: PortableTextComponents = {
         </figure>
       )
     },
+    table: ({ value }) => {
+      if (!value?.rows || !value.rows.length) return null
+
+      return (
+        <div className="my-8 overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+          <table className="w-full text-left border-collapse bg-white">
+            <tbody>
+              {value.rows.map((row: any, rowIndex: number) => {
+                const isHeader = rowIndex === 0;
+                return (
+                  <tr
+                    key={row._key || rowIndex}
+                    className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'}
+                  >
+                    {row.cells.map((cell: string, cellIndex: number) => {
+                      const CellTag = isHeader ? 'th' : 'td';
+                      return (
+                        <CellTag
+                          key={cellIndex}
+                          className={`
+                            p-4 border-b border-slate-200
+                            ${isHeader
+                              ? 'bg-slate-100 font-bold text-slate-900 border-slate-300'
+                              : 'text-slate-700'
+                            }
+                            ${cellIndex === 0 ? 'pl-6' : ''}
+                            ${cellIndex === row.cells.length - 1 ? 'pr-6' : ''}
+                          `}
+                        >
+                          {cell}
+                        </CellTag>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )
+    },
   },
 }
 
