@@ -16,7 +16,7 @@ export default function TableOfContents({ content, isMobile = false }: TOCProps)
 
     // Extract headings from content
     const headings = content
-        .filter((block) => block._type === "block" && block.style?.startsWith("h") && block.style !== "h1") // Exclude h1 as it's usually the title
+        .filter((block) => block._type === "block" && (block.style == "h2" || block.style == "h3")) // Only h2 and h3 headings should be present in the table of content
         .map((block) => {
             const text = block.children?.map((child: any) => child.text).join("") || "";
             const slug = text
