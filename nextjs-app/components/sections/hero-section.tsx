@@ -6,7 +6,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden text-white pt-36 md:pt-0 min-h-[0] md:min-h-[calc(100vh-64px)]"
+      className="relative overflow-hidden text-white pt-20 md:pt-0 min-h-[0] md:min-h-[calc(100vh-64px)]"
       style={{
         background: "linear-gradient(135deg, #0a7a72 0%, #0d9488 45%, #0f9f95 100%)"
       }}
@@ -24,12 +24,11 @@ export default function HeroSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 h-full flex items-start md:items-center">
         <div
-          className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start md:items-center"
-          style={{ paddingTop: "clamp(5.5rem, 10vw, 9rem)", paddingBottom: "clamp(2rem, 5vw, 4rem)" }}
+          className="w-full grid grid-cols-1 gap-8 items-start pt-4 pb-8 md:items-center md:pt-[clamp(5.5rem,10vw,9rem)] md:pb-[clamp(2rem,5vw,4rem)] lg:grid-cols-2 lg:gap-12"
         >
 
           {/* ─── LEFT CONTENT ─── */}
-          <div className="mt-8 md:mt-0 flex flex-col gap-2 md:gap-5">
+          <div className="flex flex-col gap-2 md:gap-5">
 
             {/* Eyebrow badge */}
             <div className="inline-flex self-start items-center gap-2 px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[9px] md:text-xs font-bold uppercase tracking-widest"
