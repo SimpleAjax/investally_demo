@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -175,11 +176,80 @@ const advisorySolutions = [
 ];
 
 export default function SolutionsPage() {
-  const SolutionCard = ({ solution, index, total, gridSpan }: { solution: any; index: number; total: number; gridSpan: string }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Refs for auto-scroll
+  const wealthRef = useRef<HTMLDivElement>(null);
+  const insuranceRef = useRef<HTMLDivElement>(null);
+  const loansRef = useRef<HTMLDivElement>(null);
+  const advisoryRef = useRef<HTMLDivElement>(null);
+
+  // Interaction states
+  const [interacting, setInteracting] = useState({
+    wealth: false,
+    insurance: false,
+    loans: false,
+    advisory: false
+  });
+
+  // Scroll positions
+  const scrollPos = useRef({
+    wealth: 0,
+    insurance: 0,
+    loans: 0,
+    advisory: 0
+  });
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    let animationFrameId: number;
+    const scrollSpeed = 0.5;
+
+    const scrollLoop = () => {
+      const sections = [
+        { ref: wealthRef, key: 'wealth' as const },
+        { ref: insuranceRef, key: 'insurance' as const },
+        { ref: loansRef, key: 'loans' as const },
+        { ref: advisoryRef, key: 'advisory' as const }
+      ];
+
+      sections.forEach(({ ref, key }) => {
+        if (ref.current && !interacting[key]) {
+          scrollPos.current[key] += scrollSpeed;
+          if (scrollPos.current[key] >= ref.current.scrollWidth / 2) {
+            scrollPos.current[key] = 0;
+          }
+          ref.current.scrollLeft = scrollPos.current[key];
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(scrollLoop);
+    };
+
+    animationFrameId = requestAnimationFrame(scrollLoop);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isMobile, interacting]);
+
+  const handleManualScroll = (key: keyof typeof interacting) => {
+    const refs = { wealth: wealthRef, insurance: insuranceRef, loans: loansRef, advisory: advisoryRef };
+    if (refs[key].current && isMobile) {
+      scrollPos.current[key] = refs[key].current!.scrollLeft;
+    }
+  };
+
+  const SolutionCard = ({ solution, gridSpan }: { solution: any; gridSpan: string }) => {
     return (
       <div
         key={solution.id}
-        className={`${gridSpan} flex-shrink-0 w-[85vw] sm:w-[450px] md:w-auto snap-start bg-[#f8fafa] relative p-6 lg:p-8 rounded-2xl border border-slate-200/50 transition-all hover:shadow-xl overflow-hidden flex flex-col group`}
+        className={`${gridSpan} flex-shrink-0 w-[85vw] sm:w-[500px] md:w-auto bg-[#f8fafa] relative p-6 lg:p-8 rounded-2xl border border-slate-200/50 transition-all hover:shadow-xl overflow-hidden flex flex-col group`}
       >
         <div className="flex flex-col h-full">
           <div>
@@ -192,11 +262,11 @@ export default function SolutionsPage() {
               </h3>
             </div>
 
-            <p className="text-slate-600 mb-8 leading-relaxed">
+            <p className="text-slate-600 mb-8 leading-relaxed text-sm">
               {solution.description}
             </p>
 
-            <ul className="space-y-4 text-sm text-slate-700">
+            <ul className="space-y-4 text-xs text-slate-700">
               {solution.features?.map((feature: string, i: number) => (
                 <li key={i} className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center text-[#006a63]">
@@ -270,14 +340,20 @@ export default function SolutionsPage() {
                 <h2 className="font-black text-4xl text-slate-900 mb-4">Wealth Building</h2>
                 <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
               </div>
-              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
-                {wealthSolutions.map((solution, i) => (
+              <div 
+                ref={wealthRef}
+                onMouseEnter={() => setInteracting(prev => ({ ...prev, wealth: true }))}
+                onMouseLeave={() => setInteracting(prev => ({ ...prev, wealth: false }))}
+                onTouchStart={() => setInteracting(prev => ({ ...prev, wealth: true }))}
+                onTouchEnd={() => setInteracting(prev => ({ ...prev, wealth: false }))}
+                onScroll={() => handleManualScroll('wealth')}
+                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
+              >
+                {(isMobile ? [...wealthSolutions, ...wealthSolutions] : wealthSolutions).map((solution, i) => (
                   <SolutionCard 
-                    key={solution.id} 
+                    key={`${solution.id}-${i}`} 
                     solution={solution} 
-                    index={i} 
-                    total={wealthSolutions.length} 
-                    gridSpan={getGridCardClasses(wealthSolutions.length, i)} 
+                    gridSpan={getGridCardClasses(wealthSolutions.length, i % wealthSolutions.length)} 
                   />
                 ))}
               </div>
@@ -293,14 +369,20 @@ export default function SolutionsPage() {
                 <h2 className="font-black text-4xl text-slate-900 mb-4">Insurance & Protection</h2>
                 <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
               </div>
-              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
-                {insuranceSolutions.map((solution, i) => (
+              <div 
+                ref={insuranceRef}
+                onMouseEnter={() => setInteracting(prev => ({ ...prev, insurance: true }))}
+                onMouseLeave={() => setInteracting(prev => ({ ...prev, insurance: false }))}
+                onTouchStart={() => setInteracting(prev => ({ ...prev, insurance: true }))}
+                onTouchEnd={() => setInteracting(prev => ({ ...prev, insurance: false }))}
+                onScroll={() => handleManualScroll('insurance')}
+                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
+              >
+                {(isMobile ? [...insuranceSolutions, ...insuranceSolutions] : insuranceSolutions).map((solution, i) => (
                   <SolutionCard 
-                    key={solution.id} 
+                    key={`${solution.id}-${i}`} 
                     solution={solution} 
-                    index={i} 
-                    total={insuranceSolutions.length} 
-                    gridSpan={getGridCardClasses(insuranceSolutions.length, i)} 
+                    gridSpan={getGridCardClasses(insuranceSolutions.length, i % insuranceSolutions.length)} 
                   />
                 ))}
               </div>
@@ -316,14 +398,20 @@ export default function SolutionsPage() {
                 <h2 className="font-black text-4xl text-slate-900 mb-4">Loans & Financing</h2>
                 <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
               </div>
-              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
-                {loansSolutions.map((solution, i) => (
+              <div 
+                ref={loansRef}
+                onMouseEnter={() => setInteracting(prev => ({ ...prev, loans: true }))}
+                onMouseLeave={() => setInteracting(prev => ({ ...prev, loans: false }))}
+                onTouchStart={() => setInteracting(prev => ({ ...prev, loans: true }))}
+                onTouchEnd={() => setInteracting(prev => ({ ...prev, loans: false }))}
+                onScroll={() => handleManualScroll('loans')}
+                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
+              >
+                {(isMobile ? [...loansSolutions, ...loansSolutions] : loansSolutions).map((solution, i) => (
                   <SolutionCard 
-                    key={solution.id} 
+                    key={`${solution.id}-${i}`} 
                     solution={solution} 
-                    index={i} 
-                    total={loansSolutions.length} 
-                    gridSpan={getGridCardClasses(loansSolutions.length, i)} 
+                    gridSpan={getGridCardClasses(loansSolutions.length, i % loansSolutions.length)} 
                   />
                 ))}
               </div>
@@ -348,11 +436,19 @@ export default function SolutionsPage() {
                 <div className="w-20 h-1.5 bg-gradient-to-r from-teal-400 to-[#006a63] rounded-full" />
               </div>
 
-              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
-                {advisorySolutions.map((solution, i) => (
+              <div 
+                ref={advisoryRef}
+                onMouseEnter={() => setInteracting(prev => ({ ...prev, advisory: true }))}
+                onMouseLeave={() => setInteracting(prev => ({ ...prev, advisory: false }))}
+                onTouchStart={() => setInteracting(prev => ({ ...prev, advisory: true }))}
+                onTouchEnd={() => setInteracting(prev => ({ ...prev, advisory: false }))}
+                onScroll={() => handleManualScroll('advisory')}
+                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
+              >
+                {(isMobile ? [...advisorySolutions, ...advisorySolutions] : advisorySolutions).map((solution, i) => (
                   <div
-                    key={solution.id}
-                    className={`${getGridCardClasses(advisorySolutions.length, i)} flex-shrink-0 w-[85vw] sm:w-[450px] md:w-auto snap-start bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center h-full transition-all group hover:bg-white/10`}
+                    key={`${solution.id}-${i}`}
+                    className={`${getGridCardClasses(advisorySolutions.length, i % advisorySolutions.length)} flex-shrink-0 w-[85vw] sm:w-[500px] md:w-auto bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center h-full transition-all group hover:bg-white/10`}
                   >
                     <div className="flex flex-col items-center">
                       <div className="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400 mb-6">
@@ -364,7 +460,7 @@ export default function SolutionsPage() {
                          {solution.description}
                       </p>
 
-                      <ul className="space-y-4 text-sm text-teal-100/40 w-full">
+                      <ul className="space-y-4 text-xs text-teal-100/40 w-full">
                         {solution.features?.map((feature: string, i: number) => (
                           <li key={i} className="flex items-center gap-2 justify-center">
                             <Check className="h-4 w-4 text-teal-400" />
@@ -377,13 +473,13 @@ export default function SolutionsPage() {
                 ))}
               </div>
 
-              <div className="mt-20 p-12 rounded-3xl bg-gradient-to-br from-teal-600 to-teal-800 text-white relative overflow-hidden shadow-2xl">
+              <div className="mt-20 p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-teal-600 to-teal-800 text-white relative overflow-hidden shadow-2xl">
                  <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
                     <Globe className="text-[30rem] absolute -top-20 -right-20" />
                  </div>
                  <div className="relative z-10 max-w-3xl">
-                    <h3 className="text-3xl font-black mb-6 italic">"A Legacy is built one decision at a time. We ensure every decision is mathematically sound and strategically sovereign."</h3>
-                    <p className="text-teal-100 text-lg mb-8 opacity-80">
+                    <h3 className="text-xl md:text-3xl font-black mb-6 italic">"A Legacy is built one decision at a time. We ensure every decision is mathematically sound and strategically sovereign."</h3>
+                    <p className="text-teal-100 text-base md:text-lg mb-8 opacity-80">
                       Connect with our advisory board for specialized family office setup, cross-border tax planning, and philanthropic engineering.
                     </p>
                     <Button asChild className="bg-white text-[#006a63] hover:bg-teal-50 px-10 py-7 rounded-full font-bold text-lg shadow-2xl transition-transform hover:scale-105">
@@ -399,8 +495,8 @@ export default function SolutionsPage() {
         <ScrollReveal>
           <section className="bg-white py-16 text-center">
             <div className="max-w-4xl mx-auto px-8">
-              <h2 className="text-4xl font-black text-slate-900 mb-6 tracking-tight">Ready to Engineer Your Future?</h2>
-              <p className="text-slate-600 text-lg mb-10 leading-relaxed max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tight">Ready to Engineer Your Future?</h2>
+              <p className="text-slate-600 text-base md:text-lg mb-10 leading-relaxed max-w-2xl mx-auto">
                 Join the elite investors who trust InvestAlly for their complex financial frameworks. Our specialized advisors are ready to design your sovereign path.
               </p>
               <Button asChild size="lg" className="bg-[#006a63] hover:bg-teal-700 text-white px-10 py-8 rounded-xl font-bold text-lg shadow-xl hover:-translate-y-1 transition-all">
