@@ -25,7 +25,7 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 h-full flex items-center">
         <div
           className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
-          style={{ paddingTop: "clamp(2rem, 5vw, 4rem)", paddingBottom: "clamp(2rem, 5vw, 4rem)" }}
+          style={{ paddingTop: "clamp(5rem, 8vw, 8rem)", paddingBottom: "clamp(2rem, 5vw, 4rem)" }}
         >
 
           {/* ─── LEFT CONTENT ─── */}
