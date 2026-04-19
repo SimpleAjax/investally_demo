@@ -58,7 +58,7 @@ export default function ContactSection() {
         </div>
 
         {/* ── MAIN GRID ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch">
 
           {/* Tally Form — takes 3 cols */}
           <div className="lg:col-span-3 bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden flex flex-col h-full">
@@ -84,7 +84,7 @@ export default function ContactSection() {
                 data-tally-src="https://tally.so/embed/Bza5BN?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
                 loading="lazy"
                 width="100%"
-                height="320"
+                height="480"
                 frameBorder="0"
                 marginHeight={0}
                 marginWidth={0}
@@ -94,10 +94,10 @@ export default function ContactSection() {
           </div>
 
           {/* Right sidebar — 2 cols */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-6 flex flex-col">
 
             {/* Portfolio Health Check - Enhanced */}
-            <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-5 md:p-6 shadow-lg shadow-teal-200 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-7 shadow-lg shadow-teal-200 text-white relative overflow-hidden flex-1 flex flex-col justify-center">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
