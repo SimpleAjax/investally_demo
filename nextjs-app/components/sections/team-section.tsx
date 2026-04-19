@@ -56,7 +56,7 @@ const teamMembers = [
 
 export default function TeamSection() {
   return (
-    <section id="team" className="py-12 md:py-16 bg-white relative overflow-hidden">
+    <section id="team" className="py-8 md:py-10 bg-white relative overflow-hidden">
       {/* Ambient blobs */}
       <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-teal-200 rounded-full opacity-[0.06] blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-100 rounded-full opacity-[0.10] blur-3xl pointer-events-none" />
@@ -64,7 +64,7 @@ export default function TeamSection() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <span className="text-teal-600 font-semibold text-sm uppercase tracking-widest">
             Meet Our Team
           </span>
@@ -78,11 +78,11 @@ export default function TeamSection() {
         </div>
 
         {/* Members */}
-        <div className="space-y-10">
+        <div className="space-y-4">
           {teamMembers.map((member, index) => (
             <div key={index} className="group">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
-
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start bg-slate-50/50 rounded-xl p-4 md:p-5 border border-slate-100/50 transition-colors duration-300 hover:bg-slate-50">
+                
                 {/* Photo */}
                 <div className="flex-shrink-0 flex flex-col items-center md:items-start gap-4">
                   <div className="relative">
@@ -169,7 +169,7 @@ export default function TeamSection() {
                   </div>
 
                   {/* Thin accent rule — centered on mobile */}
-                  <div className={`mt-5 mb-5 h-px w-16 bg-gradient-to-r ${member.accentFrom} to-transparent mx-auto md:mx-0`} />
+                  <div className={`mt-2 mb-2 h-px w-16 bg-gradient-to-r ${member.accentFrom} to-transparent mx-auto md:mx-0`} />
 
                   {/* Bio */}
                   <p className="text-slate-600 leading-relaxed text-[0.95rem] max-w-2xl mx-auto md:mx-0">
@@ -177,7 +177,7 @@ export default function TeamSection() {
                   </p>
 
                   {/* Credential tags — centered on mobile */}
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-6">
+                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-3">
                     {member.tags.map((tag, tIdx) => {
                       const Icon = member.tagIcons[tIdx];
                       return (
@@ -196,7 +196,7 @@ export default function TeamSection() {
 
               {/* Divider — except after last */}
               {index < teamMembers.length - 1 && (
-                <div className="mt-10 border-t border-dashed border-slate-200" />
+                <div className="mt-4 border-t border-dashed border-slate-200" />
               )}
             </div>
           ))}
