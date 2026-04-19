@@ -209,10 +209,10 @@ export default function UserJourneySection() {
 
                                     {/* Expanded content */}
                                     <div
-                                        className={`transition-all duration-400 ease-in-out overflow-hidden ${isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                                        className={`transition-all duration-400 ease-in-out overflow-hidden ${isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
                                             }`}
                                     >
-                                        <div className="px-5 pb-5 pl-[4rem]">
+                                        <div className="px-5 pb-5 md:pl-[4rem]">
                                             <div className="border-t border-teal-200 pt-3">
                                                 <p className="text-slate-700 text-sm leading-relaxed mb-3">
                                                     {step.description}
@@ -220,11 +220,62 @@ export default function UserJourneySection() {
                                                 <p className="text-slate-500 text-sm leading-relaxed mb-4">
                                                     {step.detail}
                                                 </p>
-                                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 border border-teal-200 rounded-full">
+                                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 border border-teal-200 rounded-full mb-4">
                                                     <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
                                                     <span className="text-teal-700 text-sm font-semibold">
                                                         {step.highlight}
                                                     </span>
+                                                </div>
+
+                                                {/* Mobile Visual Content - Inline Reveal */}
+                                                <div className="lg:hidden mt-2 rounded-2xl border border-teal-100 bg-white shadow-lg overflow-hidden">
+                                                    {/* Step image */}
+                                                    <div className="relative w-full aspect-[16/9] overflow-hidden bg-teal-50">
+                                                        <Image
+                                                            src={step.image}
+                                                            alt={`Step ${step.number}: ${step.title}`}
+                                                            fill
+                                                            className="object-contain p-4"
+                                                        />
+                                                        {/* Step number badge */}
+                                                        <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center shadow-lg">
+                                                            <span className="text-white font-black text-sm">{step.number}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Content below image */}
+                                                    <div className="p-4">
+                                                        {/* Label */}
+                                                        <p className="text-teal-600 text-[10px] font-bold uppercase tracking-widest mb-1">
+                                                            {step.visual.label}
+                                                        </p>
+
+                                                        {/* Stat row */}
+                                                        <div className="flex items-end gap-2 mb-2">
+                                                            <p className="text-2xl font-black text-slate-900 leading-none">
+                                                                {step.visual.stat}
+                                                            </p>
+                                                            <p className="text-slate-500 text-[10px] mb-0.5">{step.visual.statLabel}</p>
+                                                        </div>
+
+                                                        {/* Divider */}
+                                                        <div className="h-px bg-gradient-to-r from-teal-200 to-transparent mb-3" />
+
+                                                        {/* Bullet points */}
+                                                        <ul className="space-y-1.5">
+                                                            {step.visual.bullets.map((bullet, i) => (
+                                                                <li
+                                                                    key={i}
+                                                                    className="flex items-center gap-2 text-slate-600"
+                                                                >
+                                                                    <div className="w-4 h-4 rounded-full bg-teal-100 border border-teal-300 flex items-center justify-center flex-shrink-0">
+                                                                        <div className="w-1 h-1 rounded-full bg-teal-600" />
+                                                                    </div>
+                                                                    <span className="text-xs font-medium">{bullet}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -234,8 +285,8 @@ export default function UserJourneySection() {
                         })}
                     </div>
 
-                    {/* Right: Visual panel — sticky within this section */}
-                    <div className="self-start lg:sticky lg:top-8">
+                    {/* Right: Visual panel — sticky within this section (Desktop only) */}
+                    <div className="hidden lg:block self-start lg:sticky lg:top-8">
                         <div
                             key={activeStep}
                             className="rounded-3xl border border-slate-200 bg-white shadow-xl overflow-hidden relative"

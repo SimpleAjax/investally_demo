@@ -192,15 +192,7 @@ export default function SolutionsSection() {
                 />
               </div>
             </div>
-            {/* Mobile Image */}
-            <div className="sm:hidden relative w-full h-[250px] rounded-xl overflow-hidden mt-6 border border-slate-100 shadow-sm bg-white">
-              <Image
-                src="/team/minakshi maheshwari-medium.jpg"
-                alt="Expert Advisory - Minakshi Maheshwari"
-                fill
-                style={{ objectFit: 'cover', objectPosition: 'top' }}
-              />
-            </div>
+
 
           </div>
 
