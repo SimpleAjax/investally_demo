@@ -29,12 +29,12 @@ export default function HeroSection() {
         >
 
           {/* ─── LEFT CONTENT ─── */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-2 md:gap-5">
 
             {/* Eyebrow badge */}
-            <div className="inline-flex self-start items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
+            <div className="inline-flex self-start items-center gap-2 px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[9px] md:text-xs font-bold uppercase tracking-widest"
               style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}>
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-300" />
+              <span className="inline-block w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-emerald-300" />
               Trusted by Smart Investors Across India
             </div>
 
