@@ -45,15 +45,15 @@ export default function Navigation() {
         <div 
           className={`flex justify-between items-center transition-all duration-500 ease-in-out ${
             scrolled 
-              ? "bg-white/90 md:bg-white/80 backdrop-blur-xl shadow-md md:shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-b md:border border-slate-200/50 md:border-white/40 rounded-none md:rounded-full h-11 md:h-auto px-3 md:px-6" 
-              : "bg-white/60 md:bg-white/50 backdrop-blur-md border-b md:border border-transparent h-12 md:h-auto px-3 md:px-4 rounded-none md:rounded-2xl"
+              ? "bg-white/90 md:bg-white/80 backdrop-blur-xl shadow-md md:shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-b md:border border-slate-200/50 md:border-white/40 rounded-none md:rounded-full py-3 md:py-2 px-4 md:px-6" 
+              : "bg-white/60 md:bg-white/50 backdrop-blur-md border-b md:border border-transparent py-4 md:py-2 px-4 md:px-4 rounded-none md:rounded-2xl"
           }`}
         >
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="group">
-              <div className="flex items-center gap-1.5 bg-white py-0.5 px-2 md:gap-2 md:py-1.5 md:px-3 rounded-lg md:rounded-xl border border-slate-100 shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-teal-100 group-hover:scale-[1.02]">
-                <div className="relative h-5.5 w-5.5 md:h-8 md:w-8 transition-transform duration-500 group-hover:rotate-[360deg]">
+              <div className="flex items-center gap-2.5 bg-white py-1.5 px-3 rounded-xl border border-slate-100 shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-teal-100 group-hover:scale-[1.02]">
+                <div className="relative h-8 w-8 transition-transform duration-500 group-hover:rotate-[360deg]">
                   <Image
                     src="/investally_only_logo.png"
                     alt="Investally Icon"
@@ -62,7 +62,7 @@ export default function Navigation() {
                     priority
                   />
                 </div>
-                <div className="relative h-[18px] w-24 sm:h-5 sm:w-28 hidden sm:block">
+                <div className="relative h-5 w-28 hidden sm:block">
                   <Image
                     src="/investally_logo_name.png"
                     alt="Investally Name"
@@ -102,11 +102,11 @@ export default function Navigation() {
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-0.5 rounded-lg transition-colors duration-300 ${
+              className={`p-2 rounded-xl transition-colors duration-300 ${
                 mobileMenuOpen ? "bg-slate-100 text-slate-900" : "text-slate-600"
               }`}
             >
-              {mobileMenuOpen ? <X className="h-[18px] w-[18px]" /> : <Menu className="h-[18px] w-[18px]" />}
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
