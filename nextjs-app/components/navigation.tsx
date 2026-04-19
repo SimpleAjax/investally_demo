@@ -37,9 +37,7 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <Link href="/" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
-              Home
-            </Link>
+
             <Link href="/#about" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
               About
             </Link>
@@ -81,9 +79,7 @@ export default function Navigation() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden pb-4">
-            <Link href="/" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
-              Home
-            </Link>
+
             <Link href="/#about" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
               About
             </Link>
