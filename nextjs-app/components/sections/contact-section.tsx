@@ -155,7 +155,7 @@ export default function ContactSection() {
             </div>
 
             {/* Contact Info Cards — split width for better visibility */}
-            <div className="grid grid-cols-[1.8fr_1fr] gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-[1.8fr_1fr] gap-4">
               {/* Email */}
               <a
                 href="mailto:Support@investally.co.in"

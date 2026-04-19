@@ -24,10 +24,10 @@ export default function SolutionsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory lg:grid lg:grid-cols-12 lg:pb-0 custom-scrollbar">
           
           {/* Wealth Building - lg:col-span-7 */}
-          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex-shrink-0 w-[85vw] sm:w-[450px] lg:w-auto lg:col-span-7 snap-start bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
             <div>
               <div className="flex items-center gap-3 mb-5">
                 <TrendingUp className="h-5 w-5 text-teal-600" />
@@ -75,7 +75,7 @@ export default function SolutionsSection() {
           </div>
 
           {/* Protection - lg:col-span-5 */}
-          <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex-shrink-0 w-[85vw] sm:w-[450px] lg:w-auto lg:col-span-5 snap-start bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
             <div>
               <div className="flex items-center gap-3 mb-5">
                 <Shield className="h-5 w-5 text-teal-600" />
@@ -113,7 +113,7 @@ export default function SolutionsSection() {
           </div>
 
           {/* Financing - lg:col-span-4 */}
-          <div className="lg:col-span-4 bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex-shrink-0 w-[85vw] sm:w-[450px] lg:w-auto lg:col-span-4 snap-start bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
              <div>
               <div className="flex items-center gap-3 mb-5">
                 <Home className="h-5 w-5 text-teal-600" />
@@ -151,7 +151,7 @@ export default function SolutionsSection() {
           </div>
 
           {/* Expert Advisory - lg:col-span-8 */}
-          <div className="lg:col-span-8 bg-white p-6 sm:p-8 rounded-2xl flex flex-col sm:flex-row gap-6 justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex-shrink-0 w-[85vw] sm:w-[450px] lg:w-auto lg:col-span-8 snap-start bg-white p-6 sm:p-8 rounded-2xl flex flex-col sm:flex-row gap-6 justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
             
             {/* Left Content */}
             <div className="flex-1 flex flex-col justify-between">

@@ -179,7 +179,7 @@ export default function SolutionsPage() {
     return (
       <div
         key={solution.id}
-        className={`${gridSpan} bg-[#f8fafa] relative p-6 lg:p-8 rounded-2xl border border-slate-200/50 transition-all hover:shadow-xl overflow-hidden flex flex-col group`}
+        className={`${gridSpan} flex-shrink-0 w-[85vw] sm:w-[450px] md:w-auto snap-start bg-[#f8fafa] relative p-6 lg:p-8 rounded-2xl border border-slate-200/50 transition-all hover:shadow-xl overflow-hidden flex flex-col group`}
       >
         <div className="flex flex-col h-full">
           <div>
@@ -270,7 +270,7 @@ export default function SolutionsPage() {
                 <h2 className="font-black text-4xl text-slate-900 mb-4">Wealth Building</h2>
                 <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
                 {wealthSolutions.map((solution, i) => (
                   <SolutionCard 
                     key={solution.id} 
@@ -293,7 +293,7 @@ export default function SolutionsPage() {
                 <h2 className="font-black text-4xl text-slate-900 mb-4">Insurance & Protection</h2>
                 <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
                 {insuranceSolutions.map((solution, i) => (
                   <SolutionCard 
                     key={solution.id} 
@@ -316,7 +316,7 @@ export default function SolutionsPage() {
                 <h2 className="font-black text-4xl text-slate-900 mb-4">Loans & Financing</h2>
                 <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
                 {loansSolutions.map((solution, i) => (
                   <SolutionCard 
                     key={solution.id} 
@@ -348,11 +348,11 @@ export default function SolutionsPage() {
                 <div className="w-20 h-1.5 bg-gradient-to-r from-teal-400 to-[#006a63] rounded-full" />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+              <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory md:grid md:grid-cols-6 md:pb-0 custom-scrollbar">
                 {advisorySolutions.map((solution, i) => (
                   <div
                     key={solution.id}
-                    className={`${getGridCardClasses(advisorySolutions.length, i)} bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center h-full transition-all group hover:bg-white/10`}
+                    className={`${getGridCardClasses(advisorySolutions.length, i)} flex-shrink-0 w-[85vw] sm:w-[450px] md:w-auto snap-start bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center h-full transition-all group hover:bg-white/10`}
                   >
                     <div className="flex flex-col items-center">
                       <div className="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400 mb-6">
