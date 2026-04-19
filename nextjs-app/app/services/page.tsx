@@ -3,6 +3,7 @@ import { ArrowLeft, TrendingUp, Shield, Home, Check, ArrowRight, FileText, BookO
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
+import FamilyOfficeSection from "@/components/sections/family-office-section";
 
 export const metadata = {
   title: "Our Services - Investally | Comprehensive Financial Solutions",
@@ -468,6 +469,7 @@ export default function ServicesPage() {
         </div>
       </div>
     </div>
+    <FamilyOfficeSection />
     <Footer />
   </>
   );

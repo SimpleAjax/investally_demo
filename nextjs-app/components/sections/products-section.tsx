@@ -102,12 +102,12 @@ export default function ProductsSection() {
           </p>
         </div>
 
-        {/* Main Products */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        {/* Main Products - 6-column grid, each card spans 2 (n=3) */}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-8 mb-12">
           {mainProducts.map((product, index) => (
             <div
               key={index}
-              className={`bg-gradient-to-br ${product.gradient} rounded-2xl p-8 card-hover border-2 ${product.border}`}
+              className={`md:col-span-2 bg-gradient-to-br ${product.gradient} rounded-2xl p-8 card-hover border-2 ${product.border}`}
             >
               <div className={`${product.iconBg} w-16 h-16 rounded-xl flex items-center justify-center mb-6`}>
                 <product.icon className={`${product.iconColor} h-8 w-8`} />

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Search } from "lucide-react";
 import { urlForImage } from "@/lib/sanity.image";
+import { getGridCardClasses } from "@/lib/grid-utils";
 
 interface BlogPost {
   _id: string;
@@ -147,18 +148,20 @@ export default function BlogGridClient({ posts, categories, isHomePage = false }
         </div>
       )}
 
-      {/* Blog Grid */}
+      {/* Blog Grid - 6-column dynamic system */}
       {paginatedPosts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {paginatedPosts.map((post) => {
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
+          {paginatedPosts.map((post, index) => {
             const imageUrl = post.mainImage?.asset
               ? urlForImage(post.mainImage).width(400).height(300).url()
               : null;
 
+            const gridClasses = getGridCardClasses(paginatedPosts.length, index);
+
             return (
               <article
                 key={post._id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden card-hover"
+                className={`${gridClasses} bg-white rounded-xl shadow-lg overflow-hidden card-hover`}
               >
                 {imageUrl ? (
                   <div className="relative w-full h-48 overflow-hidden">

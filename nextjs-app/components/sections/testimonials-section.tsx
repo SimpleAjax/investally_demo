@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,6 +14,7 @@ export default function TestimonialsSection() {
       name: "CA Vishal Mittal, CFA",
       role: "Salaried, Private Sector Employee, Age 25, Mumbai",
       initials: "VM",
+      image: "/animations/testimonial-faces/face-1.png",
       products: ["Mutual Funds"]
     },
     {
@@ -20,6 +22,7 @@ export default function TestimonialsSection() {
       name: "Shailesh Tiwari",
       role: "Businessman, Age 60, Jaipur",
       initials: "ST",
+      image: "/animations/testimonial-faces/face-2.png",
       products: ["Mutual Funds"]
     },
     {
@@ -27,6 +30,7 @@ export default function TestimonialsSection() {
       name: "Abhinav Chitlangia",
       role: "Businessman, Age 35, Raxaul, Bihar",
       initials: "AC",
+      image: "/animations/testimonial-faces/face-3.png",
       products: ["Mutual Funds"]
     },
     {
@@ -34,6 +38,7 @@ export default function TestimonialsSection() {
       name: "Ram Gopal Chitlangia",
       role: "Commodity Broker, Age 66, Sikar, Rajasthan",
       initials: "RC",
+      image: "/animations/testimonial-faces/face-4.png",
       products: ["Mutual Funds"]
     },
     {
@@ -41,6 +46,7 @@ export default function TestimonialsSection() {
       name: "Nishant Lakhotiya",
       role: "Businessman, Age 37, Panipat",
       initials: "NL",
+      image: "/animations/testimonial-faces/face-5.png",
       products: ["Mutual Funds"]
     },
     {
@@ -48,6 +54,7 @@ export default function TestimonialsSection() {
       name: "Sarika Lakhotiya",
       role: "Businesswomen, Age 36, Panipat",
       initials: "SL",
+      image: "/animations/testimonial-faces/face-6.png",
       products: ["Mutual Funds"]
     },
     {
@@ -55,6 +62,7 @@ export default function TestimonialsSection() {
       name: "Anurag Rajput",
       role: "IT Consultant, Age 28, Mumbai",
       initials: "AR",
+      image: "/animations/testimonial-faces/face-7.png",
       products: ["Mutual Funds"]
     },
     {
@@ -62,6 +70,7 @@ export default function TestimonialsSection() {
       name: "Saumya",
       role: "Business, Age 30, Mumbai",
       initials: "S",
+      image: "/animations/testimonial-faces/face-8.png",
       products: ["Mutual Funds"]
     },
     {
@@ -69,8 +78,9 @@ export default function TestimonialsSection() {
       name: "Akanksha",
       role: "Salaried, Age 37, Dubai",
       initials: "A",
+      image: "/animations/testimonial-faces/face-9.png",
       products: ["Mutual Funds"]
-    }
+    },
   ];
 
   useEffect(() => {
@@ -104,12 +114,12 @@ export default function TestimonialsSection() {
   return (
     <section className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">Client Stories</span>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mt-3 mb-4">
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-2 mb-3">
             Trusted by <span className="gradient-text">Thousands</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto">
             See what our clients say about their financial journey with Investally.
           </p>
         </div>
@@ -142,8 +152,18 @@ export default function TestimonialsSection() {
                     {/* Client info at bottom */}
                     <div className="mt-6 pt-6 border-t border-slate-100">
                       <div className="flex items-center mb-3">
-                        <div className="w-14 h-14 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600 mr-4">
-                          {testimonial.initials}
+                        <div className="w-14 h-14 rounded-full overflow-hidden bg-slate-200 flex items-center justify-center font-bold text-slate-600 mr-4">
+                          {testimonial.image ? (
+                            <Image
+                              src={testimonial.image}
+                              alt={testimonial.name}
+                              width={56}
+                              height={56}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            testimonial.initials
+                          )}
                         </div>
                         <div>
                           <p className="font-bold text-slate-900">{testimonial.name}</p>

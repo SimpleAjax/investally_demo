@@ -43,13 +43,11 @@ export default function Navigation() {
             <Link href="/#about" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
               About
             </Link>
-            <Link href="/#team" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
-              Team
+
+            <Link href="/solutions" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
+              Solutions
             </Link>
-            <Link href="/services" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
-              Services
-            </Link>
-            <Link href="/#calculators" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
+            <Link href="/calculators" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
               Calculators
             </Link>
             <Link href="/blog" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
@@ -83,13 +81,11 @@ export default function Navigation() {
             <Link href="/#about" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
               About
             </Link>
-            <Link href="/#team" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
-              Team
+
+            <Link href="/solutions" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
+              Solutions
             </Link>
-            <Link href="/services" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
-              Services
-            </Link>
-            <Link href="/#calculators" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
+            <Link href="/calculators" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
               Calculators
             </Link>
             <Link href="/blog" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">

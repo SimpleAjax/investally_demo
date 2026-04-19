@@ -116,9 +116,9 @@ export default function CalculatorsSection({ showViewAllLink = true }: { showVie
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* SIP Calculator */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 card-hover">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
+          {/* SIP Calculator - md:col-span-2 */}
+          <div className="md:col-span-2 bg-white rounded-2xl shadow-lg p-8 card-hover">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-slate-900">SIP Calculator</h3>
               <div className="bg-teal-100 p-3 rounded-xl">
@@ -188,8 +188,8 @@ export default function CalculatorsSection({ showViewAllLink = true }: { showVie
             </div>
           </div>
 
-          {/* Goal-Based Calculator */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 card-hover">
+          {/* Goal-Based Calculator - md:col-span-2 */}
+          <div className="md:col-span-2 bg-white rounded-2xl shadow-lg p-8 card-hover">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-slate-900">Goal-Based Calculator</h3>
               <div className="bg-blue-100 p-3 rounded-xl">
@@ -239,8 +239,8 @@ export default function CalculatorsSection({ showViewAllLink = true }: { showVie
             </div>
           </div>
 
-          {/* Cost of Delay Calculator */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 card-hover">
+          {/* Cost of Delay Calculator - md:col-span-2 */}
+          <div className="md:col-span-2 bg-white rounded-2xl shadow-lg p-8 card-hover">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-slate-900">Cost of Delay Calculator</h3>
               <div className="bg-orange-100 p-3 rounded-xl">

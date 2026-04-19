@@ -1,193 +1,205 @@
+"use client";
+
 import Image from "next/image";
-import { Award, Shield, Briefcase, TrendingUp, Linkedin, Mail, Users, Target, Compass, Eye, BookOpen } from "lucide-react";
+import { Award, Shield, Briefcase, Users, TrendingUp, Linkedin, Mail } from "lucide-react";
+
+const teamMembers = [
+  {
+    name: "Adarsh Katta",
+    title: "Co-Founder & Research Director",
+    subtitle: "Chartered Accountant",
+    linkedin: "https://www.linkedin.com/in/adarsh-katta",
+    email: "adarsh.katta@investally.co.in",
+    image: "/team/adarsh katta-medium.jpg",
+    description:
+      "Adarsh is the research brain behind InvestAlly. With deep experience as a Private Equity and Mutual Fund Expert across global institutions like Brookfield, HSBC and JP Morgan, he specialises in identifying the right funds, evaluating risks, and conducting high-quality due diligence. His expertise ensures data, clarity, and conviction back every recommendation.",
+    tags: ["Chartered Accountant", "ARN 339359"],
+    tagIcons: [Award, Shield],
+    accentFrom: "from-teal-500",
+    titleColor: "text-teal-600",
+    tagColor: "text-teal-700 bg-teal-50 border-teal-200",
+    socialColor: "text-teal-600 hover:text-teal-700",
+  },
+  {
+    name: "Minakshi Maheshwari",
+    title: "Co-Founder & Client Strategy Lead",
+    subtitle: "Chartered Accountant · Business Analyst",
+    linkedin: "https://www.linkedin.com/in/minaxi-maheshwari-207bb3b0/",
+    email: "support@investally.co.in",
+    image: "/team/minakshi maheshwari-medium.jpg",
+    description:
+      "Minakshi is a Chartered Accountant and Business Analyst who helps people make confident financial decisions. Her experience in understanding numbers, analysing risks, and simplifying complex financial information ensures every client receives clear, tailored guidance to protect, grow, and manage their wealth.",
+    tags: ["Chartered Accountant", "Business Analyst", "ARN 345644"],
+    tagIcons: [Award, Users, Shield],
+    accentFrom: "from-green-500",
+    titleColor: "text-green-600",
+    tagColor: "text-green-700 bg-green-50 border-green-200",
+    socialColor: "text-green-600 hover:text-green-700",
+  },
+  {
+    name: "Rahul Sharma",
+    title: "Co-Founder & Wealth Strategist",
+    subtitle: "MBA Finance · SEBI Registered Advisor",
+    linkedin: "https://www.linkedin.com/",
+    email: "rahul.sharma@investally.co.in",
+    image: "",
+    description:
+      "Rahul brings strategic vision and deep market intelligence to InvestAlly. With over a decade of experience across leading institutions, he helps clients navigate complex markets with confidence. His client-first philosophy has guided hundreds of families towards long-term financial independence and sustainable wealth creation.",
+    tags: ["SEBI Registered Advisor", "MBA Finance", "Goldman Sachs · ICICI"],
+    tagIcons: [Shield, Award, Briefcase],
+    accentFrom: "from-blue-500",
+    titleColor: "text-blue-600",
+    tagColor: "text-blue-700 bg-blue-50 border-blue-200",
+    socialColor: "text-blue-600 hover:text-blue-700",
+  },
+];
 
 export default function TeamSection() {
-  // Color scheme mapping for Tailwind class generation
-  const colorSchemes = {
-    teal: {
-      gradient: "bg-gradient-to-br from-teal-400 to-teal-600",
-      text: "text-teal-600",
-      badge: "bg-teal-100 text-teal-700",
-      socialBg: "bg-teal-100",
-      socialHover: "hover:bg-teal-200",
-      icon: "text-teal-600"
-    },
-    green: {
-      gradient: "bg-gradient-to-br from-green-400 to-green-600",
-      text: "text-green-600",
-      badge: "bg-green-100 text-green-700",
-      socialBg: "bg-green-100",
-      socialHover: "hover:bg-green-200",
-      icon: "text-green-600"
-    }
-  } as const;
-
-  const teamMembers = [
-    {
-      name: "Adarsh Katta",
-      title: "Co-Founder, InvestAlly",
-      subtitle: "Chartered Accountant • CFA Level II",
-      linkedin: "https://www.linkedin.com/in/adarsh-katta",
-      email: "adarsh.katta@investally.co.in",
-      image: "/adarsh katta.JPG",
-      description: "Adarsh is the research brain behind InvestAlly. With deep experience as a Private Equity and Mutual Fund Expert across global institutions like Brookfield, HSBC and JP Morgan, he specialises in identifying the right funds, evaluating risks, and conducting high-quality due diligence. His expertise helps clients make smarter, more informed investment decisions. He brings a sharp analytical eye, a disciplined research approach, and a strong understanding of how great investments are built — ensuring that data, clarity, and conviction back every recommendation at InvestAlly.",
-      credentials: [
-        { icon: Award, title: "Chartered Accountant", subtitle: "CFA Level II" },
-        { icon: Shield, title: "Mutual Fund Distributor", subtitle: "ARN Number: 339359" },
-        { icon: Briefcase, title: "Experience", subtitle: "Private Equity Specialist - Brookfield, HSBC, JP Morgan" },
-      ],
-      color: "teal"
-    },
-    {
-      name: "Minakshi Maheshwari",
-      title: "Co-Founder, InvestAlly",
-      subtitle: "Chartered Accountant · Business Analyst",
-      linkedin: "https://www.linkedin.com/in/minaxi-maheshwari-207bb3b0/",
-      email: "support@investally.co.in",
-      image: "/minakshi maheshwari.jpg",
-      description: "Minakshi is a Chartered Accountant and Business Analyst who helps people make confident financial decisions. Her experience in understanding numbers, analysing risks, and simplifying complex financial information ensures that every client gets clear guidance tailored to their goals. She focuses on creating practical, easy-to-follow plans that help families protect, grow, and manage their wealth with confidence.",
-      credentials: [
-        { icon: Award, title: "Chartered Accountant", subtitle: "Business Analyst" },
-        { icon: Shield, title: "Mutual Fund Distributor", subtitle: "ARN Number: 345644" },
-        { icon: Users, title: "Specialization", subtitle: "Financial Planning & Risk Analysis" },
-      ],
-      color: "green"
-    }
-  ];
-
-  const philosophy = [
-    {
-      icon: Target,
-      title: "Client-First Approach",
-      description: "Your goals, risk appetite, and financial well-being are at the center of everything we do. We act as fiduciaries, always putting your interests first.",
-      gradient: "from-teal-50 to-teal-100",
-      iconBg: "bg-teal-600"
-    },
-    {
-      icon: Compass,
-      title: "Long-Term Value",
-      description: "We focus on sustainable wealth creation through disciplined, research-backed strategies rather than short-term market speculation.",
-      gradient: "from-blue-50 to-blue-100",
-      iconBg: "bg-blue-600"
-    },
-    {
-      icon: Eye,
-      title: "Complete Transparency",
-      description: "No hidden fees, no jargon, no surprises. You'll always know exactly what you're invested in and why, with full visibility into costs and performance.",
-      gradient: "from-green-50 to-green-100",
-      iconBg: "bg-green-600"
-    },
-    {
-      icon: BookOpen,
-      title: "Continuous Education",
-      description: "We empower you with knowledge through regular insights, market updates, and educational content to help you make informed decisions.",
-      gradient: "from-purple-50 to-purple-100",
-      iconBg: "bg-purple-600"
-    }
-  ];
-
   return (
-    <section id="team" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">Meet Our Team</span>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mt-3 mb-4">
-            Led by <span className="gradient-text">Expert Professionals</span>
+    <section id="team" className="py-12 md:py-16 bg-white relative overflow-hidden">
+      {/* Ambient blobs */}
+      <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-teal-200 rounded-full opacity-[0.06] blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-100 rounded-full opacity-[0.10] blur-3xl pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header */}
+        <div className="text-center mb-12">
+          <span className="text-teal-600 font-semibold text-sm uppercase tracking-widest">
+            Meet Our Team
+          </span>
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-2 mb-3 tracking-tight">
+            Led by{" "}
+            <span className="gradient-text">Expert Professionals</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Our SEBI-registered advisors bring decades of expertise in Indian financial markets to help you achieve your goals.
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            SEBI-registered advisors with decades of combined expertise in Indian financial markets.
           </p>
         </div>
 
-        {/* Team Members */}
-        <div className="max-w-6xl mx-auto mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {teamMembers.map((member, index) => {
-              const colors = colorSchemes[member.color as keyof typeof colorSchemes];
-              return (
-                <div key={index} className="bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col">
-                  <div className="flex flex-col items-center text-center flex-grow">
-                    {/* Square Image */}
-                    <div className="relative w-48 h-48 mb-4">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        width={192}
-                        height={192}
-                        className="w-full h-full object-cover rounded-xl shadow-md"
-                      />
-                    </div>
+        {/* Members */}
+        <div className="space-y-10">
+          {teamMembers.map((member, index) => (
+            <div key={index} className="group">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
 
-                    {/* Name and Title */}
-                    <h3 className="text-2xl font-black text-slate-900 mb-1">{member.name}</h3>
-                    <p className={`${colors.text} font-semibold mb-1`}>{member.title}</p>
-                    {member.subtitle && (
-                      <p className="text-slate-600 text-sm font-medium mb-2">{member.subtitle}</p>
-                    )}
-
-                    {/* Social Links */}
-                    <div className="flex space-x-3 mb-6">
-                      {member.linkedin && (
-                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className={`${colors.socialBg} p-2 rounded-lg ${colors.socialHover} transition-all duration-300`}>
-                          <Linkedin className={`h-5 w-5 ${colors.icon}`} />
-                        </a>
-                      )}
-                      <a href={`mailto:${member.email}`} className={`${colors.socialBg} p-2 rounded-lg ${colors.socialHover} transition-all duration-300`}>
-                        <Mail className={`h-5 w-5 ${colors.icon}`} />
-                      </a>
-                    </div>
-
-                    {/* Description */}
-                    <div className="flex-grow flex items-center">
-                      <p className="text-slate-600 text-sm mb-6 leading-relaxed text-center">
-                        {member.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Credentials - Aligned to bottom */}
-                  <div className="w-full space-y-3 mt-auto">
-                    {member.credentials.map((cred, idx) => (
-                      <div key={idx} className="bg-white rounded-lg p-3 text-left">
-                        <div className="flex items-center mb-1">
-                          <cred.icon className={`h-4 w-4 ${colors.icon} mr-2`} />
-                          <p className="text-sm font-semibold text-slate-900">{cred.title}</p>
+                {/* Photo */}
+                <div className="flex-shrink-0 flex flex-col items-center md:items-start gap-4">
+                  <div className="relative">
+                    {/* Decorative accent square behind photo */}
+                    <div className={`absolute -bottom-2 -right-2 w-full h-full rounded-2xl bg-gradient-to-br ${member.accentFrom} to-transparent opacity-20`} />
+                    <div className="relative w-36 h-44 rounded-2xl overflow-hidden shadow-xl ring-1 ring-slate-200">
+                      {member.image ? (
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          className="object-cover object-top"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                          <span className="text-6xl font-black text-white">{member.name.charAt(0)}</span>
                         </div>
-                        <p className="text-xs text-slate-500 ml-6">{cred.subtitle}</p>
-                      </div>
-                    ))}
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Social links */}
+                  <div className="flex gap-3 mt-1">
+                    {member.linkedin && (
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${member.socialColor}`}
+                      >
+                        <Linkedin className="h-4 w-4" />
+                        <span>LinkedIn</span>
+                      </a>
+                    )}
+                    <span className="text-slate-300">·</span>
+                    <a
+                      href={`mailto:${member.email}`}
+                      className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${member.socialColor}`}
+                    >
+                      <Mail className="h-4 w-4" />
+                      <span>Email</span>
+                    </a>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Company Philosophy */}
-        <div className="mt-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">
-              Our <span className="gradient-text">Investment Philosophy</span>
-            </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Four core principles that guide every decision we make for your financial success.
-            </p>
-          </div>
+                {/* Content */}
+                <div className="flex-1 pt-1">
 
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            {philosophy.map((item, index) => (
-              <div key={index} className={`bg-gradient-to-br ${item.gradient} rounded-2xl p-10 hover:shadow-xl transition-shadow duration-300`}>
-                <div className={`${item.iconBg} w-20 h-20 rounded-full flex items-center justify-center mb-6`}>
-                  <item.icon className="text-white h-10 w-10" />
+                  {/* Top row: Name/title block LEFT · Worked-at logos RIGHT */}
+                  <div className="flex items-end justify-between gap-6 pr-10">
+
+                    {/* Name & title */}
+                    <div className="min-w-0">
+                      <h3 className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
+                        {member.name}
+                      </h3>
+                      <p className={`text-base font-semibold mt-1 ${member.titleColor}`}>
+                        {member.title}
+                      </p>
+                      <p className="text-sm text-slate-500 mt-0.5">{member.subtitle}</p>
+                    </div>
+
+                    {/* Worked at — sits in the empty right space, aligned with the name row */}
+                    <div className="flex-shrink-0 flex flex-col items-center gap-2">
+                      <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
+                        Worked at
+                      </span>
+                      <div className="flex gap-2.5 items-center">
+                        {[1, 2, 3].map((i) => (
+                          <div
+                            key={i}
+                            className="relative w-11 h-11 rounded-xl bg-white border border-slate-200 shadow-sm ring-1 ring-slate-100 overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
+                          >
+                            <Image
+                              src="/company-logos/hsbc-logo.png"
+                              alt="Company"
+                              fill
+                              className="object-contain p-1.5"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Thin accent rule */}
+                  <div className={`mt-5 mb-5 h-px w-16 bg-gradient-to-r ${member.accentFrom} to-transparent`} />
+
+                  {/* Bio */}
+                  <p className="text-slate-600 leading-relaxed text-[0.95rem]">
+                    {member.description}
+                  </p>
+
+                  {/* Credential tags */}
+                  <div className="flex flex-wrap gap-2 mt-6">
+                    {member.tags.map((tag, tIdx) => {
+                      const Icon = member.tagIcons[tIdx];
+                      return (
+                        <span
+                          key={tIdx}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${member.tagColor}`}
+                        >
+                          <Icon className="h-3 w-3 flex-shrink-0" />
+                          {tag}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">{item.title}</h3>
-                <p className="text-slate-700 leading-relaxed">
-                  {item.description}
-                </p>
               </div>
-            ))}
-          </div>
+
+              {/* Divider — except after last */}
+              {index < teamMembers.length - 1 && (
+                <div className="mt-10 border-t border-dashed border-slate-200" />
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

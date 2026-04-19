@@ -92,7 +92,7 @@ export default function AboutUsPage() {
                             </div>
 
                             <div className="pt-8">
-                                <h2 className="text-2xl font-bold text-slate-900 mb-4">Our Services</h2>
+                                <h2 className="text-2xl font-bold text-slate-900 mb-4">Our Solutions</h2>
                                 <ul className="list-disc list-inside text-lg text-slate-600 space-y-2">
                                     <li>Mutual Fund Advisory and Portfolio Management</li>
                                     <li>Insurance Planning and Advisory</li>
