@@ -42,7 +42,7 @@ const teamMembers = [
     subtitle: "MBA Finance · SEBI Registered Advisor",
     linkedin: "https://www.linkedin.com/",
     email: "rahul.sharma@investally.co.in",
-    image: "",
+    image: "/team/team_mate3_medium.jpeg",
     description:
       "Rahul brings strategic vision and deep market intelligence to InvestAlly. With over a decade of experience across leading institutions, he helps clients navigate complex markets with confidence. His client-first philosophy has guided hundreds of families towards long-term financial independence and sustainable wealth creation.",
     tags: ["SEBI Registered Advisor", "MBA Finance", "Goldman Sachs · ICICI"],
@@ -81,7 +81,7 @@ export default function TeamSection() {
         <div className="space-y-10">
           {teamMembers.map((member, index) => (
             <div key={index} className="group">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
 
                 {/* Photo */}
                 <div className="flex-shrink-0 flex flex-col items-center md:items-start gap-4">
@@ -105,7 +105,7 @@ export default function TeamSection() {
                   </div>
 
                   {/* Social links */}
-                  <div className="flex gap-3 mt-1">
+                  <div className="flex justify-center md:justify-start gap-3 mt-1">
                     {member.linkedin && (
                       <a
                         href={member.linkedin}
@@ -129,10 +129,10 @@ export default function TeamSection() {
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 pt-1">
+                <div className="flex-1 pt-1 text-center md:text-left w-full">
 
-                  {/* Top row: Name/title block LEFT · Worked-at logos RIGHT */}
-                  <div className="flex items-end justify-between gap-6 pr-10">
+                  {/* Name, Title and Worked-at row */}
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:pr-10">
 
                     {/* Name & title */}
                     <div className="min-w-0">
@@ -145,8 +145,8 @@ export default function TeamSection() {
                       <p className="text-sm text-slate-500 mt-0.5">{member.subtitle}</p>
                     </div>
 
-                    {/* Worked at — sits in the empty right space, aligned with the name row */}
-                    <div className="flex-shrink-0 flex flex-col items-center gap-2">
+                    {/* Worked at — centered on mobile, right-aligned on desktop */}
+                    <div className="flex-shrink-0 flex flex-col items-center md:items-end gap-2 mt-2 md:mt-0">
                       <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
                         Worked at
                       </span>
@@ -154,7 +154,7 @@ export default function TeamSection() {
                         {[1, 2, 3].map((i) => (
                           <div
                             key={i}
-                            className="relative w-11 h-11 rounded-xl bg-white border border-slate-200 shadow-sm ring-1 ring-slate-100 overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
+                            className="relative w-10 md:w-11 h-10 md:h-11 rounded-xl bg-white border border-slate-200 shadow-sm ring-1 ring-slate-100 overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
                           >
                             <Image
                               src="/company-logos/hsbc-logo.png"
@@ -168,16 +168,16 @@ export default function TeamSection() {
                     </div>
                   </div>
 
-                  {/* Thin accent rule */}
-                  <div className={`mt-5 mb-5 h-px w-16 bg-gradient-to-r ${member.accentFrom} to-transparent`} />
+                  {/* Thin accent rule — centered on mobile */}
+                  <div className={`mt-5 mb-5 h-px w-16 bg-gradient-to-r ${member.accentFrom} to-transparent mx-auto md:mx-0`} />
 
                   {/* Bio */}
-                  <p className="text-slate-600 leading-relaxed text-[0.95rem]">
+                  <p className="text-slate-600 leading-relaxed text-[0.95rem] max-w-2xl mx-auto md:mx-0">
                     {member.description}
                   </p>
 
-                  {/* Credential tags */}
-                  <div className="flex flex-wrap gap-2 mt-6">
+                  {/* Credential tags — centered on mobile */}
+                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-6">
                     {member.tags.map((tag, tIdx) => {
                       const Icon = member.tagIcons[tIdx];
                       return (

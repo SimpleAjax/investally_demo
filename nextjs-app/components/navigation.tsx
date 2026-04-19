@@ -47,6 +47,12 @@ export default function Navigation() {
             <Link href="/solutions" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
               Solutions
             </Link>
+            <Link href="/#journey" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
+              Journey
+            </Link>
+            <Link href="/#team" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
+              Team
+            </Link>
             <Link href="/calculators" className="text-slate-700 hover:text-teal-600 font-medium transition-colors duration-300">
               Calculators
             </Link>
@@ -55,7 +61,7 @@ export default function Navigation() {
             </Link>
             <Button asChild className="rounded-full bg-teal-600 hover:bg-teal-700">
               <Link href="/#contact" className="inline-flex items-center">
-                Get Started
+                Talk to Expert
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -85,6 +91,12 @@ export default function Navigation() {
             <Link href="/solutions" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
               Solutions
             </Link>
+            <Link href="/#journey" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
+              Journey
+            </Link>
+            <Link href="/#team" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
+              Team
+            </Link>
             <Link href="/calculators" className="block text-slate-700 hover:text-teal-600 font-medium px-3 py-2 rounded-md transition-colors duration-300">
               Calculators
             </Link>
@@ -92,7 +104,7 @@ export default function Navigation() {
               Blog
             </Link>
             <Link href="/#contact" className="block text-teal-600 font-semibold px-3 py-2 rounded-md transition-colors duration-300">
-              Get Started
+              Talk to Expert
             </Link>
           </div>
         )}
