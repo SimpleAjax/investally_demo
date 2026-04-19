@@ -32,21 +32,21 @@ export default function Navigation() {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        scrolled ? "py-3" : "py-5"
+        scrolled ? "py-0 md:py-3" : "py-0 md:py-5"
       }`}
     >
       <nav 
-        className={`mx-auto px-4 sm:px-6 transition-all duration-500 ease-in-out ${
+        className={`mx-auto transition-all duration-500 ease-in-out ${
           scrolled 
-            ? "max-w-5xl" 
-            : "max-w-7xl"
+            ? "max-w-5xl px-0 md:px-6" 
+            : "max-w-7xl px-0 md:px-6"
         }`}
       >
         <div 
           className={`flex justify-between items-center transition-all duration-500 ease-in-out ${
             scrolled 
-              ? "bg-white/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/40 rounded-full py-2 px-6" 
-              : "bg-white/50 backdrop-blur-sm border border-transparent py-2 px-4 rounded-2xl"
+              ? "bg-white/90 md:bg-white/80 backdrop-blur-xl shadow-md md:shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-b md:border border-slate-200/50 md:border-white/40 rounded-none md:rounded-full py-3 md:py-2 px-4 md:px-6" 
+              : "bg-white/60 md:bg-white/50 backdrop-blur-md border-b md:border border-transparent py-4 md:py-2 px-4 md:px-4 rounded-none md:rounded-2xl"
           }`}
         >
           {/* Logo */}
