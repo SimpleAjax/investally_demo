@@ -300,10 +300,12 @@ export default function AboutSection() {
                 ref={rightScrollRef}
                 onMouseEnter={() => setIsRightHovered(true)}
                 onMouseLeave={() => setIsRightHovered(false)}
+                onTouchStart={() => setIsRightHovered(true)}
+                onTouchEnd={() => setIsRightHovered(false)}
                 onScroll={() => handleManualScroll("right")}
                 className={`relative max-h-[350px] custom-scrollbar overflow-y-auto pr-2 ${
                     isMobile 
-                        ? "flex flex-row overflow-x-auto overflow-y-hidden gap-4 pb-6 scroll-smooth" 
+                        ? "flex flex-row overflow-x-auto overflow-y-hidden gap-4 pb-6" 
                         : "flex flex-col space-y-3"
                 }`}
                 style={{ scrollbarWidth: "thin", scrollbarColor: "#14b8a6 transparent" }}
