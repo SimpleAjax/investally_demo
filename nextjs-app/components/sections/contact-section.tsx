@@ -38,14 +38,14 @@ export default function ContactSection() {
   }, []);
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-slate-50 relative overflow-hidden">
+    <section id="contact" className="py-12 md:py-16 bg-slate-50 relative overflow-hidden">
       {/* Subtle background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-teal-100/40 to-transparent rounded-full blur-3xl pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm border border-slate-200 mb-6">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm border border-slate-200 mb-4">
             <Sparkles className="h-4 w-4 text-teal-500" />
             <span className="text-slate-600 text-sm font-medium">Free 30-minute session</span>
           </div>
@@ -58,11 +58,11 @@ export default function ContactSection() {
         </div>
 
         {/* ── MAIN GRID ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
 
           {/* Tally Form — takes 3 cols */}
-          <div className="lg:col-span-3 bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden">
-            <div className="px-8 pt-8 pb-4 border-b border-slate-100 bg-gradient-to-r from-teal-50/50 to-white">
+          <div className="lg:col-span-3 bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden flex flex-col h-full">
+            <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-teal-50/50 to-white">
               <div className="flex items-center gap-3 mb-1">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-lg shadow-teal-200">
                   <Send className="h-5 w-5 text-white" />
@@ -79,12 +79,12 @@ export default function ContactSection() {
             </div>
 
             {/* Tally inline embed */}
-            <div className="px-6 py-4">
+            <div className="px-1 py-1 flex-1">
               <iframe
                 data-tally-src="https://tally.so/embed/Bza5BN?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
                 loading="lazy"
                 width="100%"
-                height="500"
+                height="320"
                 frameBorder="0"
                 marginHeight={0}
                 marginWidth={0}
@@ -94,10 +94,10 @@ export default function ContactSection() {
           </div>
 
           {/* Right sidebar — 2 cols */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4">
 
             {/* Portfolio Health Check - Enhanced */}
-            <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-7 shadow-lg shadow-teal-200 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-teal-600 to-teal-700 rounded-3xl p-5 md:p-6 shadow-lg shadow-teal-200 text-white relative overflow-hidden">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -110,10 +110,10 @@ export default function ContactSection() {
                   <span className="text-teal-100 text-xs font-semibold uppercase tracking-wider">Free Session</span>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-1">Not sure if your investments are on track?</h3>
-                <p className="text-teal-100 font-semibold mb-5 text-sm">Get a Free Portfolio Health Check</p>
+                <h3 className="text-xl font-bold mb-1 leading-tight">Ready for a portfolio check?</h3>
+                <p className="text-teal-100 font-semibold mb-3 text-sm">Get a Free Portfolio Health Check</p>
                 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {[
                     "Identify hidden risks in your current portfolio",
                     "Evaluate fund overlaps and diversification",
@@ -129,7 +129,7 @@ export default function ContactSection() {
                   ))}
                 </div>
 
-                <p className="mt-5 text-teal-200 text-xs text-center italic">
+                <p className="mt-4 text-teal-200 text-[10px] text-center italic">
                   Skip the form — talk to us directly!
                 </p>
                 {isMobile ? (
@@ -154,25 +154,27 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Contact Info Cards */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Contact Info Cards — split width for better visibility */}
+            <div className="grid grid-cols-[1.8fr_1fr] gap-4">
               {/* Email */}
               <a
                 href="mailto:Support@investally.co.in"
-                className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md hover:border-teal-200 transition-all duration-200 group"
+                className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 hover:shadow-md hover:border-teal-200 transition-all duration-200 group flex items-center gap-3"
               >
-                <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center mb-3 group-hover:bg-teal-100 transition-colors">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center group-hover:bg-teal-100 transition-colors">
                   <Mail className="h-5 w-5 text-teal-600" />
                 </div>
-                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Email Us</p>
-                <p className="text-sm font-semibold text-slate-900 group-hover:text-teal-600 transition-colors">
-                  Support@investally.co.in
-                </p>
+                <div className="min-w-0">
+                  <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Email Us</p>
+                  <p className="text-[13px] font-semibold text-slate-900 group-hover:text-teal-600 transition-colors truncate">
+                    Support@investally.co.in
+                  </p>
+                </div>
               </a>
 
               {/* Socials */}
-              <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
-                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-3">Follow Us</p>
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col justify-center">
+                <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider mb-2">Follow Us</p>
                 <div className="flex gap-2">
                   {[
                     { icon: Linkedin, href: "https://www.linkedin.com/company/investallyindia/", label: "LinkedIn" },
@@ -195,7 +197,7 @@ export default function ContactSection() {
             </div>
 
             {/* Phone & WhatsApp - Compact */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+            <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg shadow-green-200">
