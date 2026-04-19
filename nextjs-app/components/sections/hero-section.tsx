@@ -6,10 +6,9 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden text-white"
+      className="relative overflow-hidden text-white min-h-[0] md:min-h-[calc(100vh-64px)]"
       style={{
-        background: "linear-gradient(135deg, #0a7a72 0%, #0d9488 45%, #0f9f95 100%)",
-        minHeight: "calc(100vh - 64px)",
+        background: "linear-gradient(135deg, #0a7a72 0%, #0d9488 45%, #0f9f95 100%)"
       }}
     >
       {/* Subtle radial glow in top-right */}
@@ -56,6 +55,17 @@ export default function HeroSection() {
             >
               Structured financial planning and portfolio guidance designed to help you grow wealth with discipline.
             </p>
+
+            {/* Mobile Image - visible only after subheading on small screens */}
+            <div className="lg:hidden relative w-full aspect-[5/4] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-sm animate-fade-in">
+              <Image
+                src="/animations/hero-section-image.png"
+                alt="InvestAlly — Structured Wealth Management"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
 
             {/* Proof points */}
             <div className="flex flex-col gap-2.5">
