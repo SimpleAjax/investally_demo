@@ -3,10 +3,21 @@
 import { useState, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+
+const roles = ["Lawyers", "CXOs", "Professionals", "Business Owners", "Doctors", "Engineers"];
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [roleIndex, setRoleIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(3);
+
+  useEffect(() => {
+    const roleInterval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 7500);
+    return () => clearInterval(roleInterval);
+  }, []);
 
   const testimonials = [
     {
@@ -116,8 +127,22 @@ export default function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">Client Stories</span>
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-2 mb-3">
-            Trusted by <span className="gradient-text">Thousands</span>
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-2 mb-3 flex flex-col items-center justify-center">
+            <span className="mb-1">Trusted by</span>
+            <span className="relative inline-block w-full h-[1.2em]">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={roleIndex}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
+                  className="gradient-text absolute inset-0 text-center"
+                >
+                  {roles[roleIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
           </h2>
           <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto">
             See what our clients say about their financial journey with Investally.
