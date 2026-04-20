@@ -15,7 +15,7 @@ export default function TestimonialsSection() {
   useEffect(() => {
     const roleInterval = setInterval(() => {
       setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 7500);
+    }, 2000);
     return () => clearInterval(roleInterval);
   }, []);
 
