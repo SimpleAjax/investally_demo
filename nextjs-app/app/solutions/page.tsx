@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -269,77 +269,16 @@ const sectionConfigs: SectionConfig[] = [
 ];
 
 export default function SolutionsPage() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  const wealthRef = useRef<HTMLDivElement>(null);
-  const insuranceRef = useRef<HTMLDivElement>(null);
-  const loansRef = useRef<HTMLDivElement>(null);
-  const advisoryRef = useRef<HTMLDivElement>(null);
-
-  const [interacting, setInteracting] = useState({
-    wealth: false,
-    insurance: false,
-    loans: false,
-    advisory: false,
-  });
-
-  const scrollPos = useRef({
-    wealth: 0,
-    insurance: 0,
-    loans: 0,
-    advisory: 0,
-  });
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobile) return;
-
-    let animationFrameId: number;
-    const scrollSpeed = 0.5;
-
-    const scrollLoop = () => {
-      const sections = [
-        { ref: wealthRef, key: "wealth" as const },
-        { ref: insuranceRef, key: "insurance" as const },
-        { ref: loansRef, key: "loans" as const },
-        { ref: advisoryRef, key: "advisory" as const },
-      ];
-
-      sections.forEach(({ ref, key }) => {
-        if (ref.current && !interacting[key]) {
-          scrollPos.current[key] += scrollSpeed;
-          if (scrollPos.current[key] >= ref.current.scrollWidth / 2) {
-            scrollPos.current[key] = 0;
-          }
-          ref.current.scrollLeft = scrollPos.current[key];
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(scrollLoop);
-    };
-
-    animationFrameId = requestAnimationFrame(scrollLoop);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isMobile, interacting]);
-
-  const handleManualScroll = (key: keyof typeof interacting) => {
-    const refs = {
-      wealth: wealthRef,
-      insurance: insuranceRef,
-      loans: loansRef,
-      advisory: advisoryRef,
-    };
-
-    if (refs[key].current && isMobile) {
-      scrollPos.current[key] = refs[key].current!.scrollLeft;
-    }
-  };
+  const cardGridClasses = useMemo(
+    () =>
+      Object.fromEntries(
+        sectionConfigs.map((section) => [
+          section.id,
+          section.cards.map((_, index) => getGridCardClasses(section.cards.length, index)),
+        ]),
+      ) as Record<SectionConfig["id"], string[]>,
+    [],
+  );
 
   const SolutionCard = ({
     solution,
@@ -404,13 +343,6 @@ export default function SolutionsPage() {
     );
   };
 
-  const sectionRefs = {
-    wealth: wealthRef,
-    insurance: insuranceRef,
-    loans: loansRef,
-    advisory: advisoryRef,
-  };
-
   return (
     <>
       <Navigation />
@@ -473,19 +405,13 @@ export default function SolutionsPage() {
                 </div>
 
                 <div
-                  ref={sectionRefs[section.id]}
-                  onMouseEnter={() => setInteracting((prev) => ({ ...prev, [section.id]: true }))}
-                  onMouseLeave={() => setInteracting((prev) => ({ ...prev, [section.id]: false }))}
-                  onTouchStart={() => setInteracting((prev) => ({ ...prev, [section.id]: true }))}
-                  onTouchEnd={() => setInteracting((prev) => ({ ...prev, [section.id]: false }))}
-                  onScroll={() => handleManualScroll(section.id)}
-                  className={`flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:overflow-visible md:pb-0 custom-scrollbar ${section.dark ? "lg:overflow-visible" : ""}`}
+                  className="flex snap-x snap-mandatory overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:overflow-visible md:pb-0 custom-scrollbar"
                 >
-                  {(isMobile ? [...section.cards, ...section.cards] : section.cards).map((solution, i) => (
+                  {section.cards.map((solution, i) => (
                     <SolutionCard
-                      key={`${solution.id}-${i}`}
+                      key={solution.id}
                       solution={solution}
-                      gridSpan={getGridCardClasses(section.cards.length, i % section.cards.length)}
+                      gridSpan={`${cardGridClasses[section.id][i]} snap-start`}
                       dark={section.dark}
                     />
                   ))}
