@@ -80,7 +80,7 @@ export default async function BlogListingPage() {
                       <div className="bg-orange-600 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
                         <FileText className="text-white h-5 w-5" />
                       </div>
-                      <p className="font-bold text-slate-900 text-sm mb-1">Investment Tax Advisory</p>
+                      <p className="font-bold text-slate-900 text-sm mb-1">Expert Advisory</p>
                       <p className="text-xs text-slate-600">Consultancy</p>
                     </Link>
                   </div>
@@ -93,7 +93,7 @@ export default async function BlogListingPage() {
                     Quick Calculators
                   </h3>
                   <div className="space-y-3">
-                    <Link href="/#calculators" className="block p-4 bg-teal-50 rounded-lg hover:bg-teal-100 transition group">
+                    <Link href="/calculators" className="block p-4 bg-teal-50 rounded-lg hover:bg-teal-100 transition group">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="font-bold text-slate-900 text-sm mb-1">SIP Calculator</p>
@@ -103,7 +103,7 @@ export default async function BlogListingPage() {
                       </div>
                     </Link>
 
-                    <Link href="/#calculators" className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition group">
+                    <Link href="/calculators" className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition group">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="font-bold text-slate-900 text-sm mb-1">EMI Calculator</p>
