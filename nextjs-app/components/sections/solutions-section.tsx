@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { TrendingUp, Shield, Home, BookOpen, ArrowRight, Check } from "lucide-react";
 
 export default function SolutionsSection() {
   const [isMobile, setIsMobile] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [hasManualScroll, setHasManualScroll] = useState(false);
   const scrollPos = useRef(0);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function SolutionsSection() {
   }, []);
 
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile || hasManualScroll) return;
 
     let animationFrameId: number;
     const scrollSpeed = 0.5;
@@ -37,7 +37,22 @@ export default function SolutionsSection() {
 
     animationFrameId = requestAnimationFrame(scrollLoop);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isMobile, isInteracting]);
+  }, [isMobile, isInteracting, hasManualScroll]);
+
+  useEffect(() => {
+    if (!isMobile || !hasManualScroll || !scrollRef.current) return;
+
+    const clampScrollPosition = () => {
+      if (!scrollRef.current) return;
+      const maxScrollLeft = Math.max(0, scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
+      const nextScrollLeft = Math.min(scrollPos.current, maxScrollLeft);
+      scrollPos.current = nextScrollLeft;
+      scrollRef.current.scrollLeft = nextScrollLeft;
+    };
+
+    const frameId = requestAnimationFrame(clampScrollPosition);
+    return () => cancelAnimationFrame(frameId);
+  }, [isMobile, hasManualScroll]);
 
   const handleManualScroll = () => {
     if (scrollRef.current && isMobile) {
@@ -45,17 +60,24 @@ export default function SolutionsSection() {
     }
   };
 
+  const enableFiniteManualScroll = () => {
+    if (!isMobile || hasManualScroll) return;
+    setHasManualScroll(true);
+  };
+
   const solutions = [
     {
       id: "wealth",
       icon: TrendingUp,
       title: "Wealth Building",
-      description: "Harness precision-engineered investment strategies designed to capture market momentum while maintaining strict risk controls.",
+      highlights: ["Mutual Funds", "PMS", "AIF", "Global Investing"],
+      description: "Precision investment strategies across Indian and global markets.",
       features: [
-        "Diversified Mutual Funds",
-        "AIF & Portfolio Management",
-        "Digital Gold & Global Assets",
-        "Private Equity Opportunities"
+        "Portfolio Management Services (PMS)",
+        "International Direct & Feeder Funds, ETFs.",
+        "Mutual Funds & MLDs",
+        "Fractional Real Estate Ownership",
+        "Alternative Investment Funds (AIFs)",
       ],
       link: "/solutions#wealth",
       colSpan: "lg:col-span-7"
@@ -63,12 +85,14 @@ export default function SolutionsSection() {
     {
       id: "protection",
       icon: Shield,
-      title: "Protection",
-      description: "Secure your family's future against life's uncertainties with premium coverage.",
+      title: "Insurance & Protection",
+      highlights: ["Life Insurance", "Health Cover", "Group Plans"],
+      description: "Comprehensive cover for life, health, assets, and your workforce.",
       features: [
-        "TERM INSURANCE",
-        "CRITICAL ILLNESS",
-        "HEALTH FRAMEWORKS"
+        "Life Insurance",
+        "General Insurance",
+        "Group Mediclaim",
+        "Group Term Insurance"
       ],
       link: "/solutions#protection",
       colSpan: "lg:col-span-5"
@@ -76,30 +100,36 @@ export default function SolutionsSection() {
     {
       id: "financing",
       icon: Home,
-      title: "Financing",
-      description: "Intelligent liquidity and structured financing for major acquisitions or expansion.",
+      title: "Loans & Financing",
+      highlights: ["Home Loans", "MSME Loans", "Business Finance"],
+      description: "Smart lending solutions for life's biggest goals and business growth.",
       features: [
-        "HOME & PROPERTY",
-        "BUSINESS EXPANSION",
-        "ASSET BACKED LOANS"
+        "Home Loans",
+        "MSME & Business Loans",
+        "Loan Against Securities",
+        "Business Expansion Finance"
       ],
       link: "/solutions#financing",
-      colSpan: "lg:col-span-4"
+      colSpan: "lg:col-span-5"
     },
     {
       id: "advisory",
       icon: BookOpen,
       title: "Expert Advisory",
-      description: "Professional guidance for tax planning, financial education, and multi-generational wealth strategy.",
+      highlights: ["Tax Planning", "Wealth Strategy", "Education"],
+      description: "Certified advisors for tax, multi-generational wealth strategy, and financial education.",
       features: [
-        "Tax Consultancy",
-        "Portfolio Review"
+        "Tax Planning & Optimisation",
+        "Portfolio Review & Rebalancing",
+        "Wealth & Succession Planning",
+        "Financial Education Workshops"
       ],
       link: "/solutions#advisory",
-      colSpan: "lg:col-span-8",
-      hasImage: true
+      colSpan: "lg:col-span-7"
     }
   ];
+
+  const mobileSolutions = isMobile && !hasManualScroll ? [...solutions, ...solutions] : solutions;
 
   return (
     <section id="solutions" className="py-12 md:py-16 bg-[#f8fafa]">
@@ -124,68 +154,57 @@ export default function SolutionsSection() {
           ref={scrollRef}
           onMouseEnter={() => setIsInteracting(true)}
           onMouseLeave={() => setIsInteracting(false)}
-          onTouchStart={() => setIsInteracting(true)}
+          onTouchStart={() => {
+            enableFiniteManualScroll();
+            setIsInteracting(true);
+          }}
           onTouchEnd={() => setIsInteracting(false)}
           onScroll={handleManualScroll}
-          className="flex overflow-x-auto pb-8 gap-6 lg:grid lg:grid-cols-12 lg:pb-0 custom-scrollbar"
+          className="flex overflow-x-auto pb-8 gap-6 lg:grid lg:grid-cols-12 lg:overflow-visible lg:pb-0 custom-scrollbar"
         >
-          {(isMobile ? [...solutions, ...solutions] : solutions).map((item, index) => (
+          {mobileSolutions.map((item, index) => (
             <div 
               key={`${item.id}-${index}`}
-              className={`flex-shrink-0 w-[85vw] sm:w-[500px] lg:w-auto ${item.colSpan} bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow ${item.hasImage ? 'sm:flex-row' : ''} gap-6`}
+              className={`flex-shrink-0 w-[85vw] sm:w-[500px] lg:w-auto ${item.colSpan} bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow gap-6 ${(item.id === "protection" || item.id === "financing") ? "lg:min-h-[360px]" : ""}`}
             >
-              <div className="flex-1 flex flex-col justify-between">
-                <div>
+              <div className="flex-1 flex flex-col">
+                <div className="flex flex-col flex-1">
                   <div className="flex items-center gap-3 mb-5">
                     <item.icon className="h-5 w-5 text-teal-600" />
                     <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {item.highlights.map((highlight) => (
+                      <span
+                        key={highlight}
+                        className="inline-flex items-center rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-medium text-[#006a63]"
+                      >
+                        {highlight}
+                      </span>
+                    ))}
                   </div>
                   <p className="text-sm text-slate-500 leading-relaxed max-w-lg mb-6">
                     {item.description}
                   </p>
                   
-                  <div className={`grid grid-cols-1 ${item.id === 'wealth' || item.id === 'advisory' ? 'sm:grid-cols-2' : ''} gap-4 mb-8`}>
+                  <div className={`grid grid-cols-1 ${item.id === 'wealth' || item.id === 'advisory' || item.id === 'protection' || item.id === 'financing' ? 'sm:grid-cols-2' : ''} gap-4 ${item.id === 'protection' || item.id === 'financing' ? 'flex-1 content-center' : 'mb-8'}`}>
                     {item.features.map((feature, fIdx) => (
-                      <div key={fIdx} className={item.id === 'advisory' ? '' : 'flex items-center gap-3'}>
-                        {item.id === 'advisory' ? (
-                          <>
-                            <h4 className="text-[#006a63] font-semibold text-sm mb-1">{feature}</h4>
-                            <p className="text-slate-500 text-sm">
-                              {fIdx === 0 ? 'Optimization of complex structures' : 'Deep audit of existing assets'}
-                            </p>
-                          </>
-                        ) : (
-                          <>
-                            <div className="bg-teal-50 rounded-full p-1 border border-teal-100 flex-shrink-0">
-                              <Check className="h-3 w-3 text-teal-600" strokeWidth={3} />
-                            </div>
-                            <span className={`text-sm font-medium ${item.id === 'wealth' ? 'text-slate-700' : 'text-xs font-bold tracking-widest text-[#1e293b] uppercase'}`}>
-                              {feature}
-                            </span>
-                          </>
-                        )}
+                      <div key={fIdx} className="flex items-start gap-3">
+                        <div className="bg-teal-50 rounded-full p-1 border border-teal-100 flex-shrink-0 mt-0.5">
+                          <Check className="h-3 w-3 text-teal-600" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm font-medium text-slate-700 leading-relaxed">
+                          {feature}
+                        </span>
                       </div>
                     ))}
                   </div>
                 </div>
                 
-                <Link href={item.link} className="text-[#006a63] font-semibold text-sm flex items-center gap-2 hover:text-teal-800 transition-colors mt-auto inline-flex w-fit">
+                <Link href={item.link} className={`text-[#006a63] font-semibold text-sm flex items-center gap-2 hover:text-teal-800 transition-colors mt-auto inline-flex w-fit ${item.id === 'protection' || item.id === 'financing' ? 'pt-6' : ''}`}>
                   {item.id === 'wealth' ? 'Explore Wealth Solutions' : item.id === 'advisory' ? 'Book a Consultation' : 'Explore'} <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
-
-              {item.hasImage && (
-                <div className="hidden sm:flex shrink-0 relative items-center justify-center">
-                  <div className="w-[140px] h-[180px] rounded-xl overflow-hidden border border-slate-100 shadow-sm relative object-cover bg-white">
-                    <Image
-                      src="/team/minakshi maheshwari-medium.jpg"
-                      alt="Expert Advisory - Minakshi Maheshwari"
-                      fill
-                      style={{ objectFit: 'cover', objectPosition: 'top' }}
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>

@@ -33,7 +33,7 @@ export default function AboutUsPage() {
                             "@type": "FinancialService",
                             "name": "InvestAlly",
                             "description": "Personalized financial guidance that grows with you - built on trust, transparency, and continuous review. Because wealth creation isn't a one-time act - it's a lifelong relationship.",
-                            "slogan": "We don't sell Investments - We build Investors",
+                            "slogan": "We don't sell Investments, We build Investors",
                             "url": "https://investally.co.in",
                             "logo": "https://investally.co.in/investally_only_logo.png",
                             "image": "https://investally.co.in/investally_only_logo.png",

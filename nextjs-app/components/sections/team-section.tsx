@@ -6,19 +6,24 @@ import { Award, Shield, Briefcase, Users, TrendingUp, Linkedin, Mail } from "luc
 const teamMembers = [
   {
     name: "Adarsh Katta",
-    title: "Co-Founder & Research Director",
+    title: "Co-Founder",
     subtitle: "Chartered Accountant",
     linkedin: "https://www.linkedin.com/in/adarsh-katta",
     email: "adarsh.katta@investally.co.in",
     image: "/team/adarsh katta-medium.jpg",
     description:
-      "Adarsh is the research brain behind InvestAlly. With deep experience as a Private Equity and Mutual Fund Expert across global institutions like Brookfield, HSBC and JP Morgan, he specialises in identifying the right funds, evaluating risks, and conducting high-quality due diligence. His expertise ensures data, clarity, and conviction back every recommendation.",
+      "Before starting InvestAlly, Adarsh spent nearly a decade at global institutions — HSBC and JP Morgan — deciding which fund managers were worth trusting with hundreds of millions of dollars. He evaluated strategies, stress-tested risk frameworks, and scrutinised every assumption before a single allocation was made. He started InvestAlly because he saw a gap: most families never get access to that level of rigour. Now they do. He is the research brain behind InvestAlly.",
     tags: ["Chartered Accountant", "ARN 339359"],
     tagIcons: [Award, Shield],
     accentFrom: "from-teal-500",
     titleColor: "text-teal-600",
     tagColor: "text-teal-700 bg-teal-50 border-teal-200",
     socialColor: "text-teal-600 hover:text-teal-700",
+    workedAt: [
+      { src: "/company-logos/morgan-stanley-logo.png", alt: "Morgan Stanley" },
+      { src: "/company-logos/jpmorgan-chase-logo.svg", alt: "JPMorgan Chase" },
+      { src: "/company-logos/hsbc-logo.png", alt: "HSBC" },
+    ],
   },
   {
     name: "Minakshi Maheshwari",
@@ -28,29 +33,35 @@ const teamMembers = [
     email: "support@investally.co.in",
     image: "/team/minakshi maheshwari-medium.jpg",
     description:
-      "Minakshi is a Chartered Accountant and Business Analyst who helps people make confident financial decisions. Her experience in understanding numbers, analysing risks, and simplifying complex financial information ensures every client receives clear, tailored guidance to protect, grow, and manage their wealth.",
+      "Minakshi is a Chartered Accountant and Business Analyst who helps people make confident financial decisions. Her experience in understanding numbers, analysing risks, and simplifying complex financial information ensures that every client gets clear guidance tailored to their goals. At InvestAlly, she focuses on creating practical, easy-to-follow plans that help families protect, grow, and manage their wealth with confidence.",
     tags: ["Chartered Accountant", "Business Analyst", "ARN 345644"],
     tagIcons: [Award, Users, Shield],
     accentFrom: "from-green-500",
     titleColor: "text-green-600",
     tagColor: "text-green-700 bg-green-50 border-green-200",
     socialColor: "text-green-600 hover:text-green-700",
+    workedAt: [
+      { src: "/company-logos/morgan-stanley-logo.png", alt: "Morgan Stanley" },
+      { src: "/company-logos/societe-generale-logo.png", alt: "Societe Generale" },
+      { src: "/company-logos/ltimindtree-logo.svg", alt: "LTIMindtree" },
+    ],
   },
   {
-    name: "Rahul Sharma",
-    title: "Co-Founder & Wealth Strategist",
-    subtitle: "MBA Finance · SEBI Registered Advisor",
+    name: "Sailesh Jain",
+    title: "Loans Advisor",
+    subtitle: "Chartered Accountant",
     linkedin: "https://www.linkedin.com/",
-    email: "rahul.sharma@investally.co.in",
+    email: "support@investally.co.in",
     image: "/team/team_mate3_medium.jpeg",
     description:
-      "Rahul brings strategic vision and deep market intelligence to InvestAlly. With over a decade of experience across leading institutions, he helps clients navigate complex markets with confidence. His client-first philosophy has guided hundreds of families towards long-term financial independence and sustainable wealth creation.",
-    tags: ["SEBI Registered Advisor", "MBA Finance", "Goldman Sachs · ICICI"],
-    tagIcons: [Shield, Award, Briefcase],
+      "Shailesh brings over a decade of experience in loan syndication and subsidy consultancy—working closely with businesses and individuals to structure financing and unlock benefits under government incentive schemes. His strength lies in navigating the intersection of credit, policy, and execution—ensuring clients access the right funding while optimizing available subsidies. At InvestAlly, we collaborate with him to support clients on the lending side—helping them make informed borrowing decisions that align with their overall financial plan.",
+    tags: ["Chartered Accountant", "Loans Advisor", "Loan Syndication"],
+    tagIcons: [Award, Briefcase, TrendingUp],
     accentFrom: "from-blue-500",
     titleColor: "text-blue-600",
     tagColor: "text-blue-700 bg-blue-50 border-blue-200",
     socialColor: "text-blue-600 hover:text-blue-700",
+    hideWorkedAt: true,
   },
 ];
 
@@ -146,26 +157,28 @@ export default function TeamSection() {
                     </div>
 
                     {/* Worked at — centered on mobile, right-aligned on desktop */}
-                    <div className="flex-shrink-0 flex flex-col items-center md:items-end gap-2 mt-2 md:mt-0">
-                      <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                        Worked at
-                      </span>
-                      <div className="flex gap-2.5 items-center">
-                        {[1, 2, 3].map((i) => (
-                          <div
-                            key={i}
-                            className="relative w-10 md:w-11 h-10 md:h-11 rounded-xl bg-white border border-slate-200 shadow-sm ring-1 ring-slate-100 overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
-                          >
-                            <Image
-                              src="/company-logos/hsbc-logo.png"
-                              alt="Company"
-                              fill
-                              className="object-contain p-1.5"
-                            />
-                          </div>
-                        ))}
+                    {!member.hideWorkedAt && (
+                      <div className="flex-shrink-0 flex flex-col items-center md:items-end gap-2 mt-2 md:mt-0">
+                        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
+                          Worked at
+                        </span>
+                        <div className="flex gap-2.5 items-center">
+                          {member.workedAt?.map((company) => (
+                            <div
+                              key={company.alt}
+                              className="relative w-10 md:w-11 h-10 md:h-11 rounded-xl bg-white border border-slate-200 shadow-sm ring-1 ring-slate-100 overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
+                            >
+                              <Image
+                                src={company.src}
+                                alt={company.alt}
+                                fill
+                                className="object-contain p-1.5"
+                              />
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
 
                   {/* Thin accent rule — centered on mobile */}

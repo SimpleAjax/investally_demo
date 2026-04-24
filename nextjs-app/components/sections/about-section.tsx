@@ -2,9 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, MessageCircle, CheckCircle2, Shield, RefreshCw, BarChart2, Search, Target, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Shield, RefreshCw, BarChart2, Search, Target, Zap } from "lucide-react";
 
 const challenges = [
   "Don't know where to start investing",
@@ -75,6 +73,7 @@ const whyFeatures = [
 export default function AboutSection() {
   const [visibleCount, setVisibleCount] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasManualRightScroll, setHasManualRightScroll] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const leftScrollRef = useRef<HTMLDivElement>(null);
   const rightScrollRef = useRef<HTMLDivElement>(null);
@@ -134,7 +133,8 @@ export default function AboutSection() {
       // Challenges (Left): Auto-scroll ONLY on Desktop
       if (!isMobile && leftScrollRef.current && !isLeftHovered) {
         leftScrollPos.current += scrollSpeed;
-        if (leftScrollPos.current >= leftScrollRef.current.scrollHeight / 2) {
+        const maxLeftScroll = Math.max(0, leftScrollRef.current.scrollHeight - leftScrollRef.current.clientHeight);
+        if (leftScrollPos.current >= maxLeftScroll) {
           leftScrollPos.current = 0;
         }
         leftScrollRef.current.scrollTop = leftScrollPos.current;
@@ -145,11 +145,12 @@ export default function AboutSection() {
         if (!isMobile) {
           // Desktop Vertical
           rightScrollPos.current += scrollSpeed;
-          if (rightScrollPos.current >= rightScrollRef.current.scrollHeight / 2) {
+          const maxRightScroll = Math.max(0, rightScrollRef.current.scrollHeight - rightScrollRef.current.clientHeight);
+          if (rightScrollPos.current >= maxRightScroll) {
             rightScrollPos.current = 0;
           }
           rightScrollRef.current.scrollTop = rightScrollPos.current;
-        } else {
+        } else if (!hasManualRightScroll) {
           // Mobile Horizontal
           rightScrollPos.current += scrollSpeed;
           if (rightScrollPos.current >= rightScrollRef.current.scrollWidth / 2) {
@@ -164,7 +165,29 @@ export default function AboutSection() {
 
     animationFrameId = requestAnimationFrame(scrollLoop);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isMobile, isLeftHovered, isRightHovered]);
+  }, [isMobile, isLeftHovered, isRightHovered, hasManualRightScroll]);
+
+  useEffect(() => {
+    if (!isMobile || !hasManualRightScroll || !rightScrollRef.current) return;
+
+    const clampScrollPosition = () => {
+      if (!rightScrollRef.current) return;
+      const maxScrollLeft = Math.max(0, rightScrollRef.current.scrollWidth - rightScrollRef.current.clientWidth);
+      const nextScrollLeft = Math.min(rightScrollPos.current, maxScrollLeft);
+      rightScrollPos.current = nextScrollLeft;
+      rightScrollRef.current.scrollLeft = nextScrollLeft;
+    };
+
+    const frameId = requestAnimationFrame(clampScrollPosition);
+    return () => cancelAnimationFrame(frameId);
+  }, [isMobile, hasManualRightScroll]);
+
+  const enableFiniteRightManualScroll = () => {
+    if (!isMobile || hasManualRightScroll) return;
+    setHasManualRightScroll(true);
+  };
+
+  const mobileWhyFeatures = isMobile && !hasManualRightScroll ? [...whyFeatures, ...whyFeatures] : whyFeatures;
 
   return (
     <section
@@ -198,24 +221,6 @@ export default function AboutSection() {
 
           {/* ──── LEFT: Challenges (Vertical Only) ──── */}
           <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="relative w-12 h-12 flex-shrink-0">
-                <Image
-                  src="/team/adarsh katta-small.jpg"
-                  alt="Adarsh Katta"
-                  fill
-                  className="rounded-full object-cover object-top border-2 border-teal-50"
-                />
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center">
-                  <MessageCircle className="w-2.5 h-2.5 text-white" />
-                </div>
-              </div>
-              <div>
-                <p className="text-teal-600 text-sm font-semibold leading-tight">Adarsh Katta</p>
-                <p className="text-slate-500 text-xs">SEBI-Registered Advisor</p>
-              </div>
-            </div>
-
             <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider mb-1 block">
               Real Challenges
             </span>
@@ -236,7 +241,7 @@ export default function AboutSection() {
                 className="relative max-h-[320px] overflow-y-auto pr-2 space-y-2.5 custom-scrollbar"
                 style={{ scrollbarWidth: "thin", scrollbarColor: "#14b8a6 transparent" }}
               >
-                {(isMobile ? challenges : [...challenges, ...challenges]).map((challenge, index) => {
+                {challenges.map((challenge, index) => {
                   const actualIndex = index % challenges.length;
                   return (
                     <div
@@ -269,24 +274,6 @@ export default function AboutSection() {
 
           {/* ──── RIGHT: Why Features (Adaptive Scroll) ──── */}
           <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="relative w-12 h-12 flex-shrink-0">
-                <Image
-                  src="/team/minakshi maheshwari-small.jpg"
-                  alt="Minakshi Maheshwari"
-                  fill
-                  className="rounded-full object-cover object-top border-2 border-teal-50"
-                />
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="w-2.5 h-2.5 text-white" />
-                </div>
-              </div>
-              <div>
-                <p className="text-teal-600 text-sm font-semibold leading-tight">Minakshi Maheshwari</p>
-                <p className="text-slate-500 text-xs">SEBI-Registered Advisor</p>
-              </div>
-            </div>
-
             <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider mb-1 block">
               Why InvestAlly
             </span>
@@ -300,7 +287,10 @@ export default function AboutSection() {
                 ref={rightScrollRef}
                 onMouseEnter={() => setIsRightHovered(true)}
                 onMouseLeave={() => setIsRightHovered(false)}
-                onTouchStart={() => setIsRightHovered(true)}
+                onTouchStart={() => {
+                  enableFiniteRightManualScroll();
+                  setIsRightHovered(true);
+                }}
                 onTouchEnd={() => setIsRightHovered(false)}
                 onScroll={() => handleManualScroll("right")}
                 className={`relative max-h-[350px] custom-scrollbar overflow-y-auto pr-2 ${
@@ -310,7 +300,7 @@ export default function AboutSection() {
                 }`}
                 style={{ scrollbarWidth: "thin", scrollbarColor: "#14b8a6 transparent" }}
               >
-                {(isMobile ? [...whyFeatures, ...whyFeatures] : [...whyFeatures, ...whyFeatures]).map((feature, index) => (
+                {(isMobile ? mobileWhyFeatures : whyFeatures).map((feature, index) => (
                   <div
                     key={index}
                     className={`group shrink-0 flex items-start gap-3 p-3 rounded-xl bg-white border border-slate-100 shadow-sm transition-all duration-300 ${
@@ -339,16 +329,6 @@ export default function AboutSection() {
             </div>
           </div>
 
-        </div>
-
-        {/* CTA */}
-        <div className="mt-10 text-center">
-          <Button asChild size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-xl font-bold transition-all duration-300 px-8">
-            <Link href="#contact" className="inline-flex items-center gap-2">
-              Talk to Expert
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-          </Button>
         </div>
       </div>
     </section>

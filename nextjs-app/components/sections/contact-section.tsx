@@ -6,7 +6,7 @@ import {
   Mail,
   Linkedin,
   Facebook,
-  Instagram,
+  Youtube,
   MessageCircle,
   Check,
   Sparkles,
@@ -107,7 +107,7 @@ export default function ContactSection() {
                   <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
                     <Sparkles className="h-4 w-4 text-white" />
                   </div>
-                  <span className="text-teal-100 text-xs font-semibold uppercase tracking-wider">Free Session</span>
+                  <span className="text-teal-100 text-xs font-semibold uppercase tracking-wider">Portfolio Review</span>
                 </div>
                 
                 <h3 className="text-xl font-bold mb-1 leading-tight">Ready for a portfolio check?</h3>
@@ -178,7 +178,7 @@ export default function ContactSection() {
                 <div className="flex gap-2">
                   {[
                     { icon: Linkedin, href: "https://www.linkedin.com/company/investallyindia/", label: "LinkedIn" },
-                    { icon: Instagram, href: "https://www.instagram.com/investally.in", label: "Instagram" },
+                    { icon: Youtube, href: "https://www.youtube.com/@InvestAllyIndia", label: "YouTube" },
                     { icon: Facebook, href: "https://www.facebook.com/share/17i7Z9Zoei/?mibextid=wwXIfr", label: "Facebook" },
                   ].map(({ icon: Icon, href, label }) => (
                     <a

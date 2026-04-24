@@ -38,15 +38,15 @@ export default function Navigation() {
       <nav 
         className={`mx-auto transition-all duration-500 ease-in-out ${
           scrolled 
-            ? "max-w-5xl px-0 md:px-6" 
-            : "max-w-7xl px-0 md:px-6"
+            ? "max-w-5xl px-0 md:pr-4 lg:pr-5" 
+            : "max-w-7xl px-0 md:pr-4 lg:pr-5"
         }`}
       >
         <div 
           className={`flex justify-between items-center transition-all duration-500 ease-in-out ${
             scrolled 
-              ? "bg-white/90 md:bg-white/80 backdrop-blur-xl shadow-md md:shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-b md:border border-slate-200/50 md:border-white/40 rounded-none md:rounded-full h-11 md:h-auto px-3 md:px-6" 
-              : "bg-white/60 md:bg-white/50 backdrop-blur-md border-b md:border border-transparent h-12 md:h-auto px-3 md:px-4 rounded-none md:rounded-2xl"
+              ? "bg-white/90 md:bg-white/80 backdrop-blur-xl shadow-md md:shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-b md:border border-slate-200/50 md:border-white/40 rounded-none md:rounded-full h-11 md:h-auto px-3 md:pl-0 md:pr-5 lg:pl-0 lg:pr-6" 
+              : "bg-white/60 md:bg-white/50 backdrop-blur-md border-b md:border border-transparent h-12 md:h-auto px-3 md:pl-0 md:pr-4 lg:pl-0 lg:pr-4 rounded-none md:rounded-2xl"
           }`}
         >
           {/* Logo */}

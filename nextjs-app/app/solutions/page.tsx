@@ -8,34 +8,16 @@ import {
   ArrowRight,
   Check,
   TrendingUp,
-  Wallet,
-  DollarSign,
-  Shield,
-  Heart,
-  Activity,
-  Users,
   Building2,
-  Briefcase,
-  Receipt,
-  Calendar,
-  PieChart,
-  FileText,
-  Globe,
-  Download,
-  Compass,
-  Scale,
-  Zap,
+  Wallet,
   ShieldCheck,
   Stethoscope,
-  Umbrella,
+  Users,
   Home,
   BriefcaseBusiness,
-  Coins,
-  LineChart,
-  BarChart3,
-  History,
-  Plane,
-  Brain
+  Compass,
+  Receipt,
+  Brain,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/navigation";
@@ -43,161 +25,269 @@ import Footer from "@/components/footer";
 import { getGridCardClasses } from "@/lib/grid-utils";
 import ScrollReveal from "@/components/scroll-reveal";
 
-// --- WEALTH BUILDING DATA ---
-const wealthSolutions = [
+type SolutionCardData = {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+  features: string[];
+  approach: string;
+  meta?: string;
+  footer?: string;
+};
+
+type SectionConfig = {
+  id: "wealth" | "insurance" | "loans" | "advisory";
+  title: string;
+  description: string;
+  background: string;
+  accent: string;
+  cards: SolutionCardData[];
+  dark?: boolean;
+};
+
+const wealthSolutions: SolutionCardData[] = [
   {
     id: "mutual-funds",
     title: "Mutual Funds",
-    description: "Curated selection of high-performance domestic and international funds aligned with your risk appetite.",
+    description:
+      "Curated selection of domestic and international mutual funds aligned with your risk profile and life goals — spanning equity, debt, hybrid, and global fund categories.",
     icon: TrendingUp,
-    features: ["Equity & Debt Mix", "Automated Rebalancing", "Tax-Efficient Structures"],
-    detailedContent: "Our mutual fund framework utilizes proprietary screening models to identify top quintile alpha-generating funds. We don't just pick funds; we build portfolios that address specific liquidity and growth needs, ensuring a balanced core for your investment strategy.",
-    image: "https://images.unsplash.com/photo-1611974714851-482061384736?auto=format&fit=crop&q=80&w=800"
+    meta: "Indian markets from Rs500/month  International from Rs10,000",
+    features: [
+      "Indian equity, debt & hybrid mutual funds",
+      "International direct & global feeder funds and ETFs",
+      "Goal-based fund selection & SIP planning",
+      "AMC & fund manager due diligence",
+      "Quarterly portfolio review & rebalancing",
+    ],
+    approach:
+      "We start by listening — understanding your life goals and conducting a thorough risk profiling. From there, we identify the right fund categories for your profile, then go deeper with rigorous AMC and fund manager due diligence. The result is a personalized investment plan with zero distributor bias. We then review and realign your portfolio every quarter as your life evolves.",
   },
   {
-    id: "pms",
-    title: "Portfolio Management",
-    description: "Discretionary and non-discretionary services designed for bespoke investment philosophies.",
+    id: "mlds-real-estate",
+    title: "MLDs & Fractional Real Estate",
+    description:
+      "Two distinct ways to diversify beyond traditional mutual funds — market-linked debentures for debt alternatives, and fractional real estate ownership to access property investment at an accessible entry point.",
+    icon: Building2,
+    meta: "Min. investment: Rs5L",
+    features: [
+      "Market-linked debentures (MLDs)",
+      "Debt alternative with select downside protection",
+      "Fractional ownership of real estate - property appreciation",
+    ],
+    approach:
+      "MLDs work like a debt product — but select plans can shield you from market downside, making them a considered alternative to traditional fixed-income instruments. For fractional real estate, we evaluate platforms and properties on regulatory standing and asset quality — so you can own a share of real property with confidence.",
+  },
+  {
+    id: "pms-aifs",
+    title: "PMS & AIFs",
+    description:
+      "Bespoke portfolio management and exclusive access to alternative investment funds — for HNI investors seeking superior, risk-adjusted returns beyond public markets.",
     icon: Wallet,
-    features: ["Direct Stock Execution", "Active Risk Monitoring", "Direct Fund Access"],
-    detailedContent: "Bespoke stock portfolios managed with absolute precision. Our PMS partners provide professional management of your equity assets, offering a level of customization and transparency impossible through traditional retail products.",
-    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800"
+    meta: "Min. investment: Rs50L (PMS)  Rs1Cr (AIF)",
+    features: [
+      "Discretionary & non-discretionary PMS",
+      "Category I, II & III AIFs",
+      "Private equity & venture capital access",
+      "Hedge funds & structured products",
+    ],
+    approach:
+      "We match you with SEBI-registered PMS and AIF managers whose philosophy aligns with your goals — with full transparency on fees, strategy, and performance.",
   },
-  {
-    id: "aif",
-    title: "AIF & PMS",
-    description: "Exclusive access to Alternative Investment Funds and professional Portfolio Management Schemes.",
-    icon: Coins,
-    features: ["Venture Capital Access", "Private Equity Participation", "Hedged Strategies"],
-    detailedContent: "Unlock access to the growing alternative investment landscape. We provide entry to high-potential venture capital, real estate, and distressed asset funds that were previously reserved only for institutional players.",
-    image: "https://images.unsplash.com/photo-1633156189776-614264663923?auto=format&fit=crop&q=80&w=800"
-  }
 ];
 
-// --- INSURANCE DATA ---
-const insuranceSolutions = [
+const insuranceSolutions: SolutionCardData[] = [
   {
-    id: "term",
-    title: "Term Insurance",
-    description: "Pure protection plans for maximum coverage at low cost.",
+    id: "life-insurance",
+    title: "Life Insurance",
+    description:
+      "Pure term insurance — and nothing else. We believe life cover should protect your family at the lowest possible cost, freeing the rest of your money to genuinely build wealth.",
     icon: ShieldCheck,
-    features: ["High Sum Assured", "Flexible Tenure", "Add-on Riders"],
-    detailedContent: "The absolute foundation of any robust financial plan. Our term solutions focus on high claim-settlement ratios and comprehensive critical illness riders to ensure your family's future is bulletproof. These plans act as a financial safety net, providing peace of mind through every life stage.",
-    image: "https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=800"
+    features: [
+      "Pure term insurance — maximum cover, minimal premium",
+      "Strategic coverage planning aligned to your wealth goals",
+      "Coverage duration planning — know exactly when you need it till",
+      "Periodic review as your income, expenses & liabilities evolve",
+      "Dedicated claim support when your family needs it most",
+    ],
+    approach:
+      "We don't recommend ULIPs or endowment plans — products that blend insurance with investment rarely do justice to either. Instead, we recommend pure term insurance sized precisely to your needs, structured to complement your wealth building plan. We plan the right coverage amount, the right duration, and stay with you through coverage reviews and claims — so insurance becomes a financial decision, not just an annual expense.",
   },
   {
-    id: "health",
-    title: "Health Insurance",
-    description: "Comprehensive medical covers for individuals and families.",
-    icon: Heart,
-    features: ["Cashless Treatments", "Global Coverage", "Zero Deductibles"],
-    detailedContent: "High-net-worth medical insurance provides access to the world's best hospitals without geographical boundaries. We prioritize plans that include global access and maternity benefits for sovereign transitions, ensuring you receive world-class care wherever you are.",
-    image: "https://images.unsplash.com/photo-1505751172107-160a2b027d9c?auto=format&fit=crop&q=80&w=800"
+    id: "non-life-insurance",
+    title: "Non-Life Insurance",
+    description:
+      "Comprehensive coverage for your health, vehicle, property, and travel — with policy comparison across insurers and dedicated claims support when you need it most.",
+    icon: Stethoscope,
+    features: [
+      "Health insurance — individual & family floater",
+      "Vehicle insurance — two & four wheelers",
+      "Property & home insurance",
+      "Travel insurance — domestic & international",
+      "Critical illness & super top-up covers",
+    ],
+    approach:
+      "We run a coverage need analysis first — then compare policies across insurers on claim settlement ratio, not just premium. We stay with you through claims, not just at purchase.",
   },
   {
-    id: "critical",
-    title: "Critical Illness",
-    description: "Specialized covers for life-threatening diseases.",
-    icon: Activity,
-    features: ["Lump Sum Payouts", "Income Replacement", "Second Opinion"],
-    detailedContent: "A financial shield for health crises. These plans provide a substantial lump sum upon diagnosis of specific life-altering conditions, ensuring you have the capital for the best treatments while protecting your existing savings and maintaining your lifestyle.",
-    image: "https://images.unsplash.com/photo-1454165833767-152e535e6488?auto=format&fit=crop&q=80&w=800"
+    id: "group-insurance",
+    title: "Group Insurance Plans",
+    description:
+      "Employer-sponsored insurance solutions that help businesses attract and retain talent — with group health and life cover for your entire workforce and their families.",
+    icon: Users,
+    features: [
+      "Group mediclaim — employees & dependents",
+      "Group term life insurance",
+      "Corporate personal accident cover",
+      "Cashless hospitalisation network access",
+      "Annual renewal & claims management",
+    ],
+    approach:
+      "We design group plans that balance employee wellbeing with cost efficiency — and handle renewals, additions, and claims so your HR team doesn't have to.",
   },
-  {
-    id: "family-office",
-    title: "Family Office Cover",
-    description: "Global protection for families across multiple jurisdictions.",
-    icon: Globe,
-    features: ["Jurisdictional Planning", "Cyber Protection", "Reputational Risk"],
-    detailedContent: "Holistic asset and life protection scaled for multi-generational families. We integrate insurance with legal structures to protect against kidnap, ransom, cyber extortion, and complex liability issues that can arise in global wealth management.",
-    image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800"
-  }
 ];
 
-// --- LOANS DATA ---
-const loansSolutions = [
+const loansSolutions: SolutionCardData[] = [
   {
-    id: "home-loan",
+    id: "home-loans",
     title: "Home Loans",
-    description: "Efficient financing for luxury real estate and commercial properties.",
+    description:
+      "Finance your dream home with competitive interest rates and flexible tenures — for purchase, construction, or renovation. We compare across 20+ lenders to get you the best deal.",
     icon: Home,
-    features: ["Sovereign Interest Rates", "Quick Processing", "Tax Benefit Optimization"],
-    detailedContent: "Acquire high-value real estate with optimized debt structures. We assist in securing large-ticket home loans for properties in premium micro-markets, focusing on the lowest interest rates and flexible repayment terms that fit your long-term wealth strategy.",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800"
+    features: [
+      "Home purchase & construction loans",
+      "Home renovation & extension loans",
+      "Balance transfer & top-up loans",
+      "NRI home loan assistance",
+      "End-to-end documentation support",
+    ],
+    approach:
+      "We compare rates across banks and NBFCs and negotiate on your behalf. Our team handles documentation and lender coordination — reducing approval time significantly.",
   },
   {
-    id: "business-loan",
-    title: "Business Loans",
-    description: "Structured capital for business expansion and inventory financing.",
+    id: "business-msme-loans",
+    title: "Business & MSME Loans",
+    description:
+      "Fuel your business growth with working capital finance, term loans, and expansion funding — tailored for MSMEs, startups, and established businesses across sectors.",
     icon: BriefcaseBusiness,
-    features: ["Collateral-Free Options", "Flexible Credit Lines", "Strategic Leverage"],
-    detailedContent: "Fuel your entrepreneurial ventures with bespoke corporate debt. Whether it's working capital, asset financing, or acquisition debt, we provide the strategic leverage needed to scale your business legacy while maintaining optimal control.",
-    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=800"
-  }
+    features: [
+      "MSME & SME working capital loans",
+      "Business term & expansion loans",
+    ],
+    approach:
+      "We match your business profile to the right lender — bank or NBFC — and present your case to maximise approval chances while minimising interest cost.",
+  },
+  {
+    id: "secured-loans",
+    title: "Secured Loans & Credit Facilities",
+    description:
+      "Access liquidity by leveraging your existing assets — investments, mutual funds, or property — without liquidating what you've built. Smart borrowing that keeps your wealth intact.",
+    icon: Compass,
+    features: [
+      "Loan against securities (LAS)",
+      "Loan against mutual funds",
+      "Loan against property (secured loans)",
+    ],
+    approach:
+      "Why sell your investments when you can borrow against them? We help you unlock liquidity from your existing assets — securities, mutual funds, or property — at competitive rates, so your wealth continues to compound uninterrupted while you meet your financial needs.",
+  },
 ];
 
-// --- ADVISORY DATA ---
-const advisorySolutions = [
-  { 
-    id: "tax", 
-    title: "Tax Consultancy", 
+const advisorySolutions: SolutionCardData[] = [
+  {
+    id: "tax-planning",
+    title: "Tax Planning & Optimisation",
+    description:
+      "As chartered accountants, we craft tax-efficient strategies that keep more money in your pocket — legally. From ITR filing to complex income structuring for HNIs and business owners.",
     icon: Receipt,
-    description: "Optimizing your tax liabilities through legal structures and cross-border planning.",
-    features: ["Tax-Efficient Structures", "Cross-Border Planning", "Compliance Monitoring"]
+    features: [
+      "Income tax planning & ITR filing",
+      "Capital gains tax optimisation",
+      "Tax-loss harvesting on investments",
+      "HUF & business structure planning",
+    ],
+    approach:
+      "We integrate tax planning with your investment strategy — so your portfolio is structured to minimise tax drag across asset classes year-on-year, not just at filing time.",
   },
-  { 
-    id: "financial", 
-    title: "Financial Planning", 
-    icon: PieChart,
-    description: "Holistic mapping of life goals against cash flows and projected market returns.",
-    features: ["Goal-Based Mapping", "Cash Flow Analysis", "Risk Profiling"]
+  {
+    id: "financial-education",
+    title: "Financial Education Workshops",
+    description:
+      "Interactive workshops that demystify personal finance — empowering individuals, families, and corporate teams to make informed financial decisions with confidence.",
+    icon: Brain,
+    features: [
+      "Personal finance fundamentals",
+      "Investment basics — MF, stocks, gold",
+      "Insurance & risk awareness sessions",
+      "Corporate employee wellness programmes",
+      "Women & money — focused workshops",
+    ],
+    approach:
+      "We believe financial knowledge is the foundation of wealth. Our workshops are jargon-free, interactive, and tailored to the audience — because when you understand money, you control your future.",
   },
-  { 
-    id: "portfolio", 
-    title: "Portfolio Review", 
-    icon: LineChart,
-    description: "Periodic deep-dives into asset performance and structural health of your holdings.",
-    features: ["Asset Audit", "Structural Health Check", "Objective Benchmarking"]
+];
+
+const sectionConfigs: SectionConfig[] = [
+  {
+    id: "wealth",
+    title: "Wealth Building",
+    description:
+      "Precision investment strategies across Indian and global markets — built for disciplined, long-term wealth creation with SEBI-registered expert guidance.",
+    background: "bg-white",
+    accent: "from-[#006a63] to-teal-400",
+    cards: wealthSolutions,
   },
-  { 
-    id: "estate", 
-    title: "Estate Planning", 
-    icon: Scale,
-    description: "Securing your legacy through trusts, wills, and succession structures.",
-    features: ["Trust Formation", "Succession Planning", "Will Management"]
+  {
+    id: "insurance",
+    title: "Insurance & Protection",
+    description:
+      "Unbiased insurance advisory that puts your coverage first. We decode complex policies, compare across insurers, and ensure you're protected for real risks — not oversold.",
+    background: "bg-[#f2f4f4]",
+    accent: "from-[#006a63] to-teal-400",
+    cards: insuranceSolutions,
   },
-  { 
-    id: "global", 
-    title: "Global Advisory", 
-    icon: Globe,
-    description: "Access to international markets, foreign currency management, and residency planning.",
-    features: ["International Access", "Currency Hedge", "Offshore Compliance"]
-  }
+  {
+    id: "loans",
+    title: "Loans & Financing",
+    description:
+      "Smart lending solutions for individuals and businesses — with access to competitive rates across banks and NBFCs, plus end-to-end documentation and approval support.",
+    background: "bg-white",
+    accent: "from-[#006a63] to-teal-400",
+    cards: loansSolutions,
+  },
+  {
+    id: "advisory",
+    title: "Expert Advisory",
+    description:
+      "Certified financial advisors and chartered accountants helping you make smarter money decisions — from tax optimisation and wealth strategy to financial literacy for individuals and corporates.",
+    background: "bg-slate-900",
+    accent: "from-teal-400 to-[#006a63]",
+    cards: advisorySolutions,
+    dark: true,
+  },
 ];
 
 export default function SolutionsPage() {
   const [isMobile, setIsMobile] = useState(false);
-  
-  // Refs for auto-scroll
+
   const wealthRef = useRef<HTMLDivElement>(null);
   const insuranceRef = useRef<HTMLDivElement>(null);
   const loansRef = useRef<HTMLDivElement>(null);
   const advisoryRef = useRef<HTMLDivElement>(null);
 
-  // Interaction states
   const [interacting, setInteracting] = useState({
     wealth: false,
     insurance: false,
     loans: false,
-    advisory: false
+    advisory: false,
   });
 
-  // Scroll positions
   const scrollPos = useRef({
     wealth: 0,
     insurance: 0,
     loans: 0,
-    advisory: 0
+    advisory: 0,
   });
 
   useEffect(() => {
@@ -215,10 +305,10 @@ export default function SolutionsPage() {
 
     const scrollLoop = () => {
       const sections = [
-        { ref: wealthRef, key: 'wealth' as const },
-        { ref: insuranceRef, key: 'insurance' as const },
-        { ref: loansRef, key: 'loans' as const },
-        { ref: advisoryRef, key: 'advisory' as const }
+        { ref: wealthRef, key: "wealth" as const },
+        { ref: insuranceRef, key: "insurance" as const },
+        { ref: loansRef, key: "loans" as const },
+        { ref: advisoryRef, key: "advisory" as const },
       ];
 
       sections.forEach(({ ref, key }) => {
@@ -239,58 +329,92 @@ export default function SolutionsPage() {
   }, [isMobile, interacting]);
 
   const handleManualScroll = (key: keyof typeof interacting) => {
-    const refs = { wealth: wealthRef, insurance: insuranceRef, loans: loansRef, advisory: advisoryRef };
+    const refs = {
+      wealth: wealthRef,
+      insurance: insuranceRef,
+      loans: loansRef,
+      advisory: advisoryRef,
+    };
+
     if (refs[key].current && isMobile) {
       scrollPos.current[key] = refs[key].current!.scrollLeft;
     }
   };
 
-  const SolutionCard = ({ solution, gridSpan }: { solution: any; gridSpan: string }) => {
+  const SolutionCard = ({
+    solution,
+    gridSpan,
+    dark = false,
+  }: {
+    solution: SolutionCardData;
+    gridSpan: string;
+    dark?: boolean;
+  }) => {
+    const cardClasses = dark
+      ? "bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10"
+      : "bg-[#f8fafa] border border-slate-200/50 hover:shadow-xl";
+
+    const iconClasses = dark
+      ? "bg-teal-500/10 text-teal-300"
+      : "bg-teal-50 text-[#006a63]";
+
+    const titleClasses = dark ? "text-white" : "text-slate-900";
+    const descriptionClasses = dark ? "text-teal-50/80" : "text-slate-600";
+    const metaClasses = dark ? "text-teal-200 border-teal-500/20 bg-teal-500/10" : "text-[#006a63] border-teal-100 bg-teal-50";
+    const featureTextClasses = dark ? "text-teal-50/90" : "text-slate-700";
+    const approachLabelClasses = dark ? "text-teal-300" : "text-[#006a63]";
+    const approachTextClasses = dark ? "text-teal-50/80" : "text-slate-600";
+
     return (
       <div
-        key={solution.id}
-        className={`${gridSpan} flex-shrink-0 w-[85vw] sm:w-[500px] md:w-auto bg-[#f8fafa] relative p-6 lg:p-8 rounded-2xl border border-slate-200/50 transition-all hover:shadow-xl overflow-hidden flex flex-col group`}
+        className={`${gridSpan} flex-shrink-0 w-[88vw] sm:w-[520px] md:w-auto rounded-2xl p-6 lg:p-8 transition-all overflow-hidden flex flex-col ${cardClasses}`}
       >
-        <div className="flex flex-col h-full">
-          <div>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-[#006a63]">
-                <solution.icon className="h-6 w-6" />
+        <div className="flex items-center gap-4 mb-5">
+          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconClasses}`}>
+            <solution.icon className="h-6 w-6" />
+          </div>
+          <h3 className={`font-bold text-xl lg:text-2xl ${titleClasses}`}>{solution.title}</h3>
+        </div>
+
+        <p className={`text-sm leading-relaxed mb-5 ${descriptionClasses}`}>{solution.description}</p>
+
+        {solution.meta && (
+          <div className={`inline-flex w-fit rounded-full border px-3 py-1 text-xs font-semibold mb-5 ${metaClasses}`}>
+            {solution.meta}
+          </div>
+        )}
+
+        <ul className={`space-y-3 text-sm mb-6 ${featureTextClasses}`}>
+          {solution.features.map((feature) => (
+            <li key={feature} className="flex items-start gap-3">
+              <div className="mt-0.5 w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center text-[#006a63] shrink-0">
+                <Check className="h-3 w-3" strokeWidth={4} />
               </div>
-              <h3 className="font-bold text-slate-900 text-2xl">
-                {solution.title}
-              </h3>
-            </div>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
 
-            <p className="text-slate-600 mb-8 leading-relaxed text-sm">
-              {solution.description}
-            </p>
-
-            <ul className="space-y-4 text-xs text-slate-700">
-              {solution.features?.map((feature: string, i: number) => (
-                <li key={i} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center text-[#006a63]">
-                    <Check className="h-3 w-3" strokeWidth={4} />
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className="mt-auto pt-6 text-[#006a63] font-bold text-sm flex items-center gap-2">
-            Learn More <ArrowRight className="h-4 w-4" />
-          </div>
+        <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/10">
+          <p className={`text-xs font-bold uppercase tracking-[0.18em] mb-3 ${approachLabelClasses}`}>The InvestAlly approach</p>
+          <p className={`text-sm leading-relaxed ${approachTextClasses}`}>{solution.approach}</p>
+          {solution.footer && <p className={`text-sm leading-relaxed mt-4 ${approachTextClasses}`}>{solution.footer}</p>}
         </div>
       </div>
     );
+  };
+
+  const sectionRefs = {
+    wealth: wealthRef,
+    insurance: insuranceRef,
+    loans: loansRef,
+    advisory: advisoryRef,
   };
 
   return (
     <>
       <Navigation />
       <main className="pt-24 bg-[#f8fafa]">
-        {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
           <Link href="/" className="text-[#006a63] hover:underline font-medium inline-flex items-center transition-colors text-sm">
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -298,7 +422,6 @@ export default function SolutionsPage() {
           </Link>
         </div>
 
-        {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-teal-50 text-[#006a63] font-semibold text-xs uppercase tracking-widest border border-teal-100">
@@ -306,10 +429,10 @@ export default function SolutionsPage() {
             </div>
             <h1 className="font-black text-5xl lg:text-7xl text-slate-900 leading-[1.1] tracking-tight">
               Comprehensive <br />
-              <span className="text-[#006a63]">Financial Frameworks</span>
+              <span className="text-[#006a63]">Financial Solutions</span>
             </h1>
             <p className="text-slate-600 text-lg max-w-xl leading-relaxed">
-              At InvestAlly, we transcend traditional asset management. Our frameworks are engineered for the sovereign investor, balancing multi-generational wealth preservation with aggressive growth strategies.
+              Wealth creation, protection, lending, and advisory under one roof — with disciplined execution and guidance aligned to your real financial goals.
             </p>
             <div className="flex gap-4">
               <Button asChild className="bg-[#006a63] hover:bg-teal-700 text-white px-8 py-6 rounded-lg font-bold text-base flex items-center gap-2 group shadow-lg transition-transform hover:scale-[1.02]">
@@ -323,7 +446,7 @@ export default function SolutionsPage() {
           <div className="flex-1 relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
             <Image
               src="/animations/solutions-hero-section-image.png"
-              alt="InvestAlly Financial Freedom"
+              alt="InvestAlly Financial Solutions"
               fill
               className="object-cover"
               priority
@@ -332,182 +455,59 @@ export default function SolutionsPage() {
           </div>
         </section>
 
-        {/* Wealth Building Section */}
-        <ScrollReveal>
-          <section id="wealth" className="bg-white py-16 scroll-mt-24">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="mb-10">
-                <h2 className="font-black text-4xl text-slate-900 mb-4">Wealth Building</h2>
-                <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
-              </div>
-              <div 
-                ref={wealthRef}
-                onMouseEnter={() => setInteracting(prev => ({ ...prev, wealth: true }))}
-                onMouseLeave={() => setInteracting(prev => ({ ...prev, wealth: false }))}
-                onTouchStart={() => setInteracting(prev => ({ ...prev, wealth: true }))}
-                onTouchEnd={() => setInteracting(prev => ({ ...prev, wealth: false }))}
-                onScroll={() => handleManualScroll('wealth')}
-                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
-              >
-                {(isMobile ? [...wealthSolutions, ...wealthSolutions] : wealthSolutions).map((solution, i) => (
-                  <SolutionCard 
-                    key={`${solution.id}-${i}`} 
-                    solution={solution} 
-                    gridSpan={getGridCardClasses(wealthSolutions.length, i % wealthSolutions.length)} 
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-        </ScrollReveal>
-
-        {/* Insurance & Protection Section */}
-        <ScrollReveal>
-          <section id="insurance" className="bg-[#f2f4f4] py-16 scroll-mt-24">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="mb-10">
-                <h2 className="font-black text-4xl text-slate-900 mb-4">Insurance & Protection</h2>
-                <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
-              </div>
-              <div 
-                ref={insuranceRef}
-                onMouseEnter={() => setInteracting(prev => ({ ...prev, insurance: true }))}
-                onMouseLeave={() => setInteracting(prev => ({ ...prev, insurance: false }))}
-                onTouchStart={() => setInteracting(prev => ({ ...prev, insurance: true }))}
-                onTouchEnd={() => setInteracting(prev => ({ ...prev, insurance: false }))}
-                onScroll={() => handleManualScroll('insurance')}
-                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
-              >
-                {(isMobile ? [...insuranceSolutions, ...insuranceSolutions] : insuranceSolutions).map((solution, i) => (
-                  <SolutionCard 
-                    key={`${solution.id}-${i}`} 
-                    solution={solution} 
-                    gridSpan={getGridCardClasses(insuranceSolutions.length, i % insuranceSolutions.length)} 
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-        </ScrollReveal>
-
-        {/* Loans & Financing Section */}
-        <ScrollReveal>
-          <section id="loans" className="bg-white py-16 scroll-mt-24">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="mb-10">
-                <h2 className="font-black text-4xl text-slate-900 mb-4">Loans & Financing</h2>
-                <div className="w-20 h-1.5 bg-gradient-to-r from-[#006a63] to-teal-400 rounded-full" />
-              </div>
-              <div 
-                ref={loansRef}
-                onMouseEnter={() => setInteracting(prev => ({ ...prev, loans: true }))}
-                onMouseLeave={() => setInteracting(prev => ({ ...prev, loans: false }))}
-                onTouchStart={() => setInteracting(prev => ({ ...prev, loans: true }))}
-                onTouchEnd={() => setInteracting(prev => ({ ...prev, loans: false }))}
-                onScroll={() => handleManualScroll('loans')}
-                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
-              >
-                {(isMobile ? [...loansSolutions, ...loansSolutions] : loansSolutions).map((solution, i) => (
-                  <SolutionCard 
-                    key={`${solution.id}-${i}`} 
-                    solution={solution} 
-                    gridSpan={getGridCardClasses(loansSolutions.length, i % loansSolutions.length)} 
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-        </ScrollReveal>
-
-        {/* Expert Advisory Section */}
-        <ScrollReveal>
-          <section id="advisory" className="bg-slate-900 py-16 relative overflow-hidden scroll-mt-24">
-            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-              <div className="grid grid-cols-6 h-full">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="border-r border-teal-500/20 last:border-0" />
-                ))}
-              </div>
-            </div>
-            
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-              <div className="mb-12">
-                <h2 className="font-black text-4xl text-white mb-4">Expert Advisory</h2>
-                <div className="w-20 h-1.5 bg-gradient-to-r from-teal-400 to-[#006a63] rounded-full" />
-              </div>
-
-              <div 
-                ref={advisoryRef}
-                onMouseEnter={() => setInteracting(prev => ({ ...prev, advisory: true }))}
-                onMouseLeave={() => setInteracting(prev => ({ ...prev, advisory: false }))}
-                onTouchStart={() => setInteracting(prev => ({ ...prev, advisory: true }))}
-                onTouchEnd={() => setInteracting(prev => ({ ...prev, advisory: false }))}
-                onScroll={() => handleManualScroll('advisory')}
-                className="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:pb-0 custom-scrollbar"
-              >
-                {(isMobile ? [...advisorySolutions, ...advisorySolutions] : advisorySolutions).map((solution, i) => (
-                  <div
-                    key={`${solution.id}-${i}`}
-                    className={`${getGridCardClasses(advisorySolutions.length, i % advisorySolutions.length)} flex-shrink-0 w-[85vw] sm:w-[500px] md:w-auto bg-white/5 backdrop-blur-sm p-6 lg:p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center h-full transition-all group hover:bg-white/10`}
-                  >
-                    <div className="flex flex-col items-center">
-                      <div className="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400 mb-6">
-                        <solution.icon className="h-7 w-7" />
-                      </div>
-                      <h3 className="font-bold text-white mb-4 text-xl">{solution.title}</h3>
-                      
-                      <p className="text-teal-100/60 leading-relaxed mb-8 text-sm">
-                         {solution.description}
-                      </p>
-
-                      <ul className="space-y-4 text-xs text-teal-100/40 w-full">
-                        {solution.features?.map((feature: string, i: number) => (
-                          <li key={i} className="flex items-center gap-2 justify-center">
-                            <Check className="h-4 w-4 text-teal-400" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-20 p-8 lg:p-12 rounded-3xl bg-gradient-to-br from-teal-600 to-teal-800 text-white relative overflow-hidden shadow-2xl">
-                 <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
-                    <Globe className="text-[30rem] absolute -top-20 -right-20" />
-                 </div>
-                 <div className="relative z-10 max-w-3xl">
-                    <h3 className="text-xl md:text-3xl font-black mb-6 italic">"A Legacy is built one decision at a time. We ensure every decision is mathematically sound and strategically sovereign."</h3>
-                    <p className="text-teal-100 text-base md:text-lg mb-8 opacity-80">
-                      Connect with our advisory board for specialized family office setup, cross-border tax planning, and philanthropic engineering.
+        {sectionConfigs.map((section) => (
+          <ScrollReveal key={section.id}>
+            <section id={section.id} className={`${section.background} py-16 scroll-mt-24 ${section.dark ? "relative overflow-hidden" : ""}`}>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="mb-10 max-w-4xl">
+                  <h2 className={`font-black text-4xl mb-4 ${section.dark ? "text-white" : "text-slate-900"}`}>{section.title}</h2>
+                  <div className={`w-20 h-1.5 bg-gradient-to-r ${section.accent} rounded-full mb-5`} />
+                  <p className={`text-base md:text-lg leading-relaxed ${section.dark ? "text-teal-50/75" : "text-slate-600"}`}>
+                    {section.description}
+                  </p>
+                  {section.id === "insurance" && (
+                    <p className="text-sm mt-4 text-teal-700 font-medium">
+                      Insurance advisory services available. Execution through IRDAI-licensed partner brokers.
                     </p>
-                    <Button asChild className="bg-white text-[#006a63] hover:bg-teal-50 px-10 py-7 rounded-full font-bold text-lg shadow-2xl transition-transform hover:scale-105">
-                       <Link href="/#contact">Private Consultation</Link>
-                    </Button>
-                 </div>
-              </div>
-            </div>
-          </section>
-        </ScrollReveal>
+                  )}
+                </div>
 
-        {/* CTA Section */}
+                <div
+                  ref={sectionRefs[section.id]}
+                  onMouseEnter={() => setInteracting((prev) => ({ ...prev, [section.id]: true }))}
+                  onMouseLeave={() => setInteracting((prev) => ({ ...prev, [section.id]: false }))}
+                  onTouchStart={() => setInteracting((prev) => ({ ...prev, [section.id]: true }))}
+                  onTouchEnd={() => setInteracting((prev) => ({ ...prev, [section.id]: false }))}
+                  onScroll={() => handleManualScroll(section.id)}
+                  className={`flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:overflow-visible md:pb-0 custom-scrollbar ${section.dark ? "lg:overflow-visible" : ""}`}
+                >
+                  {(isMobile ? [...section.cards, ...section.cards] : section.cards).map((solution, i) => (
+                    <SolutionCard
+                      key={`${solution.id}-${i}`}
+                      solution={solution}
+                      gridSpan={getGridCardClasses(section.cards.length, i % section.cards.length)}
+                      dark={section.dark}
+                    />
+                  ))}
+                </div>
+              </div>
+            </section>
+          </ScrollReveal>
+        ))}
+
         <ScrollReveal>
           <section className="bg-white py-16 text-center">
             <div className="max-w-4xl mx-auto px-8">
-              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tight">Ready to Engineer Your Future?</h2>
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tight">Ready to Build with Clarity?</h2>
               <p className="text-slate-600 text-base md:text-lg mb-10 leading-relaxed max-w-2xl mx-auto">
-                Join the elite investors who trust InvestAlly for their complex financial frameworks. Our specialized advisors are ready to design your sovereign path.
+                Talk to InvestAlly for a structured plan across investments, protection, credit, and advisory — built around your life, not pushed products.
               </p>
               <Button asChild size="lg" className="bg-[#006a63] hover:bg-teal-700 text-white px-10 py-8 rounded-xl font-bold text-lg shadow-xl hover:-translate-y-1 transition-all">
                 <Link href="/#contact" className="flex items-center gap-2">
-                  Book Private Consultation
+                  Book Consultation
                   <ArrowRight className="h-6 w-6" />
                 </Link>
               </Button>
-              <p className="mt-10 text-slate-400 text-sm italic font-medium">
-                At <span className="text-[#006a63] font-bold">InvestAlly</span>, your financial legacy is our masterwork.
-              </p>
             </div>
           </section>
         </ScrollReveal>

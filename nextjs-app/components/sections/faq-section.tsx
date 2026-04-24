@@ -5,37 +5,57 @@ import { HelpCircle, ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "How is InvestAlly different from other financial advisors?",
-    answer: "We give you a written financial plan — not vague advice. Every client gets quarterly scheduled reviews (not 'when you ask'), WhatsApp access to your advisor with 4-hour response times, and the freedom to exit anytime with zero penalties. Plus, we clean up your existing portfolio within 30 days — most clients go from 15+ overlapping funds to 5 purposeful ones."
+    question: "What does a financial advisor actually do for me — and how is InvestAlly different?",
+    answer: "A financial advisor helps you make structured, goal-based decisions across investments, insurance, and taxes. At InvestAlly, the focus is not on selling products but on building a clear financial roadmap. We prioritize asset allocation, risk management, and long-term discipline—while keeping insurance and investments strictly separate to avoid conflicts of interest."
+  },
+  {
+    question: "Which mutual funds should I invest in — and how do you decide?",
+    answer: "There is no best mutual fund for everyone. At InvestAlly, fund selection follows your goals, time horizon, and risk profile. We evaluate funds based on consistency, risk-adjusted returns, portfolio quality, and fund manager strategy—not short-term performance or trends."
+  },
+  {
+    question: "How is investing through an advisor different from doing it myself on Zerodha or Groww?",
+    answer: "Platforms like Zerodha or Groww provide execution; they dont provide strategy. An advisor adds value through asset allocation, portfolio construction, behavioral guidance, and ongoing monitoring. InvestAlly ensures you stay aligned to your goals—especially during market volatility, where most DIY investors make costly mistakes."
+  },
+  {
+    question: "How do you build a financial plan for a family — where do you even start?",
+    answer: "We start with clarity: understanding income, expenses, existing investments, liabilities, and life goals. From there, we define priorities, assess risk, and build a structured plan covering investments, insurance, and liquidity. The focus is on creating a system—not just picking products."
+  },
+  {
+    question: "I already have investments scattered across funds and policies. Can you help sort them out?",
+    answer: "Yes. InvestAlly specializes in portfolio consolidation and review. We analyze your existing investments, identify overlaps, underperformers, and unnecessary products, and restructure your portfolio to make it goal-aligned, tax-efficient, and easier to manage."
+  },
+  {
+    question: "I have LIC policies and some ULIPs — but how do I know if my family is actually protected enough?",
+    answer: "Most traditional policies and ULIPs provide inadequate life cover relative to real needs. We assess your required coverage based on income, liabilities, and future goals, and typically recommend pure term insurance for effective protection—ensuring your family is financially secure."
+  },
+  {
+    question: "Should I keep insurance and investments separate, or are combined plans like ULIPs better?",
+    answer: "They should be separate. Combined products like ULIPs often result in high costs, low flexibility, and suboptimal returns. InvestAlly follows a clear principle: use term insurance for protection and mutual funds or other instruments for wealth creation."
   },
   {
     question: "Do you charge hidden fees or commissions?",
-    answer: "Absolutely not. Our fees are disclosed upfront before you invest a single rupee. We don't take hidden trail commissions from fund houses. What we quote is what you pay — no surprises, ever."
+    answer: "No. Transparency is core to our approach. Any commissions (where applicable) are disclosed upfront, and our advice is not driven by product incentives. The focus remains on what is best for your financial goals."
   },
   {
-    question: "I already have investments. Can you help clean them up?",
-    answer: "Yes — in fact, we start there. Within 30 days of onboarding, we audit your existing portfolio, remove duplicates, consolidate overlapping funds, and create a lean, purposeful investment strategy. Average client sees 15 funds reduced to 5 optimized ones."
+    question: "How do you approach risk — what happens to my portfolio when markets fall?",
+    answer: "Risk is managed through proper asset allocation, diversification, and disciplined investing. Market falls are expected and planned for—not reacted to. We help you stay invested, rebalance when needed, and avoid panic decisions that can harm long-term returns."
   },
   {
-    question: "How often will we review my portfolio?",
-    answer: "Every 90 days, guaranteed. These aren't 'call me when you need' reviews — they're scheduled in advance on our calendar. We proactively rebalance, discuss life changes, and update your plan so it always matches your goals."
+    question: "Do you also help with home loans, insurance, and tax planning — or only investments?",
+    answer: "Yes. InvestAlly provides holistic financial guidance, including insurance advisory, tax-efficient investing, and strategic inputs on liabilities like home loans—ensuring all financial decisions work together cohesively."
   },
   {
-    question: "What if I want to stop or withdraw my money?",
-    answer: "Your money is always yours. There are no lock-in periods, no exit penalties, and no minimum commitment. You can stop SIPs, switch funds, or withdraw completely — anytime, no questions asked."
+    question: "Is there a minimum amount needed to start investing with InvestAlly?",
+    answer: "No strict minimum. What matters more is consistency and discipline. Whether youre starting small or investing larger amounts, we help structure your investments in a way that aligns with your long-term goals."
   },
   {
-    question: "How quickly can I reach my advisor?",
-    answer: "You'll have direct WhatsApp access to your SEBI-registered advisor — not a relationship manager or call center. We respond within 4 hours during business hours. For urgent matters, you can always call."
+    question: "Can I stop, pause, or withdraw my investments at any time?",
+    answer: "Yes. Most mutual fund investments offer flexibility to pause, stop SIPs, or withdraw (subject to exit loads or tax implications). We guide you on the right timing and impact to ensure decisions dont disrupt your financial plan."
   },
   {
-    question: "Is there a minimum investment required?",
-    answer: "We work with clients starting from ₹50,000 in investable assets. Whether you're just starting out or have a substantial portfolio, we create plans that fit your current situation and grow with you."
+    question: "Do you suggest only India-based funds or also global investments?",
+    answer: "InvestAlly recommends both India-based and global investments. A well-diversified portfolio often benefits from international exposure across developed and emerging markets. We help you invest in Indian mutual funds as well as global opportunities, based on your goals, risk profile, and asset allocation strategy."
   },
-  {
-    question: "How do I get started?",
-    answer: "Book a free 30-minute discovery call. We'll understand your goals, review your current portfolio, and explain exactly how we can help. No obligation, no sales pressure — just honest advice. If it's a fit, we onboard you within 48 hours."
-  }
 ];
 
 export default function FAQSection() {

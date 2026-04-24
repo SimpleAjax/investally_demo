@@ -42,7 +42,7 @@ export default function HeroSection() {
               className="font-black text-white leading-[1.08] tracking-tight"
               style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
             >
-              We don&apos;t sell investments —
+              We don&apos;t sell investments,
               <br />
               <span style={{ color: "#a7f3d0" }}>We build investors.</span>
             </h1>
