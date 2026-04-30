@@ -290,16 +290,6 @@ export default function SolutionsPage() {
 
   useEffect(() => {
     const syncCardHeights = () => {
-      if (window.innerWidth < 768) {
-        setSyncedHeights({
-          wealth: { description: 0, meta: 0, features: 0, approach: 0 },
-          insurance: { description: 0, meta: 0, features: 0, approach: 0 },
-          loans: { description: 0, meta: 0, features: 0, approach: 0 },
-          advisory: { description: 0, meta: 0, features: 0, approach: 0 },
-        });
-        return;
-      }
-
       const nextHeights = {
         wealth: { description: 0, meta: 0, features: 0, approach: 0 },
         insurance: { description: 0, meta: 0, features: 0, approach: 0 },
@@ -328,8 +318,14 @@ export default function SolutionsPage() {
     };
 
     syncCardHeights();
+    const frameId = window.requestAnimationFrame(syncCardHeights);
+    const timeoutId = window.setTimeout(syncCardHeights, 150);
     window.addEventListener("resize", syncCardHeights);
-    return () => window.removeEventListener("resize", syncCardHeights);
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.clearTimeout(timeoutId);
+      window.removeEventListener("resize", syncCardHeights);
+    };
   }, []);
 
   const SolutionCard = ({
