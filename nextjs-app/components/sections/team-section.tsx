@@ -13,8 +13,8 @@ const teamMembers = [
     image: "/team/adarsh katta-medium.jpg",
     description:
       "Before starting InvestAlly, Adarsh spent nearly a decade at global institutions — HSBC and JP Morgan — deciding which fund managers were worth trusting with hundreds of millions of dollars. He evaluated strategies, stress-tested risk frameworks, and scrutinised every assumption before a single allocation was made. He started InvestAlly because he saw a gap: most families never get access to that level of rigour. Now they do. He is the research brain behind InvestAlly.",
-    tags: ["Chartered Accountant", "ARN 339359"],
-    tagIcons: [Award, Shield],
+    tags: ["Chartered Accountant", "ARN 339359", "APRN08555 - PMS Code"],
+    tagIcons: [Award, Shield, Briefcase],
     accentFrom: "from-teal-500",
     titleColor: "text-teal-600",
     tagColor: "text-teal-700 bg-teal-50 border-teal-200",
@@ -50,7 +50,7 @@ const teamMembers = [
     name: "Sailesh Jain",
     title: "Loans Advisor",
     subtitle: "Chartered Accountant",
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/shailesh-jain-322423178",
     email: "support@investally.co.in",
     image: "/team/team_mate3_medium.jpeg",
     description:

@@ -1,10 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  ArrowLeft,
   ArrowRight,
   Check,
   TrendingUp,
@@ -269,6 +268,15 @@ const sectionConfigs: SectionConfig[] = [
 ];
 
 export default function SolutionsPage() {
+  const [syncedHeights, setSyncedHeights] = useState<
+    Record<SectionConfig["id"], { description: number; meta: number; features: number; approach: number }>
+  >({
+    wealth: { description: 0, meta: 0, features: 0, approach: 0 },
+    insurance: { description: 0, meta: 0, features: 0, approach: 0 },
+    loans: { description: 0, meta: 0, features: 0, approach: 0 },
+    advisory: { description: 0, meta: 0, features: 0, approach: 0 },
+  });
+
   const cardGridClasses = useMemo(
     () =>
       Object.fromEntries(
@@ -280,13 +288,59 @@ export default function SolutionsPage() {
     [],
   );
 
+  useEffect(() => {
+    const syncCardHeights = () => {
+      if (window.innerWidth < 768) {
+        setSyncedHeights({
+          wealth: { description: 0, meta: 0, features: 0, approach: 0 },
+          insurance: { description: 0, meta: 0, features: 0, approach: 0 },
+          loans: { description: 0, meta: 0, features: 0, approach: 0 },
+          advisory: { description: 0, meta: 0, features: 0, approach: 0 },
+        });
+        return;
+      }
+
+      const nextHeights = {
+        wealth: { description: 0, meta: 0, features: 0, approach: 0 },
+        insurance: { description: 0, meta: 0, features: 0, approach: 0 },
+        loans: { description: 0, meta: 0, features: 0, approach: 0 },
+        advisory: { description: 0, meta: 0, features: 0, approach: 0 },
+      } as Record<SectionConfig["id"], { description: number; meta: number; features: number; approach: number }>;
+
+      sectionConfigs.forEach((section) => {
+        const sectionRoot = document.getElementById(section.id);
+        if (!sectionRoot) return;
+
+        const descriptions = sectionRoot.querySelectorAll<HTMLElement>("[data-card-description]");
+        const metas = sectionRoot.querySelectorAll<HTMLElement>("[data-card-meta]");
+        const features = sectionRoot.querySelectorAll<HTMLElement>("[data-card-features]");
+        const approaches = sectionRoot.querySelectorAll<HTMLElement>("[data-card-approach]");
+
+        nextHeights[section.id] = {
+          description: Math.max(0, ...Array.from(descriptions, (node) => node.offsetHeight)),
+          meta: Math.max(0, ...Array.from(metas, (node) => node.offsetHeight)),
+          features: Math.max(0, ...Array.from(features, (node) => node.offsetHeight)),
+          approach: Math.max(0, ...Array.from(approaches, (node) => node.offsetHeight)),
+        };
+      });
+
+      setSyncedHeights(nextHeights);
+    };
+
+    syncCardHeights();
+    window.addEventListener("resize", syncCardHeights);
+    return () => window.removeEventListener("resize", syncCardHeights);
+  }, []);
+
   const SolutionCard = ({
     solution,
     gridSpan,
+    sectionId,
     dark = false,
   }: {
     solution: SolutionCardData;
     gridSpan: string;
+    sectionId: SectionConfig["id"];
     dark?: boolean;
   }) => {
     const cardClasses = dark
@@ -306,7 +360,7 @@ export default function SolutionsPage() {
 
     return (
       <div
-        className={`${gridSpan} flex-shrink-0 w-[88vw] sm:w-[520px] md:w-auto rounded-2xl p-6 lg:p-8 transition-all overflow-hidden flex flex-col ${cardClasses}`}
+        className={`${gridSpan} flex-shrink-0 w-[88vw] sm:w-[520px] md:w-auto h-full rounded-2xl p-6 lg:p-8 transition-all overflow-hidden flex flex-col ${cardClasses}`}
       >
         <div className="flex items-center gap-4 mb-5">
           <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconClasses}`}>
@@ -315,15 +369,31 @@ export default function SolutionsPage() {
           <h3 className={`font-bold text-xl lg:text-2xl ${titleClasses}`}>{solution.title}</h3>
         </div>
 
-        <p className={`text-sm leading-relaxed mb-5 ${descriptionClasses}`}>{solution.description}</p>
+        <p
+          data-card-description
+          style={{ minHeight: syncedHeights[sectionId].description || undefined }}
+          className={`text-sm leading-relaxed mb-5 ${descriptionClasses}`}
+        >
+          {solution.description}
+        </p>
 
-        {solution.meta && (
-          <div className={`inline-flex w-fit rounded-full border px-3 py-1 text-xs font-semibold mb-5 ${metaClasses}`}>
-            {solution.meta}
-          </div>
-        )}
+        <div
+          data-card-meta
+          style={{ minHeight: syncedHeights[sectionId].meta || undefined }}
+          className="mb-5 min-h-[2rem]"
+        >
+          {solution.meta && (
+            <div className={`inline-flex w-fit rounded-full border px-3 py-1 text-xs font-semibold ${metaClasses}`}>
+              {solution.meta}
+            </div>
+          )}
+        </div>
 
-        <ul className={`space-y-3 text-sm mb-6 ${featureTextClasses}`}>
+        <ul
+          data-card-features
+          style={{ minHeight: syncedHeights[sectionId].features || undefined }}
+          className={`space-y-3 text-sm mb-6 ${featureTextClasses}`}
+        >
           {solution.features.map((feature) => (
             <li key={feature} className="flex items-start gap-3">
               <div className="mt-0.5 w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center text-[#006a63] shrink-0">
@@ -334,7 +404,11 @@ export default function SolutionsPage() {
           ))}
         </ul>
 
-        <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/10">
+        <div
+          data-card-approach
+          style={{ minHeight: syncedHeights[sectionId].approach || undefined }}
+          className="mt-auto pt-6 border-t border-black/5 dark:border-white/10"
+        >
           <p className={`text-xs font-bold uppercase tracking-[0.18em] mb-3 ${approachLabelClasses}`}>The InvestAlly approach</p>
           <p className={`text-sm leading-relaxed ${approachTextClasses}`}>{solution.approach}</p>
           {solution.footer && <p className={`text-sm leading-relaxed mt-4 ${approachTextClasses}`}>{solution.footer}</p>}
@@ -346,44 +420,44 @@ export default function SolutionsPage() {
   return (
     <>
       <Navigation />
-      <main className="pt-24 bg-[#f8fafa]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-          <Link href="/" className="text-[#006a63] hover:underline font-medium inline-flex items-center transition-colors text-sm">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </Link>
-        </div>
-
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row items-center gap-16">
-          <div className="flex-1 space-y-8">
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-teal-50 text-[#006a63] font-semibold text-xs uppercase tracking-widest border border-teal-100">
-              Expert Solutions
-            </div>
-            <h1 className="font-black text-5xl lg:text-7xl text-slate-900 leading-[1.1] tracking-tight">
-              Comprehensive <br />
-              <span className="text-[#006a63]">Financial Solutions</span>
-            </h1>
-            <p className="text-slate-600 text-lg max-w-xl leading-relaxed">
-              Wealth creation, protection, lending, and advisory under one roof — with disciplined execution and guidance aligned to your real financial goals.
-            </p>
-            <div className="flex gap-4">
-              <Button asChild className="bg-[#006a63] hover:bg-teal-700 text-white px-8 py-6 rounded-lg font-bold text-base flex items-center gap-2 group shadow-lg transition-transform hover:scale-[1.02]">
-                <Link href="/#contact">
-                  Begin Your Journey
-                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-          <div className="flex-1 relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
+      <main className="bg-[#f8fafa]">
+        <section className="relative overflow-hidden min-h-screen pt-20 md:pt-0">
+          <div className="absolute inset-0">
             <Image
-              src="/animations/solutions-hero-section-image.png"
+              src="/animations/solutions_hero_section.png"
               alt="InvestAlly Financial Solutions"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               priority
             />
-            <div className="absolute inset-0 bg-teal-600/10 mix-blend-multiply pointer-events-none" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,250,0.94)_0%,rgba(248,250,250,0.84)_34%,rgba(248,250,250,0.5)_62%,rgba(248,250,250,0.12)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.2),transparent_42%),linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.16)_100%)]" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-full md:w-[58%] bg-[linear-gradient(90deg,rgba(255,255,255,0.34)_0%,rgba(255,255,255,0.16)_70%,transparent_100%)]" />
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 min-h-screen flex items-start md:items-center">
+            <div className="w-full grid grid-cols-1 gap-8 items-start pt-4 pb-8 md:items-center md:pt-[clamp(5.5rem,10vw,9rem)] md:pb-[clamp(3rem,6vw,5rem)]">
+              <div className="max-w-2xl space-y-8">
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/85 text-[#006a63] font-semibold text-xs uppercase tracking-widest border border-teal-100 backdrop-blur-sm">
+                  Expert Solutions
+                </div>
+                <h1 className="font-black text-5xl lg:text-7xl text-slate-900 leading-[1.1] tracking-tight">
+                  Comprehensive <br />
+                  <span className="text-[#006a63]">Financial Solutions</span>
+                </h1>
+                <p className="text-slate-700 text-lg max-w-xl leading-relaxed">
+                  Wealth creation, protection, lending, and advisory under one roof — with disciplined execution and guidance aligned to your real financial goals.
+                </p>
+                <div className="flex gap-4">
+                  <Button asChild className="bg-[#006a63] hover:bg-teal-700 text-white px-8 py-6 rounded-lg font-bold text-base flex items-center gap-2 group shadow-lg transition-transform hover:scale-[1.02]">
+                    <Link href="/#contact">
+                      Begin Your Journey
+                      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -405,12 +479,13 @@ export default function SolutionsPage() {
                 </div>
 
                 <div
-                  className="flex snap-x snap-mandatory overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:overflow-visible md:pb-0 custom-scrollbar"
+                  className="flex snap-x snap-mandatory overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:auto-rows-fr md:items-stretch md:overflow-visible md:pb-0 custom-scrollbar"
                 >
                   {section.cards.map((solution, i) => (
                     <SolutionCard
                       key={solution.id}
                       solution={solution}
+                      sectionId={section.id}
                       gridSpan={`${cardGridClasses[section.id][i]} snap-start`}
                       dark={section.dark}
                     />

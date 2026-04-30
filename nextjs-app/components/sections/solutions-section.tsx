@@ -70,7 +70,6 @@ export default function SolutionsSection() {
       id: "wealth",
       icon: TrendingUp,
       title: "Wealth Building",
-      highlights: ["Mutual Funds", "PMS", "AIF", "Global Investing"],
       description: "Precision investment strategies across Indian and global markets.",
       features: [
         "Portfolio Management Services (PMS)",
@@ -86,7 +85,6 @@ export default function SolutionsSection() {
       id: "protection",
       icon: Shield,
       title: "Insurance & Protection",
-      highlights: ["Life Insurance", "Health Cover", "Group Plans"],
       description: "Comprehensive cover for life, health, assets, and your workforce.",
       features: [
         "Life Insurance",
@@ -101,7 +99,6 @@ export default function SolutionsSection() {
       id: "financing",
       icon: Home,
       title: "Loans & Financing",
-      highlights: ["Home Loans", "MSME Loans", "Business Finance"],
       description: "Smart lending solutions for life's biggest goals and business growth.",
       features: [
         "Home Loans",
@@ -116,7 +113,6 @@ export default function SolutionsSection() {
       id: "advisory",
       icon: BookOpen,
       title: "Expert Advisory",
-      highlights: ["Tax Planning", "Wealth Strategy", "Education"],
       description: "Certified advisors for tax, multi-generational wealth strategy, and financial education.",
       features: [
         "Tax Planning & Optimisation",
@@ -165,31 +161,22 @@ export default function SolutionsSection() {
           {mobileSolutions.map((item, index) => (
             <div 
               key={`${item.id}-${index}`}
-              className={`flex-shrink-0 w-[85vw] sm:w-[500px] lg:w-auto ${item.colSpan} bg-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow gap-6 ${(item.id === "protection" || item.id === "financing") ? "lg:min-h-[360px]" : ""}`}
+              className={`flex-shrink-0 w-[85vw] sm:w-[500px] lg:w-auto ${item.colSpan} bg-white p-6 sm:p-7 rounded-2xl flex flex-col border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow gap-5 lg:min-h-[332px]`}
             >
               <div className="flex-1 flex flex-col">
                 <div className="flex flex-col flex-1">
-                  <div className="flex items-center gap-3 mb-5">
+                  <div className="flex items-center gap-3 mb-4">
                     <item.icon className="h-5 w-5 text-teal-600" />
                     <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {item.highlights.map((highlight) => (
-                      <span
-                        key={highlight}
-                        className="inline-flex items-center rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-medium text-[#006a63]"
-                      >
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-sm text-slate-500 leading-relaxed max-w-lg mb-6">
+                  <p className="text-sm text-slate-500 leading-relaxed max-w-lg mb-5">
                     {item.description}
                   </p>
                   
-                  <div className={`grid grid-cols-1 ${item.id === 'wealth' || item.id === 'advisory' || item.id === 'protection' || item.id === 'financing' ? 'sm:grid-cols-2' : ''} gap-4 ${item.id === 'protection' || item.id === 'financing' ? 'flex-1 content-center' : 'mb-8'}`}>
+                  <div className="flex-1 flex items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3 w-full">
                     {item.features.map((feature, fIdx) => (
-                      <div key={fIdx} className="flex items-start gap-3">
+                      <div key={fIdx} className="flex items-start gap-3 min-h-[44px]">
                         <div className="bg-teal-50 rounded-full p-1 border border-teal-100 flex-shrink-0 mt-0.5">
                           <Check className="h-3 w-3 text-teal-600" strokeWidth={3} />
                         </div>
@@ -198,11 +185,12 @@ export default function SolutionsSection() {
                         </span>
                       </div>
                     ))}
+                    </div>
                   </div>
                 </div>
                 
-                <Link href={item.link} className={`text-[#006a63] font-semibold text-sm flex items-center gap-2 hover:text-teal-800 transition-colors mt-auto inline-flex w-fit ${item.id === 'protection' || item.id === 'financing' ? 'pt-6' : ''}`}>
-                  {item.id === 'wealth' ? 'Explore Wealth Solutions' : item.id === 'advisory' ? 'Book a Consultation' : 'Explore'} <ArrowRight className="h-4 w-4" />
+                <Link href={item.link} className="text-[#006a63] font-semibold text-sm flex items-center gap-2 hover:text-teal-800 transition-colors mt-auto inline-flex w-fit pt-5">
+                  Explore <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

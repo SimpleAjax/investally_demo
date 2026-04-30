@@ -6,33 +6,33 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden text-white pt-20 md:pt-0 min-h-[0] md:min-h-[calc(100vh-64px)]"
-      style={{
-        background: "linear-gradient(135deg, #0a7a72 0%, #0d9488 45%, #0f9f95 100%)"
-      }}
+      className="relative overflow-hidden text-white pt-20 md:pt-0 min-h-[0] md:min-h-[calc(100vh-64px)] bg-[#0f766e]"
     >
-      {/* Subtle radial glow in top-right */}
-      <div
-        className="pointer-events-none absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full opacity-20"
-        style={{ background: "radial-gradient(circle, #5eead4 0%, transparent 70%)" }}
-      />
-      {/* Subtle radial glow bottom-left */}
-      <div
-        className="pointer-events-none absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full opacity-10"
-        style={{ background: "radial-gradient(circle, #2dd4bf 0%, transparent 70%)" }}
-      />
+      <div className="absolute inset-0">
+        <Image
+          src="/animations/hero section.png"
+          alt="InvestAlly financial journey illustration"
+          fill
+          priority
+          className="object-cover object-center"
+        />
+      </div>
+
+      {/* Contrast layer for legibility over the illustration */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(7,36,34,0.86)_0%,rgba(7,36,34,0.72)_38%,rgba(7,36,34,0.38)_62%,rgba(7,36,34,0.18)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_42%),linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.22)_100%)]" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-full md:w-[58%] bg-[linear-gradient(90deg,rgba(6,24,23,0.48)_0%,rgba(6,24,23,0.22)_70%,transparent_100%)]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 h-full flex items-start md:items-center">
         <div
-          className="w-full grid grid-cols-1 gap-8 items-start pt-4 pb-8 md:items-center md:pt-[clamp(5.5rem,10vw,9rem)] md:pb-[clamp(2rem,5vw,4rem)] lg:grid-cols-2 lg:gap-12"
+          className="w-full grid grid-cols-1 gap-8 items-start pt-4 pb-8 md:items-center md:pt-[clamp(5.5rem,10vw,9rem)] md:pb-[clamp(2rem,5vw,4rem)]"
         >
 
-          {/* ─── LEFT CONTENT ─── */}
-          <div className="flex flex-col gap-2 md:gap-5">
+          <div className="flex max-w-2xl flex-col gap-2 md:gap-5">
 
             {/* Eyebrow badge */}
             <div className="inline-flex self-start items-center gap-2 px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[9px] md:text-xs font-bold uppercase tracking-widest"
-              style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}>
+              style={{ background: "rgba(255,255,255,0.14)", border: "1px solid rgba(255,255,255,0.22)", backdropFilter: "blur(8px)" }}>
               <span className="inline-block w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-emerald-300" />
               Trusted by Smart Investors Across India
             </div>
@@ -50,21 +50,10 @@ export default function HeroSection() {
             {/* Sub-copy */}
             <p
               className="leading-relaxed max-w-md"
-              style={{ color: "rgba(255,255,255,0.78)", fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)" }}
+              style={{ color: "rgba(255,255,255,0.86)", fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)" }}
             >
               Structured financial planning and portfolio guidance designed to help you grow wealth with discipline.
             </p>
-
-            {/* Mobile Image - visible only after subheading on small screens */}
-            <div className="lg:hidden relative w-full aspect-[5/4] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-sm animate-fade-in">
-              <Image
-                src="/animations/hero-section-image.png"
-                alt="InvestAlly — Structured Wealth Management"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
 
             {/* Proof points */}
             <div className="flex flex-col gap-2.5">
@@ -73,7 +62,7 @@ export default function HeroSection() {
                   style={{ background: "rgba(167,243,208,0.15)", border: "1px solid rgba(167,243,208,0.3)" }}>
                   <ShieldCheck className="w-4 h-4" style={{ color: "#a7f3d0" }} />
                 </div>
-                <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.88)" }}>
+                <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.92)" }}>
                   Founded by Chartered Accountants
                 </span>
               </div>
@@ -82,7 +71,7 @@ export default function HeroSection() {
                   style={{ background: "rgba(167,243,208,0.15)", border: "1px solid rgba(167,243,208,0.3)" }}>
                   <BarChart3 className="w-4 h-4" style={{ color: "#a7f3d0" }} />
                 </div>
-                <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.88)" }}>
+                <span className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.92)" }}>
                   Evidence-driven investing approach
                 </span>
               </div>
@@ -102,7 +91,7 @@ export default function HeroSection() {
                 Book a 30-Min Clarity Session
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <p className="text-xs pl-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <p className="text-xs pl-1" style={{ color: "rgba(255,255,255,0.68)" }}>
                 * Understand your portfolio, risks, and next steps.
               </p>
             </div>
@@ -120,34 +109,12 @@ export default function HeroSection() {
                 <div
                   key={i}
                   className="flex flex-col items-center justify-center py-3 px-2"
-                  style={{ background: "rgba(255,255,255,0.07)" }}
+                  style={{ background: "rgba(255,255,255,0.1)" }}
                 >
                   <span className="text-xl font-black text-white">{stat.value}</span>
-                  <span className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>{stat.label}</span>
+                  <span className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.7)" }}>{stat.label}</span>
                 </div>
               ))}
-            </div>
-
-          </div>
-
-          {/* ─── RIGHT IMAGE ─── */}
-          <div className="hidden lg:flex items-center justify-center">
-            <div
-              className="relative w-full rounded-2xl overflow-hidden shadow-2xl"
-              style={{
-                aspectRatio: "5/4",
-                border: "1px solid rgba(255,255,255,0.18)",
-                background: "rgba(255,255,255,0.06)",
-                backdropFilter: "blur(4px)",
-              }}
-            >
-              <Image
-                src="/animations/hero-section-image.png"
-                alt="InvestAlly — Structured Wealth Management"
-                fill
-                className="object-cover"
-                priority
-              />
             </div>
           </div>
 

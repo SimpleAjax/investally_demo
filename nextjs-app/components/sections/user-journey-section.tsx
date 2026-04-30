@@ -235,7 +235,7 @@ export default function UserJourneySection() {
                                                             src={step.image}
                                                             alt={`Step ${step.number}: ${step.title}`}
                                                             fill
-                                                            className="object-contain p-4"
+                                                            className="object-cover object-center"
                                                         />
                                                         {/* Step number badge */}
                                                         <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center shadow-lg">
@@ -298,7 +298,7 @@ export default function UserJourneySection() {
                                     src={active.image}
                                     alt={`Step ${active.number}: ${active.title}`}
                                     fill
-                                    className="object-contain p-4"
+                                    className="object-cover object-center"
                                     style={{ animation: "stepFadeIn 0.4s ease both" }}
                                 />
                                 {/* Step number badge */}
