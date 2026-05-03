@@ -100,6 +100,19 @@ export default function TestimonialsSection() {
 
   const maxIndex = testimonials.length - slidesToShow;
 
+  const goToSlide = (nextIndex: number, behavior: ScrollBehavior = "smooth") => {
+    const boundedIndex = Math.max(0, Math.min(nextIndex, maxIndex));
+
+    if (isMobile && sliderRef.current) {
+      sliderRef.current.scrollTo({
+        left: boundedIndex * sliderRef.current.clientWidth,
+        behavior,
+      });
+    }
+
+    setCurrentIndex(boundedIndex);
+  };
+
   const pauseAutoAdvance = () => {
     autoAdvancePausedRef.current = true;
 
@@ -115,34 +128,35 @@ export default function TestimonialsSection() {
 
   const nextSlide = () => {
     pauseAutoAdvance();
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    goToSlide(currentIndex >= maxIndex ? 0 : currentIndex + 1);
   };
 
   const prevSlide = () => {
     pauseAutoAdvance();
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+    goToSlide(currentIndex <= 0 ? maxIndex : currentIndex - 1);
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (autoAdvancePausedRef.current) return;
-      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+      setCurrentIndex((prev) => {
+        const nextIndex = prev >= maxIndex ? 0 : prev + 1;
+
+        if (isMobile && sliderRef.current) {
+          sliderRef.current.scrollTo({
+            left: nextIndex * sliderRef.current.clientWidth,
+            behavior: "smooth",
+          });
+        }
+
+        return nextIndex;
+      });
     }, 5000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [maxIndex]);
-
-  useEffect(() => {
-    if (!isMobile || !sliderRef.current) return;
-
-    const cardWidth = sliderRef.current.clientWidth;
-    sliderRef.current.scrollTo({
-      left: currentIndex * cardWidth,
-      behavior: "smooth",
-    });
-  }, [currentIndex, isMobile]);
+  }, [isMobile, maxIndex]);
 
   useEffect(() => {
     if (!isMobile || !sliderRef.current) return;
@@ -285,7 +299,10 @@ export default function TestimonialsSection() {
             {testimonials.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentIndex(index <= maxIndex ? index : maxIndex)}
+                onClick={() => {
+                  pauseAutoAdvance();
+                  goToSlide(index <= maxIndex ? index : maxIndex);
+                }}
                 className={`w-3 h-3 rounded-full transition-colors duration-300 ${currentIndex === index ? 'bg-teal-600' : 'bg-slate-300'
                   }`}
               />
