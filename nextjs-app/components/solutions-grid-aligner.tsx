@@ -36,7 +36,7 @@ export default function SolutionsGridAligner({
           node.style.minHeight = "";
         }
 
-        if (window.innerWidth < 768 || nodes.length === 0) {
+        if (nodes.length === 0) {
           continue;
         }
 

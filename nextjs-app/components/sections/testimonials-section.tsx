@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useViewportBelow } from "@/hooks/useViewportBelow";
@@ -10,6 +10,9 @@ const roles = ["Lawyers", "CXOs", "Professionals", "Business Owners", "Doctors",
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [roleIndex, setRoleIndex] = useState(0);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const autoAdvanceResumeRef = useRef<number | null>(null);
+  const autoAdvancePausedRef = useRef(false);
   const isMobile = useViewportBelow(768);
   const slidesToShow = isMobile ? 1 : 3;
 
@@ -97,16 +100,32 @@ export default function TestimonialsSection() {
 
   const maxIndex = testimonials.length - slidesToShow;
 
+  const pauseAutoAdvance = () => {
+    autoAdvancePausedRef.current = true;
+
+    if (autoAdvanceResumeRef.current) {
+      window.clearTimeout(autoAdvanceResumeRef.current);
+    }
+
+    autoAdvanceResumeRef.current = window.setTimeout(() => {
+      autoAdvancePausedRef.current = false;
+      autoAdvanceResumeRef.current = null;
+    }, 3500);
+  };
+
   const nextSlide = () => {
+    pauseAutoAdvance();
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
+    pauseAutoAdvance();
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (autoAdvancePausedRef.current) return;
       setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }, 5000);
 
@@ -114,6 +133,45 @@ export default function TestimonialsSection() {
       clearInterval(interval);
     };
   }, [maxIndex]);
+
+  useEffect(() => {
+    if (!isMobile || !sliderRef.current) return;
+
+    const cardWidth = sliderRef.current.clientWidth;
+    sliderRef.current.scrollTo({
+      left: currentIndex * cardWidth,
+      behavior: "smooth",
+    });
+  }, [currentIndex, isMobile]);
+
+  useEffect(() => {
+    if (!isMobile || !sliderRef.current) return;
+
+    const slider = sliderRef.current;
+
+    const handleScroll = () => {
+      pauseAutoAdvance();
+      const cardWidth = slider.clientWidth;
+      if (cardWidth === 0) return;
+
+      const nextIndex = Math.round(slider.scrollLeft / cardWidth);
+      setCurrentIndex((prev) => (prev === nextIndex ? prev : Math.min(nextIndex, maxIndex)));
+    };
+
+    slider.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      slider.removeEventListener("scroll", handleScroll);
+    };
+  }, [isMobile, maxIndex]);
+
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceResumeRef.current) {
+        window.clearTimeout(autoAdvanceResumeRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section className="py-20 bg-slate-50">
@@ -139,13 +197,19 @@ export default function TestimonialsSection() {
         {/* Testimonials Slider Container */}
         <div className="relative">
           {/* Slider Wrapper */}
-          <div className="overflow-hidden">
+          <div
+            ref={sliderRef}
+            className={isMobile ? "overflow-x-auto snap-x snap-mandatory touch-pan-x custom-scrollbar" : "overflow-hidden"}
+          >
             <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)` }}
+              className={`flex ${isMobile ? "" : "transition-transform duration-500 ease-in-out"}`}
+              style={isMobile ? undefined : { transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)` }}
             >
               {testimonials.map((testimonial, index) => (
-                <div key={index} className={`w-full ${slidesToShow === 3 ? 'md:w-1/3' : ''} flex-shrink-0 px-4`}>
+                <div
+                  key={index}
+                  className={`w-full ${slidesToShow === 3 ? "md:w-1/3" : ""} flex-shrink-0 px-4 ${isMobile ? "snap-center" : ""}`}
+                >
                   <div className="bg-white rounded-xl shadow-lg p-8 h-full flex flex-col">
                     {/* Stars at top */}
                     <div className="flex items-center mb-6">
