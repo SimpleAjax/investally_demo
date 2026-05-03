@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
+import Script from "next/script";
 import {
   Phone,
   Mail,
   Linkedin,
   Facebook,
   Youtube,
-  MessageCircle,
   Check,
   Sparkles,
   Send,
@@ -15,30 +15,30 @@ import {
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
+declare global {
+  interface Window {
+    Tally?: {
+      loadEmbeds: () => void;
+    };
+  }
+}
+
 export default function ContactSection() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // Load Tally embed script
-    const script = document.createElement("script");
-    script.src = "https://tally.so/widgets/embed.js";
-    script.async = true;
-    script.onload = () => {
-      if (typeof window !== "undefined" && (window as any).Tally) {
-        (window as any).Tally.loadEmbeds();
-      }
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
+    window.Tally?.loadEmbeds();
   }, []);
 
   return (
     <section id="contact" className="py-12 md:py-16 bg-slate-50 relative overflow-hidden">
+      <Script
+        src="https://tally.so/widgets/embed.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          window.Tally?.loadEmbeds();
+        }}
+      />
       {/* Subtle background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-teal-100/40 to-transparent rounded-full blur-3xl pointer-events-none" />
       
@@ -53,7 +53,7 @@ export default function ContactSection() {
             Get In <span className="gradient-text">Touch</span>
           </h2>
           <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
-            Book a discovery call with our experts — or reach out directly. We're always available.
+            Book a discovery call with our experts — or reach out directly. We&apos;re always available.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function ContactSection() {
                     Send Us a Message
                   </h3>
                   <p className="text-slate-500 text-sm">
-                    We'll get back to you within 24 hours
+                    We&apos;ll get back to you within 24 hours
                   </p>
                 </div>
               </div>

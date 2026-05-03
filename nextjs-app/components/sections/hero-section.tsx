@@ -10,10 +10,11 @@ export default function HeroSection() {
     >
       <div className="absolute inset-0">
         <Image
-          src="/animations/hero section.png"
+          src="/animations/hero-section.webp"
           alt="InvestAlly financial journey illustration"
           fill
           priority
+          sizes="100vw"
           className="object-cover object-center"
         />
       </div>

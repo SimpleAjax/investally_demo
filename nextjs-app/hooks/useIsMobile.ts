@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 
 /**
- * Hook to detect if the user is on a mobile device
- * Uses user agent detection for distinguishing mobile from desktop
+ * Hook to detect if the user is on a mobile-like device by user agent.
  */
 export function useIsMobile(): boolean {
   const [isMobile, setIsMobile] = useState(false);
@@ -19,8 +18,7 @@ export function useIsMobile(): boolean {
     };
 
     checkMobile();
-    
-    // Re-check on resize (in case of tablet mode switches, etc.)
+
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);

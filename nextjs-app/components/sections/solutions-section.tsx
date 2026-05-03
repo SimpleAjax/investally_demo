@@ -3,20 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TrendingUp, Shield, Home, BookOpen, ArrowRight, Check } from "lucide-react";
+import { useViewportBelow } from "@/hooks/useViewportBelow";
 
 export default function SolutionsSection() {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useViewportBelow(1024);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
   const [hasManualScroll, setHasManualScroll] = useState(false);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
   const scrollPos = useRef(0);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   useEffect(() => {
     if (!isMobile || hasManualScroll) return;
@@ -25,7 +21,7 @@ export default function SolutionsSection() {
     const scrollSpeed = 0.5;
 
     const scrollLoop = () => {
-      if (scrollRef.current && !isInteracting) {
+      if (isSectionVisible && scrollRef.current && !isInteracting) {
         scrollPos.current += scrollSpeed;
         if (scrollPos.current >= scrollRef.current.scrollWidth / 2) {
           scrollPos.current = 0;
@@ -37,7 +33,22 @@ export default function SolutionsSection() {
 
     animationFrameId = requestAnimationFrame(scrollLoop);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isMobile, isInteracting, hasManualScroll]);
+  }, [isMobile, isInteracting, hasManualScroll, isSectionVisible]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSectionVisible(entry.isIntersecting);
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isMobile || !hasManualScroll || !scrollRef.current) return;
@@ -128,7 +139,7 @@ export default function SolutionsSection() {
   const mobileSolutions = isMobile && !hasManualScroll ? [...solutions, ...solutions] : solutions;
 
   return (
-    <section id="solutions" className="py-12 md:py-16 bg-[#f8fafa]">
+    <section ref={sectionRef} id="solutions" className="py-12 md:py-16 bg-[#f8fafa]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
         {/* Section Header */}

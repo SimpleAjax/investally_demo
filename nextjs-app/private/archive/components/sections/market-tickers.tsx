@@ -1,4 +1,4 @@
-import TradingViewWidget from "../tradingview-widget";
+import TradingViewWidget from "@/components/tradingview-widget";
 
 export default function MarketTickers() {
   const symbols = [

@@ -163,7 +163,7 @@ export default function RootLayout({
         />
 
         {children}
-        <WhatsAppFloat />
+        {!blogOnlyMode && <WhatsAppFloat />}
 
         {/* Tawk.to Live Chat Widget - Hidden in blog-only mode */}
         {/* {!blogOnlyMode && (

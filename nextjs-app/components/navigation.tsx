@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -59,6 +58,7 @@ export default function Navigation() {
                     src="/investally_only_logo.png"
                     alt="Investally Icon"
                     fill
+                    sizes="32px"
                     className="object-contain"
                     priority
                   />
@@ -68,8 +68,8 @@ export default function Navigation() {
                     src="/investally_logo_name.png"
                     alt="Investally Name"
                     fill
+                    sizes="112px"
                     className="object-contain"
-                    priority
                   />
                 </div>
               </div>
@@ -113,52 +113,66 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute top-full left-4 right-4 mt-4 md:hidden"
-            >
-              <div className="bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-6 overflow-hidden">
-                <div className="flex flex-col space-y-2">
-                  {navLinks.map((link, i) => (
-                    <motion.div
-                      key={link.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                    >
-                      <Link 
-                        href={link.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="block px-4 py-3 rounded-2xl text-lg font-bold text-slate-800 hover:bg-teal-50 hover:text-teal-600 transition-all duration-200"
-                      >
-                        {link.name}
-                      </Link>
-                    </motion.div>
-                  ))}
-                  
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="pt-4"
+        {mobileMenuOpen && (
+          <div
+            className="absolute top-full left-4 right-4 mt-4 md:hidden animate-[navMenuIn_220ms_cubic-bezier(0.16,1,0.3,1)]"
+          >
+            <div className="bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-6 overflow-hidden">
+              <div className="flex flex-col space-y-2">
+                {navLinks.map((link, i) => (
+                  <div
+                    key={link.name}
+                    className="animate-[navItemIn_260ms_cubic-bezier(0.16,1,0.3,1)_both]"
+                    style={{ animationDelay: `${i * 45}ms` }}
                   >
-                    <Button asChild className="w-full h-14 rounded-2xl bg-teal-600 hover:bg-teal-700 text-lg font-bold shadow-lg shadow-teal-600/20">
-                      <Link href="/#contact" onClick={() => setMobileMenuOpen(false)}>
-                        Talk to Expert
-                      </Link>
-                    </Button>
-                  </motion.div>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block px-4 py-3 rounded-2xl text-lg font-bold text-slate-800 hover:bg-teal-50 hover:text-teal-600 transition-all duration-200"
+                    >
+                      {link.name}
+                    </Link>
+                  </div>
+                ))}
+
+                <div
+                  className="pt-4 animate-[navItemIn_260ms_cubic-bezier(0.16,1,0.3,1)_both]"
+                  style={{ animationDelay: "300ms" }}
+                >
+                  <Button asChild className="w-full h-14 rounded-2xl bg-teal-600 hover:bg-teal-700 text-lg font-bold shadow-lg shadow-teal-600/20">
+                    <Link href="/#contact" onClick={() => setMobileMenuOpen(false)}>
+                      Talk to Expert
+                    </Link>
+                  </Button>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </div>
+        )}
       </nav>
+      <style jsx>{`
+        @keyframes navMenuIn {
+          from {
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes navItemIn {
+          from {
+            opacity: 0;
+            transform: translateX(-18px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
     </header>
   );
 }

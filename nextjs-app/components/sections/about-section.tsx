@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { Shield, RefreshCw, BarChart2, Search, Target, Zap } from "lucide-react";
+import { useViewportBelow } from "@/hooks/useViewportBelow";
 
 const challenges = [
   "Don't know where to start investing",
@@ -72,8 +72,9 @@ const whyFeatures = [
 
 export default function AboutSection() {
   const [visibleCount, setVisibleCount] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useViewportBelow(1024);
   const [hasManualRightScroll, setHasManualRightScroll] = useState(false);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const leftScrollRef = useRef<HTMLDivElement>(null);
   const rightScrollRef = useRef<HTMLDivElement>(null);
@@ -84,15 +85,12 @@ export default function AboutSection() {
   const hasAnimated = useRef(false);
 
   useEffect(() => {
-    // Check mobile state on mount
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    
     // Intersection observer for animation
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated.current) {
+        const [entry] = entries;
+        setIsSectionVisible(entry.isIntersecting);
+        if (entry.isIntersecting && !hasAnimated.current) {
           hasAnimated.current = true;
           challenges.forEach((_, i) => {
             setTimeout(() => {
@@ -107,7 +105,6 @@ export default function AboutSection() {
     
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
@@ -131,7 +128,7 @@ export default function AboutSection() {
 
     const scrollLoop = () => {
       // Challenges (Left): Auto-scroll ONLY on Desktop
-      if (!isMobile && leftScrollRef.current && !isLeftHovered) {
+      if (isSectionVisible && !isMobile && leftScrollRef.current && !isLeftHovered) {
         leftScrollPos.current += scrollSpeed;
         const maxLeftScroll = Math.max(0, leftScrollRef.current.scrollHeight - leftScrollRef.current.clientHeight);
         if (leftScrollPos.current >= maxLeftScroll) {
@@ -141,7 +138,7 @@ export default function AboutSection() {
       }
       
       // Why Features (Right): Vertical on Desktop, Horizontal on Mobile
-      if (rightScrollRef.current && !isRightHovered) {
+      if (isSectionVisible && rightScrollRef.current && !isRightHovered) {
         if (!isMobile) {
           // Desktop Vertical
           rightScrollPos.current += scrollSpeed;
@@ -165,7 +162,7 @@ export default function AboutSection() {
 
     animationFrameId = requestAnimationFrame(scrollLoop);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isMobile, isLeftHovered, isRightHovered, hasManualRightScroll]);
+  }, [isMobile, isLeftHovered, isRightHovered, hasManualRightScroll, isSectionVisible]);
 
   useEffect(() => {
     if (!isMobile || !hasManualRightScroll || !rightScrollRef.current) return;

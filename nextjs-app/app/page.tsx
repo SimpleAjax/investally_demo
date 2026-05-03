@@ -36,7 +36,6 @@ export default function Home() {
         <HeroSection />
         <ScrollReveal><AboutSection /></ScrollReveal>
         <ScrollReveal><SolutionsSection /></ScrollReveal>
-        {/* <WhyChooseSection /> */}
         <ScrollReveal><UserJourneySection /></ScrollReveal>
 
         <ScrollReveal><TeamSection /></ScrollReveal>

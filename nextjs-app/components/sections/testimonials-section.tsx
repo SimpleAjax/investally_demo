@@ -3,14 +3,15 @@
 import { useState, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { useViewportBelow } from "@/hooks/useViewportBelow";
 
 const roles = ["Lawyers", "CXOs", "Professionals", "Business Owners", "Doctors", "Engineers"];
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [roleIndex, setRoleIndex] = useState(0);
-  const [slidesToShow, setSlidesToShow] = useState(3);
+  const isMobile = useViewportBelow(768);
+  const slidesToShow = isMobile ? 1 : 3;
 
   useEffect(() => {
     const roleInterval = setInterval(() => {
@@ -94,24 +95,6 @@ export default function TestimonialsSection() {
     },
   ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      setSlidesToShow(window.innerWidth >= 768 ? 3 : 1);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearInterval(interval);
-    };
-  }, [currentIndex]);
-
   const maxIndex = testimonials.length - slidesToShow;
 
   const nextSlide = () => {
@@ -122,6 +105,16 @@ export default function TestimonialsSection() {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [maxIndex]);
+
   return (
     <section className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,18 +123,12 @@ export default function TestimonialsSection() {
           <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-2 mb-3 flex flex-col items-center justify-center">
             <span className="mb-1">Trusted by</span>
             <span className="relative inline-block w-full h-[1.2em]">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={roleIndex}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
-                  className="gradient-text absolute inset-0 text-center"
-                >
-                  {roles[roleIndex]}
-                </motion.span>
-              </AnimatePresence>
+              <span
+                key={roleIndex}
+                className="gradient-text absolute inset-0 text-center animate-[testimonialRoleIn_800ms_cubic-bezier(0.33,1,0.68,1)]"
+              >
+                {roles[roleIndex]}
+              </span>
             </span>
           </h2>
           <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto">
@@ -242,6 +229,18 @@ export default function TestimonialsSection() {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes testimonialRoleIn {
+          from {
+            opacity: 0;
+            transform: translateY(15px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }

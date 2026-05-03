@@ -79,6 +79,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                               src={authorImageUrl}
                               alt={post.author?.name || 'Author'}
                               fill
+                              sizes="48px"
                               className="object-cover"
                             />
                           </div>
@@ -122,6 +123,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         src={imageUrl}
                         alt={post.mainImage?.alt || post.title}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 66vw"
                         className="object-contain"
                         priority
                       />

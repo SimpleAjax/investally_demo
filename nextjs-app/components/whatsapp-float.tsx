@@ -1,17 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 
 export default function WhatsAppFloat() {
-  // Hide WhatsApp float when blog-only mode is enabled
-  const blogOnlyMode = process.env.NEXT_PUBLIC_BLOG_ONLY_MODE === 'true';
-
-  if (blogOnlyMode) {
-    return null;
-  }
-
   const phoneNumber = "9166779632"; // Your phone number without + or spaces
   const message = "Hi, I would like to know more about Investally's services.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;

@@ -58,7 +58,7 @@ export default function AboutUsPage() {
                             </h1>
                             <p className="text-xl text-slate-600 leading-relaxed mb-6">
                                 Personalized financial guidance that grows with you - built on trust, transparency, and continuous review.
-                                Because wealth creation isn't a one-time act- it's a lifelong relationship.
+                                Because wealth creation isn&apos;t a one-time act- it&apos;s a lifelong relationship.
                             </p>
                         </div>
 
@@ -66,7 +66,7 @@ export default function AboutUsPage() {
                             <div>
                                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Personalized Solutions</h2>
                                 <p className="text-lg text-slate-600 leading-relaxed">
-                                    Every investor's journey is different — and so are our strategies. We design plans that reflect your goals, risk comfort, and life stage — not someone else's template.
+                                    Every investor&apos;s journey is different — and so are our strategies. We design plans that reflect your goals, risk comfort, and life stage — not someone else&apos;s template.
                                 </p>
                             </div>
 
@@ -80,7 +80,7 @@ export default function AboutUsPage() {
                             <div>
                                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Education First</h2>
                                 <p className="text-lg text-slate-600 leading-relaxed">
-                                    We don't just tell you where to invest — we help you understand why. Through simplified explanations and regular insights, we make sure you feel confident about every decision.
+                                    We don&apos;t just tell you where to invest — we help you understand why. Through simplified explanations and regular insights, we make sure you feel confident about every decision.
                                 </p>
                             </div>
 

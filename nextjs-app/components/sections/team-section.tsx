@@ -34,7 +34,7 @@ const teamMembers = [
     image: "/team/minakshi maheshwari-medium.jpg",
     description:
       "Minakshi is a Chartered Accountant and Business Analyst who helps people make confident financial decisions. Her experience in understanding numbers, analysing risks, and simplifying complex financial information ensures that every client gets clear guidance tailored to their goals. At InvestAlly, she focuses on creating practical, easy-to-follow plans that help families protect, grow, and manage their wealth with confidence.",
-    tags: ["Chartered Accountant", "Business Analyst", "ARN 345644"],
+    tags: ["Chartered Accountant", "ARN 345644", "Business Analyst"],
     tagIcons: [Award, Users, Shield],
     accentFrom: "from-green-500",
     titleColor: "text-green-600",
@@ -105,6 +105,7 @@ export default function TeamSection() {
                           src={member.image}
                           alt={member.name}
                           fill
+                          sizes="144px"
                           className="object-cover object-top"
                         />
                       ) : (
@@ -172,6 +173,7 @@ export default function TeamSection() {
                                 src={company.src}
                                 alt={company.alt}
                                 fill
+                                sizes="44px"
                                 className="object-contain p-1.5"
                               />
                             </div>

@@ -4,16 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-    Headphones,
     Wrench,
     Map,
-    Rocket,
-    CalendarCheck,
     ArrowRight,
     ChevronDown,
-    BarChart3,
-    FileText,
-    CheckCircle2,
     RefreshCw,
     Shield,
     Target,
@@ -31,7 +25,7 @@ const steps = [
         detail:
             "In our discovery sessions, we map out your complete financial picture: income sources, liabilities, and most importantly — what you want your money to achieve.",
         highlight: "Free 30-min discovery call",
-        image: "/animations/step 1.png",
+        image: "/animations/step-1.webp",
         visual: {
             label: "Discovery Phase",
             stat: "30 min",
@@ -49,7 +43,7 @@ const steps = [
         detail:
             "We create a comprehensive financial roadmap covering every aspect of your future. It defines exactly where each rupee should go and sets an optimal asset allocation mix.",
         highlight: "Detailed financial roadmap",
-        image: "/animations/step 2.png",
+        image: "/animations/step-2.webp",
         visual: {
             label: "Your Strategy",
             stat: "3-in-1",
@@ -67,7 +61,7 @@ const steps = [
         detail:
             "No generic templates. Your unique portfolio is built with precision instruments tailored to you — ranging from diversified Mutual Funds to Private Equity opportunities depending on your net worth and goals.",
         highlight: "Bespoke portfolio construction",
-        image: "/animations/step 3.png",
+        image: "/animations/step-3.webp",
         visual: {
             label: "Execution Phase",
             stat: "100%",
@@ -85,7 +79,7 @@ const steps = [
         detail:
             "Through comprehensive quarterly evaluations, we ensure that your portfolio stays tightly aligned to the roadmap. We rebalance, remove underperformers, and adapt to new life goals.",
         highlight: "Scheduled portfolio reviews",
-        image: "/animations/step 4.png",
+        image: "/animations/step-4.webp",
         visual: {
             label: "Active Oversight",
             stat: "4×",
@@ -103,7 +97,7 @@ const steps = [
         detail:
             "A financial plan isn't complete without protecting the downside. We meticulously plan your term insurance, critical illness cover, and health frameworks to ensure sudden events don't derail your goals.",
         highlight: "Complete insurance audit",
-        image: "/animations/step 5.png",
+        image: "/animations/step-5.webp",
         visual: {
             label: "Safety Net",
             stat: "100%",
@@ -235,6 +229,7 @@ export default function UserJourneySection() {
                                                             src={step.image}
                                                             alt={`Step ${step.number}: ${step.title}`}
                                                             fill
+                                                            sizes="(max-width: 1023px) 100vw, 50vw"
                                                             className="object-cover object-center"
                                                         />
                                                         {/* Step number badge */}
@@ -298,6 +293,7 @@ export default function UserJourneySection() {
                                     src={active.image}
                                     alt={`Step ${active.number}: ${active.title}`}
                                     fill
+                                    sizes="(max-width: 1023px) 100vw, 50vw"
                                     className="object-cover object-center"
                                     style={{ animation: "stepFadeIn 0.4s ease both" }}
                                 />

@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -21,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
+import SolutionsGridAligner from "@/components/solutions-grid-aligner";
 import { getGridCardClasses } from "@/lib/grid-utils";
 import ScrollReveal from "@/components/scroll-reveal";
 
@@ -267,76 +265,21 @@ const sectionConfigs: SectionConfig[] = [
   },
 ];
 
+const cardGridClasses = Object.fromEntries(
+  sectionConfigs.map((section) => [
+    section.id,
+    section.cards.map((_, index) => getGridCardClasses(section.cards.length, index)),
+  ]),
+) as Record<SectionConfig["id"], string[]>;
+
 export default function SolutionsPage() {
-  const [syncedHeights, setSyncedHeights] = useState<
-    Record<SectionConfig["id"], { description: number; meta: number; features: number; approach: number }>
-  >({
-    wealth: { description: 0, meta: 0, features: 0, approach: 0 },
-    insurance: { description: 0, meta: 0, features: 0, approach: 0 },
-    loans: { description: 0, meta: 0, features: 0, approach: 0 },
-    advisory: { description: 0, meta: 0, features: 0, approach: 0 },
-  });
-
-  const cardGridClasses = useMemo(
-    () =>
-      Object.fromEntries(
-        sectionConfigs.map((section) => [
-          section.id,
-          section.cards.map((_, index) => getGridCardClasses(section.cards.length, index)),
-        ]),
-      ) as Record<SectionConfig["id"], string[]>,
-    [],
-  );
-
-  useEffect(() => {
-    const syncCardHeights = () => {
-      const nextHeights = {
-        wealth: { description: 0, meta: 0, features: 0, approach: 0 },
-        insurance: { description: 0, meta: 0, features: 0, approach: 0 },
-        loans: { description: 0, meta: 0, features: 0, approach: 0 },
-        advisory: { description: 0, meta: 0, features: 0, approach: 0 },
-      } as Record<SectionConfig["id"], { description: number; meta: number; features: number; approach: number }>;
-
-      sectionConfigs.forEach((section) => {
-        const sectionRoot = document.getElementById(section.id);
-        if (!sectionRoot) return;
-
-        const descriptions = sectionRoot.querySelectorAll<HTMLElement>("[data-card-description]");
-        const metas = sectionRoot.querySelectorAll<HTMLElement>("[data-card-meta]");
-        const features = sectionRoot.querySelectorAll<HTMLElement>("[data-card-features]");
-        const approaches = sectionRoot.querySelectorAll<HTMLElement>("[data-card-approach]");
-
-        nextHeights[section.id] = {
-          description: Math.max(0, ...Array.from(descriptions, (node) => node.offsetHeight)),
-          meta: Math.max(0, ...Array.from(metas, (node) => node.offsetHeight)),
-          features: Math.max(0, ...Array.from(features, (node) => node.offsetHeight)),
-          approach: Math.max(0, ...Array.from(approaches, (node) => node.offsetHeight)),
-        };
-      });
-
-      setSyncedHeights(nextHeights);
-    };
-
-    syncCardHeights();
-    const frameId = window.requestAnimationFrame(syncCardHeights);
-    const timeoutId = window.setTimeout(syncCardHeights, 150);
-    window.addEventListener("resize", syncCardHeights);
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.clearTimeout(timeoutId);
-      window.removeEventListener("resize", syncCardHeights);
-    };
-  }, []);
-
   const SolutionCard = ({
     solution,
     gridSpan,
-    sectionId,
     dark = false,
   }: {
     solution: SolutionCardData;
     gridSpan: string;
-    sectionId: SectionConfig["id"];
     dark?: boolean;
   }) => {
     const cardClasses = dark
@@ -356,6 +299,7 @@ export default function SolutionsPage() {
 
     return (
       <div
+        data-solution-card
         className={`${gridSpan} flex-shrink-0 w-[88vw] sm:w-[520px] md:w-auto h-full rounded-2xl p-6 lg:p-8 transition-all overflow-hidden flex flex-col ${cardClasses}`}
       >
         <div className="flex items-center gap-4 mb-5">
@@ -367,7 +311,6 @@ export default function SolutionsPage() {
 
         <p
           data-card-description
-          style={{ minHeight: syncedHeights[sectionId].description || undefined }}
           className={`text-sm leading-relaxed mb-5 ${descriptionClasses}`}
         >
           {solution.description}
@@ -375,7 +318,6 @@ export default function SolutionsPage() {
 
         <div
           data-card-meta
-          style={{ minHeight: syncedHeights[sectionId].meta || undefined }}
           className="mb-5 min-h-[2rem]"
         >
           {solution.meta && (
@@ -387,7 +329,6 @@ export default function SolutionsPage() {
 
         <ul
           data-card-features
-          style={{ minHeight: syncedHeights[sectionId].features || undefined }}
           className={`space-y-3 text-sm mb-6 ${featureTextClasses}`}
         >
           {solution.features.map((feature) => (
@@ -402,7 +343,6 @@ export default function SolutionsPage() {
 
         <div
           data-card-approach
-          style={{ minHeight: syncedHeights[sectionId].approach || undefined }}
           className="mt-auto pt-6 border-t border-black/5 dark:border-white/10"
         >
           <p className={`text-xs font-bold uppercase tracking-[0.18em] mb-3 ${approachLabelClasses}`}>The InvestAlly approach</p>
@@ -420,11 +360,12 @@ export default function SolutionsPage() {
         <section className="relative overflow-hidden min-h-screen pt-20 md:pt-0">
           <div className="absolute inset-0">
             <Image
-              src="/animations/solutions_hero_section.png"
+              src="/animations/solutions-hero-section.webp"
               alt="InvestAlly Financial Solutions"
               fill
               className="object-cover object-center"
               priority
+              sizes="100vw"
             />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,250,0.94)_0%,rgba(248,250,250,0.84)_34%,rgba(248,250,250,0.5)_62%,rgba(248,250,250,0.12)_100%)]" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.2),transparent_42%),linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.16)_100%)]" />
@@ -474,19 +415,18 @@ export default function SolutionsPage() {
                   )}
                 </div>
 
-                <div
+                <SolutionsGridAligner
                   className="flex snap-x snap-mandatory overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-6 md:auto-rows-fr md:items-stretch md:overflow-visible md:pb-0 custom-scrollbar"
                 >
                   {section.cards.map((solution, i) => (
                     <SolutionCard
                       key={solution.id}
                       solution={solution}
-                      sectionId={section.id}
                       gridSpan={`${cardGridClasses[section.id][i]} snap-start`}
                       dark={section.dark}
                     />
                   ))}
-                </div>
+                </SolutionsGridAligner>
               </div>
             </section>
           </ScrollReveal>

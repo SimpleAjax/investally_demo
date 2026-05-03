@@ -109,7 +109,6 @@ const services = [
 export default function FamilyOfficeSection() {
     const [activeId, setActiveId] = useState("protection");
     const active = services.find((s) => s.id === activeId)!;
-    const ActiveIcon = active.icon;
 
     return (
         <section id="family-office" className="py-20 md:py-28 bg-slate-50 relative overflow-hidden">
