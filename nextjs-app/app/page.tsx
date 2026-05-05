@@ -34,7 +34,7 @@ export default function Home() {
       <Navigation />
       <main>
         <HeroSection />
-        <ScrollReveal><AboutSection /></ScrollReveal>
+        <ScrollReveal initiallyVisible><AboutSection /></ScrollReveal>
         <ScrollReveal><SolutionsSection /></ScrollReveal>
         <ScrollReveal><UserJourneySection /></ScrollReveal>
 

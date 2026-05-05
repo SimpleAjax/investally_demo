@@ -8,6 +8,7 @@ interface ScrollRevealProps {
   direction?: "up" | "down" | "left" | "right" | "none";
   className?: string;
   viewportMargin?: string;
+  initiallyVisible?: boolean;
 }
 
 export default function ScrollReveal({
@@ -16,11 +17,14 @@ export default function ScrollReveal({
   direction = "up",
   className = "",
   viewportMargin = "-50px",
+  initiallyVisible = false,
 }: ScrollRevealProps) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(initiallyVisible);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (initiallyVisible) return;
+
     const node = ref.current;
     if (!node) return;
 
