@@ -224,13 +224,13 @@ export default function UserJourneySection() {
                                                 {/* Mobile Visual Content - Inline Reveal */}
                                                 <div className="lg:hidden mt-2 rounded-2xl border border-teal-100 bg-white shadow-lg overflow-hidden">
                                                     {/* Step image */}
-                                                    <div className="relative w-full aspect-[16/9] overflow-hidden bg-teal-50">
+                                                    <div className="relative w-full aspect-square overflow-hidden bg-teal-50">
                                                         <Image
                                                             src={step.image}
                                                             alt={`Step ${step.number}: ${step.title}`}
                                                             fill
                                                             sizes="(max-width: 1023px) 100vw, 50vw"
-                                                            className="object-cover object-center"
+                                                            className="object-contain object-center p-2"
                                                         />
                                                         {/* Step number badge */}
                                                         <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center shadow-lg">

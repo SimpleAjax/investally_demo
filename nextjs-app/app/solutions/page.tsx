@@ -360,7 +360,7 @@ export default function SolutionsPage() {
         <section className="relative overflow-hidden min-h-screen pt-20 md:pt-0">
           <div className="absolute inset-0">
             <Image
-              src="/animations/solutions-hero-section.webp"
+              src="/animations/solutions-hero-section-v2.png"
               alt="InvestAlly Financial Solutions"
               fill
               className="object-cover object-center"
