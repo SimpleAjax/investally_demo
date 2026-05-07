@@ -62,6 +62,8 @@ const steps = [
             "No generic templates. Your unique portfolio is built with precision instruments tailored to you — ranging from diversified Mutual Funds to Private Equity opportunities depending on your net worth and goals.",
         highlight: "Bespoke portfolio construction",
         image: "/animations/step-3.webp",
+        desktopFrameClassName: "aspect-square",
+        desktopImageClassName: "object-contain object-center p-4",
         visual: {
             label: "Execution Phase",
             stat: "100%",
@@ -288,13 +290,13 @@ export default function UserJourneySection() {
                             style={{ animation: "stepFadeIn 0.4s ease both" }}
                         >
                             {/* Step image */}
-                            <div className="relative w-full aspect-[4/3] overflow-hidden bg-teal-50">
+                            <div className={`relative w-full overflow-hidden bg-teal-50 ${active.desktopFrameClassName ?? "aspect-[4/3]"}`}>
                                 <Image
                                     src={active.image}
                                     alt={`Step ${active.number}: ${active.title}`}
                                     fill
                                     sizes="(max-width: 1023px) 100vw, 50vw"
-                                    className="object-cover object-center"
+                                    className={active.desktopImageClassName ?? "object-cover object-center"}
                                     style={{ animation: "stepFadeIn 0.4s ease both" }}
                                 />
                                 {/* Step number badge */}
