@@ -25,6 +25,46 @@ export default function TestimonialsSection() {
 
   const testimonials = [
     {
+      text: "With 20+ years in finance, I ask tough questions before trusting anyone with my money, and InvestAlly passed with ease. Adarsh is knowledgeable, honest, and focused on what truly suits you. His advice is clear, research-driven, and pressure-free. He understands risk well and always puts the client's interest first. I recommend InvestAlly without hesitation.",
+      name: "Anil Venherkar",
+      role: "Former Executive Director - Finance, MSCI Inc., Mumbai",
+      initials: "AV",
+      image: "/animations/testimonial-faces/Anil Venherkar.jpg",
+      products: ["PMS"]
+    },
+    {
+      text: "I've had a great experience with InvestAlly and with the way Adarsh has built the firm. His investing approach is practical, well-researched, and focused on long-term wealth creation rather than short-term noise. What stands out is the clarity, transparency, and trust in every interaction. InvestAlly feels like a genuine partner in your financial journey. Highly recommended.",
+      name: "Nikhil Agarwal",
+      role: "Businessman, Age 35, Jaipur",
+      initials: "NA",
+      image: "/animations/testimonial-faces/Nikhil Agarwal.jpg",
+      products: ["Mutual Fund"]
+    },
+    {
+      text: "InvestAlly has had a meaningful impact on my investing journey. During times of uncertainty and setbacks, their guidance brought much-needed clarity and confidence. What stood out was not just the recommendations, but the explanation of fundamentals and macro trends behind them. Their balanced insights and timely support have truly shaped my approach to investing.",
+      name: "Pratik Kesherwani",
+      role: "Private Equity Manager, Brookfield, Mumbai",
+      initials: "PK",
+      image: "/animations/testimonial-faces/Pratik Kesherwani.jpg",
+      products: ["Mutual Fund"]
+    },
+    {
+      text: "My experience with InvestAlly under Adarsh Katta's guidance has been excellent. Their clear insights on US markets made global investing far more accessible. Along with good returns, I've gained a deeper understanding of international investing. I'd highly recommend InvestAlly to anyone looking to diversify beyond Indian equities.",
+      name: "Agam Shah",
+      role: "Private Equity Senior Analyst - Brookfield, Age 34, Mumbai",
+      initials: "AS",
+      image: "/animations/testimonial-faces/face-5.png",
+      products: ["Global Investing"]
+    },
+    {
+      text: "It's rare to find someone who is both a close friend and a true professional. Adarsh manages my investments at InvestAlly with the same care and precision as his own. If you're looking for someone with deep market knowledge, integrity, and genuine commitment, Adarsh is the right person.",
+      name: "Vivek Nagaria",
+      role: "Private Equity Senior Analyst - Brookfield, Age 31, Mumbai",
+      initials: "VN",
+      image: "/animations/testimonial-faces/face-7.png",
+      products: ["Mutual Fund", "Global Investing"]
+    },
+    {
       text: "Investally has been managing my portfolio for the last 6 months, and I'm genuinely happy with their recommendations. They explain things clearly, keep me updated, and suggest what truly fits my goals. Adarsh's market insight and instinct give me full confidence that my money is in safe hands and the returns speak for themselves.",
       name: "CA Vishal Mittal, CFA",
       role: "Salaried, Private Sector Employee, Age 25, Mumbai",
@@ -95,6 +135,14 @@ export default function TestimonialsSection() {
       initials: "A",
       image: "/animations/testimonial-faces/face-9.png",
       products: ["Mutual Funds"]
+    },
+    {
+      text: "Working with InvestAlly has been a great experience. The team is approachable, always available for discussions, and takes the time to understand financial goals in detail. Their tailored investment options make decisions easier and more informed. They also stay consistently updated with changing market scenarios, which gives a lot of confidence while planning investments.",
+      name: "Siddharth Hansaria",
+      role: "Businessman, Age 36, Jaipur",
+      initials: "SH",
+      image: "/animations/testimonial-faces/face-1.png",
+      products: ["PMS", "Mutual Fund", "AIF"]
     },
   ];
 
@@ -213,7 +261,11 @@ export default function TestimonialsSection() {
           {/* Slider Wrapper */}
           <div
             ref={sliderRef}
-            className={isMobile ? "overflow-x-auto snap-x snap-mandatory touch-pan-x custom-scrollbar" : "overflow-hidden"}
+            className={
+              isMobile
+                ? "overflow-x-auto overflow-y-visible snap-x snap-mandatory touch-pan-x custom-scrollbar py-3"
+                : "overflow-x-hidden overflow-y-visible py-3"
+            }
           >
             <div
               className={`flex ${isMobile ? "" : "transition-transform duration-500 ease-in-out"}`}
@@ -224,7 +276,7 @@ export default function TestimonialsSection() {
                   key={index}
                   className={`w-full ${slidesToShow === 3 ? "md:w-1/3" : ""} flex-shrink-0 px-4 ${isMobile ? "snap-center" : ""}`}
                 >
-                  <div className="bg-white rounded-xl shadow-lg p-8 h-full flex flex-col">
+                  <div className="bg-white rounded-xl shadow-xl p-8 h-full flex flex-col">
                     {/* Stars at top */}
                     <div className="flex items-center mb-6">
                       <div className="flex text-yellow-400">
@@ -242,7 +294,7 @@ export default function TestimonialsSection() {
                     {/* Client info at bottom */}
                     <div className="mt-6 pt-6 border-t border-slate-100">
                       <div className="flex items-center mb-3">
-                        <div className="w-14 h-14 rounded-full overflow-hidden bg-slate-200 flex items-center justify-center font-bold text-slate-600 mr-4">
+                        <div className="w-14 h-14 aspect-square shrink-0 rounded-full overflow-hidden bg-slate-200 flex items-center justify-center font-bold text-slate-600 mr-4">
                           {testimonial.image ? (
                             <Image
                               src={testimonial.image}
