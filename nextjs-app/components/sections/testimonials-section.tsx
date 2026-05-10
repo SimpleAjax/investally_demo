@@ -53,7 +53,7 @@ export default function TestimonialsSection() {
       name: "Agam Shah",
       role: "Private Equity Senior Analyst - Brookfield, Age 34, Mumbai",
       initials: "AS",
-      image: "/animations/testimonial-faces/face-5.png",
+      image: "/animations/testimonial-faces/Agam Shah.jpg",
       products: ["Global Investing"]
     },
     {
@@ -61,7 +61,7 @@ export default function TestimonialsSection() {
       name: "Vivek Nagaria",
       role: "Private Equity Senior Analyst - Brookfield, Age 31, Mumbai",
       initials: "VN",
-      image: "/animations/testimonial-faces/face-7.png",
+      image: "/animations/testimonial-faces/Vivek Nagaria.jpg",
       products: ["Mutual Fund", "Global Investing"]
     },
     {
