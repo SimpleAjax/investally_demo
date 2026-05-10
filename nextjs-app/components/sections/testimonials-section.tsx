@@ -29,7 +29,7 @@ export default function TestimonialsSection() {
       name: "Anil Venherkar",
       role: "Former Executive Director - Finance, MSCI Inc., Mumbai",
       initials: "AV",
-      image: "/animations/testimonial-faces/Anil Venherkar.jpg",
+      image: "/animations/testimonial-faces/Anil Venherkar.webp",
       products: ["PMS"]
     },
     {
@@ -37,7 +37,7 @@ export default function TestimonialsSection() {
       name: "Nikhil Agarwal",
       role: "Businessman, Age 35, Jaipur",
       initials: "NA",
-      image: "/animations/testimonial-faces/Nikhil Agarwal.jpg",
+      image: "/animations/testimonial-faces/Nikhil Agarwal.webp",
       products: ["Mutual Fund"]
     },
     {
@@ -45,7 +45,7 @@ export default function TestimonialsSection() {
       name: "Pratik Kesherwani",
       role: "Private Equity Manager, Brookfield, Mumbai",
       initials: "PK",
-      image: "/animations/testimonial-faces/Pratik Kesherwani.jpg",
+      image: "/animations/testimonial-faces/Pratik Kesherwani.webp",
       products: ["Mutual Fund"]
     },
     {
@@ -53,7 +53,7 @@ export default function TestimonialsSection() {
       name: "Agam Shah",
       role: "Private Equity Senior Analyst - Brookfield, Age 34, Mumbai",
       initials: "AS",
-      image: "/animations/testimonial-faces/Agam Shah.jpg",
+      image: "/animations/testimonial-faces/Agam Shah.webp",
       products: ["Global Investing"]
     },
     {
@@ -61,7 +61,7 @@ export default function TestimonialsSection() {
       name: "Vivek Nagaria",
       role: "Private Equity Senior Analyst - Brookfield, Age 31, Mumbai",
       initials: "VN",
-      image: "/animations/testimonial-faces/Vivek Nagaria.jpg",
+      image: "/animations/testimonial-faces/Vivek Nagaria.webp",
       products: ["Mutual Fund", "Global Investing"]
     },
     {
